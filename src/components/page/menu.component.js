@@ -7,7 +7,11 @@ import MenuService from "../../services/page/menu.service";
 export default class Menu extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { menus: {} };
+    this.state = {
+      menus: {},
+      selectedMenuName: null
+    };
+    this.onSelectingMenu = this.onSelectingMenu.bind(this);
     this.menuService = new MenuService({});
   }
 
@@ -41,9 +45,11 @@ export default class Menu extends React.Component {
                 {Object.keys(this.state.menus).map((key, value) => (
                   <MenuItem
                     key={key}
-                    itemName={key}
+                    menuName={key}
                     iconClass={this.state.menus[key].iconClass}
                     menuItems={this.state.menus[key].menuItems}
+                    selectedMenuName={this.state.selectedMenuName}
+                    //onSelectingMenu={this.onSelectingMenu}
                   />
                 ))}
               </ul>
@@ -52,5 +58,11 @@ export default class Menu extends React.Component {
         </div>
       </div>
     );
+  }
+
+  onSelectingMenu(selectedMenuName) {
+    this.setState({
+      selectedMenuName: selectedMenuName
+    });
   }
 }
