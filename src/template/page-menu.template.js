@@ -2,17 +2,15 @@ import React from 'react';
 
 import * as AppConstants from '../constants/app.constant';
 
-import MenuItem from '../components/menu/menuitem.component';
+import Menu from '../components/menu/menu.component';
 import MenuService from '../services/page/menu.service';
 
 export default class PageMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      menus: {},
-      selectedMenuName: null
+      menus: {}
     };
-    this.onSelectingMenu = this.onSelectingMenu.bind(this);
     this.menuService = new MenuService({});
   }
 
@@ -42,21 +40,14 @@ export default class PageMenu extends React.Component {
               </form>
             </div>
             <div className="col-lg order-lg-first">
-              <ul className="nav nav-tabs border-0 flex-column flex-lg-row">
-                {Object.keys(this.state.menus).map((key, value) => (
-                  <MenuItem key={key} name={key} data={this.state.menus[key]} />
-                ))}
-              </ul>
+              <Menu
+                data={this.state.menus}
+                onMenuChange={this.props.onMenuChange}
+              />
             </div>
           </div>
         </div>
       </div>
     );
-  }
-
-  onSelectingMenu(selectedMenuName) {
-    this.setState({
-      selectedMenuName: selectedMenuName
-    });
   }
 }

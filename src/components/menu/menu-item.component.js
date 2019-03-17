@@ -9,7 +9,6 @@ import {
 export default class MenuItem extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
   }
 
   render() {
@@ -24,7 +23,12 @@ export default class MenuItem extends React.Component {
       for (let menuItem of menuItems) {
         let menuItemName = menuItem.name;
         dropdownItems.push(
-          <DropdownItem key={menuItemName} tag="a" href="/blah">
+          <DropdownItem
+            key={menuItemName}
+            name={menuItemName}
+            tag="a"
+            onClick={this.props.onMenuChange}
+          >
             {menuItemName}
           </DropdownItem>
         );

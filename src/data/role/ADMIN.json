@@ -10,10 +10,13 @@
     "iconClass": "fe fe-calendar",
     "menuItems": [
       {
-        "name": "Component 1"
+        "name": "Table"
       },
       {
-        "name": "Component 2"
+        "name": "Modal"
+      },
+      {
+        "name": "Carousal"
       }
     ]
   },
@@ -21,10 +24,10 @@
     "iconClass": "fe fe-file",
     "menuItems": [
       {
-        "name": "Table"
+        "name": "Dashboard"
       },
       {
-        "name": "Carousal"
+        "name": "Crud"
       },
       {
         "name": "Profile"
