@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-export default class Footer extends React.Component {
+export default class PageFooter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -12,14 +12,14 @@ export default class Footer extends React.Component {
         <div className="container">
           <div className="row align-items-center">
             <div className="col-12 col-lg-auto mt-3 mt-lg-0 text-center">
-              Copyright © 2018 <a href=".">Tabler</a>. Theme by{" "}
+              Copyright © 2018 <a href=".">Tabler</a>. Theme by{' '}
               <a
                 href="https://codecalm.net"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 codecalm.net
-              </a>{" "}
+              </a>{' '}
               All rights reserved.
             </div>
           </div>

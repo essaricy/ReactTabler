@@ -48,7 +48,7 @@ export default class MenuItem extends React.Component {
           className="nav-link"
           aria-expanded="false"
         >
-          <i className={'fe ' + menuData.iconClass} /> {menuName}
+          <i className={menuData.iconClass} /> {menuName}
         </a>
       );
     }
