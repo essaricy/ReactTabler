@@ -1,4 +1,10 @@
-import React from "react";
+import React from 'react';
+import {
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  UncontrolledDropdown
+} from 'reactstrap';
 
 export default class MenuItem extends React.Component {
   constructor(props) {
@@ -7,37 +13,48 @@ export default class MenuItem extends React.Component {
   }
 
   render() {
-    let styleShow = { display: "block" };
-    let styleHide = { display: "none" };
+    let menuName = this.props.name;
+    let menuData = this.props.data;
+    let menuItems = menuData.menuItems;
+    let hasMenuItems = menuData.menuItems && menuItems.length !== 0;
 
-    let showMenu = this.props.menuName === this.props.selectedMenuName;
-    let hasMenuItems =
-      this.props.menuItems && this.props.menuItems.length !== 0;
-
-    let menuDropdown;
+    let dropdownMenu;
     if (hasMenuItems) {
-      menuDropdown = (
-        <div
-          className={"dropdown-menu dropdown-menu-arrow"}
-          style={showMenu ? styleShow : styleHide}
+      let dropdownItems = [];
+      for (let menuItem of menuItems) {
+        let menuItemName = menuItem.name;
+        dropdownItems.push(
+          <DropdownItem key={menuItemName} tag="a" href="/blah">
+            {menuItemName}
+          </DropdownItem>
+        );
+      }
+
+      dropdownMenu = (
+        <UncontrolledDropdown setActiveFromChild>
+          <DropdownToggle tag="a" className="nav-link">
+            <i className={'fe ' + menuData.iconClass} /> {menuName}
+          </DropdownToggle>
+          <DropdownMenu className="dropdown-menu dropdown-menu-arrow">
+            {dropdownItems}
+          </DropdownMenu>
+        </UncontrolledDropdown>
+      );
+    } else {
+      dropdownMenu = (
+        <a
+          href={menuData.url}
+          aria-haspopup="false"
+          className="nav-link"
+          aria-expanded="false"
         >
-          <a href="./cards.html" className="dropdown-item ">
-            Cards design
-          </a>
-        </div>
+          <i className={'fe ' + menuData.iconClass} /> {menuName}
+        </a>
       );
     }
     return (
       <li className="nav-item" key={this.props.menuName}>
-        <a
-          href={null}
-          className="nav-link"
-          data-toggle="dropdown"
-          //onClick={this.props.onSelectingMenu(this.props.selectedMenuName)}
-        >
-          <i className={"fe " + this.props.iconClass} /> {this.props.menuName}
-        </a>
-        {menuDropdown}
+        {dropdownMenu}
       </li>
     );
   }

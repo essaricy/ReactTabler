@@ -1,9 +1,9 @@
-import * as Constants from "../constants/result.constant";
+import * as Constants from '../constants/api.constant';
 
 export function get(url) {
-  console.log("Sending request (GET) to " + url);
+  console.log('Sending request (GET) to ' + url);
   return fetch(url, {
-    method: "get",
+    method: 'get',
     headers: Constants.JsonHeaders
   }).then(function(apiResponse) {
     //return sendGenericResponse(apiResponse);
@@ -14,10 +14,10 @@ export function get(url) {
 export function post(url, payload) {
   let payloadAsText = JSON.stringify(payload);
   console.log(
-    "Sending request (POST) to " + url + " with payload=" + payloadAsText
+    'Sending request (POST) to ' + url + ' with payload=' + payloadAsText
   );
   return fetch(url, {
-    method: "post",
+    method: 'post',
     headers: Constants.JsonHeaders,
     body: payloadAsText
   }).then(function(apiResponse) {

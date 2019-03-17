@@ -1,10 +1,12 @@
-import React from "react";
+import React from 'react';
 
-import * as FetchApi from "../../utils/fetchapi.util";
-import * as Urls from "../../constants/url.constant";
+import * as AppConstants from '../../constants/app.constant';
+import ADMIN_ROLES from '../../data/role/ADMIN.json';
 
 export default class MenuService extends React.Component {
-  accessList() {
-    return FetchApi.get(Urls.API_URL.BASE + Urls.API_URL.MENU + "ADMIN");
+  accessList(role) {
+    if (role === AppConstants.Role.ADMIN) {
+      return JSON.parse(JSON.stringify(ADMIN_ROLES));
+    }
   }
 }

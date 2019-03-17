@@ -1,8 +1,9 @@
-import React from "react";
+import React from 'react';
 
-//import * as Constants from "../../constants/result.constant";
-import MenuItem from "./menuitem.component";
-import MenuService from "../../services/page/menu.service";
+import * as AppConstants from '../../constants/app.constant';
+
+import MenuItem from './menuitem.component';
+import MenuService from '../../services/page/menu.service';
 
 export default class Menu extends React.Component {
   constructor(props) {
@@ -16,8 +17,8 @@ export default class Menu extends React.Component {
   }
 
   componentDidMount() {
-    this.menuService.accessList().then(response => {
-      this.setState({ menus: response });
+    this.setState({
+      menus: this.menuService.accessList(AppConstants.Role.ADMIN)
     });
   }
 
@@ -43,14 +44,7 @@ export default class Menu extends React.Component {
             <div className="col-lg order-lg-first">
               <ul className="nav nav-tabs border-0 flex-column flex-lg-row">
                 {Object.keys(this.state.menus).map((key, value) => (
-                  <MenuItem
-                    key={key}
-                    menuName={key}
-                    iconClass={this.state.menus[key].iconClass}
-                    menuItems={this.state.menus[key].menuItems}
-                    selectedMenuName={this.state.selectedMenuName}
-                    //onSelectingMenu={this.onSelectingMenu}
-                  />
+                  <MenuItem key={key} name={key} data={this.state.menus[key]} />
                 ))}
               </ul>
             </div>

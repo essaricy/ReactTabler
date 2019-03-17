@@ -1,7 +1,7 @@
-import React from "react";
-import Header from "./header.component";
-import Menu from "./menu.component";
-import Footer from "./footer.component";
+import React from 'react';
+import Header from './header.component';
+import Menu from './menu.component';
+import Footer from './footer.component';
 
 export default class Page extends React.Component {
   render() {

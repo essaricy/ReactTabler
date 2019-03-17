@@ -1,16 +1,16 @@
-import React from "react";
-import "./login.component.css";
+import React from 'react';
+import './login.component.css';
 
-import * as Constants from "../../constants/result.constant";
-import LoginService from "../../services/login/login.service";
+import * as ApiConstants from '../../constants/api.constant';
+import LoginService from '../../services/login/login.service';
 
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
     // 200 for good, 401 for unauthorized and 500 for server error
     this.state = {
-      loginId: "200",
-      password: "#password",
+      loginId: '200',
+      password: '#password',
       loggingIn: false,
       error: null
     };
@@ -41,7 +41,7 @@ export default class Login extends React.Component {
                 <div className="card-body p-6">
                   <div
                     className={
-                      this.state.loggingIn ? "dimmer active" : "dimmer"
+                      this.state.loggingIn ? 'dimmer active' : 'dimmer'
                     }
                   >
                     <div className="loader" />
@@ -124,9 +124,9 @@ export default class Login extends React.Component {
       password: this.state.password
     };
     this.loginService.login(payload).then(response => {
-      if (response.code === Constants.Result.SUCCESS) {
-        console.log("Login successful");
-        this.props.history.push("/dashboard");
+      if (response.code === ApiConstants.Result.SUCCESS) {
+        console.log('Login successful');
+        this.props.history.push('/dashboard');
       } else {
         this.handleError(response.message);
       }

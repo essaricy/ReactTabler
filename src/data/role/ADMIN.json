@@ -1,0 +1,47 @@
+{
+  "Home": {
+    "iconClass": "fe fe-home",
+    "url": "/dashboard"
+  },
+  "Interface": {
+    "iconClass": "fe fe-box"
+  },
+  "Components": {
+    "iconClass": "fe fe-calendar",
+    "menuItems": [
+      {
+        "name": "Component 1"
+      },
+      {
+        "name": "Component 2"
+      }
+    ]
+  },
+  "Pages": {
+    "iconClass": "fe fe-file",
+    "menuItems": [
+      {
+        "name": "Table"
+      },
+      {
+        "name": "Carousal"
+      },
+      {
+        "name": "Profile"
+      },
+      {
+        "name": "Empty Page"
+      }
+    ]
+  },
+  "Forms": {
+    "iconClass": "fe fe-check-square",
+    "url": "/forms",
+    "menuItems": []
+  },
+  "Gallery": {
+    "iconClass": "fe fe-image",
+    "url": "/gallery",
+    "menuItems": []
+  }
+}
