@@ -1,5 +1,7 @@
 {
   "Home": {
+    "id": "Dashboard",
+    "title": "Dashboard",
     "iconClass": "fe fe-home",
     "url": "/dashboard"
   },
@@ -10,13 +12,16 @@
     "iconClass": "fe fe-calendar",
     "menuItems": [
       {
-        "name": "Table"
+        "id": "Components/Table",
+        "title": "Table"
       },
       {
-        "name": "Modal"
+        "id": "Components/Modal",
+        "title": "Modal"
       },
       {
-        "name": "Carousal"
+        "id": "Components/Carousal",
+        "title": "Carousal"
       }
     ]
   },
@@ -24,16 +29,20 @@
     "iconClass": "fe fe-file",
     "menuItems": [
       {
-        "name": "Dashboard"
+        "id": "Pages/Dashboard",
+        "title": "Dashboard"
       },
       {
-        "name": "Crud"
+        "id": "Pages/Crud",
+        "title": "Crud"
       },
       {
-        "name": "Profile"
+        "id": "Pages/Profile",
+        "title": "Profile"
       },
       {
-        "name": "Empty Page"
+        "id": "Pages/Empty Page",
+        "title": "Empty Page"
       }
     ]
   },

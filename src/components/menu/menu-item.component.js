@@ -1,16 +1,12 @@
-import React from 'react';
+import React from "react";
 import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
   UncontrolledDropdown
-} from 'reactstrap';
+} from "reactstrap";
 
 export default class MenuItem extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     let menuName = this.props.name;
     let menuData = this.props.data;
@@ -21,15 +17,18 @@ export default class MenuItem extends React.Component {
     if (hasMenuItems) {
       let dropdownItems = [];
       for (let menuItem of menuItems) {
-        let menuItemName = menuItem.name;
+        let menuItemId = menuItem.id;
+        let menuItemTitle = menuItem.title;
+
         dropdownItems.push(
           <DropdownItem
-            key={menuItemName}
-            name={menuItemName}
+            key={menuItemId}
             tag="a"
+            data-id={menuItemId}
+            data-title={menuItemTitle}
             onClick={this.props.onMenuChange}
           >
-            {menuItemName}
+            {menuItemTitle}
           </DropdownItem>
         );
       }
@@ -37,7 +36,7 @@ export default class MenuItem extends React.Component {
       dropdownMenu = (
         <UncontrolledDropdown setActiveFromChild>
           <DropdownToggle tag="a" className="nav-link">
-            <i className={'fe ' + menuData.iconClass} /> {menuName}
+            <i className={menuData.iconClass} /> {menuName}
           </DropdownToggle>
           <DropdownMenu className="dropdown-menu dropdown-menu-arrow">
             {dropdownItems}
@@ -45,12 +44,16 @@ export default class MenuItem extends React.Component {
         </UncontrolledDropdown>
       );
     } else {
+      let menuId = menuData.id;
+      let menuTitle = menuData.title;
       dropdownMenu = (
         <a
           href={menuData.url}
           aria-haspopup="false"
           className="nav-link"
           aria-expanded="false"
+          data-id={menuId}
+          data-title={menuTitle}
         >
           <i className={menuData.iconClass} /> {menuName}
         </a>

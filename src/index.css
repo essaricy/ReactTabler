@@ -13836,7 +13836,7 @@ Dimmer
 }
 
 .dimmer.active .dimmer-content {
-  opacity: .04;
+  opacity: .18;
   pointer-events: none;
 }
 
