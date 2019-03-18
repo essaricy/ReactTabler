@@ -1,6 +1,6 @@
 export const Pages = {
   Components: {
-    Table: "Components/Table",
+    DataTable: "Components/DataTable",
     Modal: "Components/Modal",
     Carousal: "Components/Carousal"
   },

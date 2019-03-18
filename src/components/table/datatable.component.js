@@ -1,28 +1,26 @@
 import React from "react";
 
-export default class Table extends React.Component {
+export default class DataTable extends React.Component {
   render() {
+    console.log("Rendering table with headers: " + this.props.headerNames);
+    let title = this.props.title;
+    let headerNames = this.props.headerNames;
+    let tableHeaderElements = [];
+
+    for (let headerName of headerNames) {
+      tableHeaderElements.push(<th>{headerName}</th>);
+    }
     return (
       <div className="row">
         <div className="col-12">
           <div className="card">
             <div className="card-header">
-              <h3 className="card-title">Invoices</h3>
+              <h3 className="card-title">{title}</h3>
             </div>
             <div className="table-responsive">
               <table className="table card-table table-vcenter text-nowrap">
                 <thead>
-                  <tr>
-                    <th className="w-1">No.</th>
-                    <th>Invoice Subject</th>
-                    <th>Client</th>
-                    <th>VAT No.</th>
-                    <th>Created</th>
-                    <th>Status</th>
-                    <th>Price</th>
-                    <th />
-                    <th />
-                  </tr>
+                  <tr>{tableHeaderElements}</tr>
                 </thead>
                 <tbody>
                   <tr>
@@ -41,24 +39,8 @@ export default class Table extends React.Component {
                       <span className="status-icon bg-success" /> Paid
                     </td>
                     <td>$887</td>
-                    <td className="text-right">
-                      <a
-                        href="javascript:void(0)"
-                        className="btn btn-secondary btn-sm"
-                      >
-                        Manage
-                      </a>
-                      <div className="dropdown">
-                        <button
-                          className="btn btn-secondary btn-sm dropdown-toggle"
-                          data-toggle="dropdown"
-                        >
-                          Actions
-                        </button>
-                      </div>
-                    </td>
                     <td>
-                      <a className="icon" href="javascript:void(0)">
+                      <a className="icon" href="/dashboard">
                         <i className="fe fe-edit" />
                       </a>
                     </td>
@@ -79,24 +61,8 @@ export default class Table extends React.Component {
                       <span className="status-icon bg-warning" /> Pending
                     </td>
                     <td>$1200</td>
-                    <td className="text-right">
-                      <a
-                        href="javascript:void(0)"
-                        className="btn btn-secondary btn-sm"
-                      >
-                        Manage
-                      </a>
-                      <div className="dropdown">
-                        <button
-                          className="btn btn-secondary btn-sm dropdown-toggle"
-                          data-toggle="dropdown"
-                        >
-                          Actions
-                        </button>
-                      </div>
-                    </td>
                     <td>
-                      <a className="icon" href="javascript:void(0)">
+                      <a className="icon" href="/dashboard">
                         <i className="fe fe-edit" />
                       </a>
                     </td>
@@ -117,24 +83,8 @@ export default class Table extends React.Component {
                       <span className="status-icon bg-warning" /> Pending
                     </td>
                     <td>$534</td>
-                    <td className="text-right">
-                      <a
-                        href="javascript:void(0)"
-                        className="btn btn-secondary btn-sm"
-                      >
-                        Manage
-                      </a>
-                      <div className="dropdown">
-                        <button
-                          className="btn btn-secondary btn-sm dropdown-toggle"
-                          data-toggle="dropdown"
-                        >
-                          Actions
-                        </button>
-                      </div>
-                    </td>
                     <td>
-                      <a className="icon" href="javascript:void(0)">
+                      <a className="icon" href="/dashboard">
                         <i className="fe fe-edit" />
                       </a>
                     </td>
@@ -156,24 +106,8 @@ export default class Table extends React.Component {
                       Weeks
                     </td>
                     <td>$1500</td>
-                    <td className="text-right">
-                      <a
-                        href="javascript:void(0)"
-                        className="btn btn-secondary btn-sm"
-                      >
-                        Manage
-                      </a>
-                      <div className="dropdown">
-                        <button
-                          className="btn btn-secondary btn-sm dropdown-toggle"
-                          data-toggle="dropdown"
-                        >
-                          Actions
-                        </button>
-                      </div>
-                    </td>
                     <td>
-                      <a className="icon" href="javascript:void(0)">
+                      <a className="icon" href="/dashboard">
                         <i className="fe fe-edit" />
                       </a>
                     </td>
@@ -194,24 +128,8 @@ export default class Table extends React.Component {
                       <span className="status-icon bg-danger" /> Paid Today
                     </td>
                     <td>$648</td>
-                    <td className="text-right">
-                      <a
-                        href="javascript:void(0)"
-                        className="btn btn-secondary btn-sm"
-                      >
-                        Manage
-                      </a>
-                      <div className="dropdown">
-                        <button
-                          className="btn btn-secondary btn-sm dropdown-toggle"
-                          data-toggle="dropdown"
-                        >
-                          Actions
-                        </button>
-                      </div>
-                    </td>
                     <td>
-                      <a className="icon" href="javascript:void(0)">
+                      <a className="icon" href="/dashboard">
                         <i className="fe fe-edit" />
                       </a>
                     </td>
@@ -233,24 +151,8 @@ export default class Table extends React.Component {
                       Weeks
                     </td>
                     <td>$300</td>
-                    <td className="text-right">
-                      <a
-                        href="javascript:void(0)"
-                        className="btn btn-secondary btn-sm"
-                      >
-                        Manage
-                      </a>
-                      <div className="dropdown">
-                        <button
-                          className="btn btn-secondary btn-sm dropdown-toggle"
-                          data-toggle="dropdown"
-                        >
-                          Actions
-                        </button>
-                      </div>
-                    </td>
                     <td>
-                      <a className="icon" href="javascript:void(0)">
+                      <a className="icon" href="/dashboard">
                         <i className="fe fe-edit" />
                       </a>
                     </td>

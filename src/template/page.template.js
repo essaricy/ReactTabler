@@ -1,24 +1,21 @@
 import React from "react";
 
 import { Pages } from "../constants/page.constant";
+import * as TableMock from "../data/mock/table.mock";
+import * as PageDefault from "../data/page.default";
 
 import PageHeader from "./page-header.template";
 import PageFooter from "./page-footer.template";
 import PageMenu from "./page-menu.template";
 import Dashboard from "../pages/dashboard/dashboard.page";
 import Crud from "../pages/crud/crud.page";
-import Table from "../components/table/table.component";
+import DataTable from "../components/table/datatable.component";
 
 export default class Page extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentView: {
-        id: "Dashboard",
-        title: "Dashboard",
-        iconClass: "fe fe-home",
-        url: "/dashboard"
-      }
+      currentView: PageDefault.DEFAULT_VIEW
     };
     this.onMenuChange = this.onMenuChange.bind(this);
   }
@@ -33,14 +30,21 @@ export default class Page extends React.Component {
   }
 
   render() {
-    let currentViewId = this.state.currentView.id;
-    let currentViewTitle = this.state.currentView.title;
+    let currentView = this.state.currentView;
+    let currentViewId = currentView.id;
+    let currentViewTitle = currentView.title;
 
     let currentPage = null;
+    console.log("currentViewId=" + currentViewId);
     if (currentViewId === Pages.Pages.Crud) {
       currentPage = <Crud />;
-    } else if (currentViewId === Pages.Components.Table) {
-      currentPage = <Table />;
+    } else if (currentViewId === Pages.Components.DataTable) {
+      currentPage = (
+        <DataTable
+          title={TableMock.TITLE}
+          headerNames={TableMock.HEADER_NAMES}
+        />
+      );
     } else {
       currentPage = <Dashboard />;
     }
@@ -52,8 +56,8 @@ export default class Page extends React.Component {
           <PageMenu onMenuChange={this.onMenuChange} />
           <div className="my-3 my-md-5">
             <div className="container">
-              <div class="page-header">
-                <h1 class="page-title">{currentViewTitle}</h1>
+              <div className="page-header">
+                <h1 className="page-title">{currentViewTitle}</h1>
               </div>
               {currentPage}
             </div>

@@ -12,8 +12,8 @@
     "iconClass": "fe fe-calendar",
     "menuItems": [
       {
-        "id": "Components/Table",
-        "title": "Table"
+        "id": "Components/DataTable",
+        "title": "Data Table"
       },
       {
         "id": "Components/Modal",
