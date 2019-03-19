@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 export default class DataTable extends React.Component {
   render() {
-    console.log("Rendering table with headers: " + this.props.headerNames);
+    console.log('Rendering table with headers: ' + this.props.headerNames);
     let title = this.props.title;
     let headerNames = this.props.headerNames;
     let tableHeaderElements = [];

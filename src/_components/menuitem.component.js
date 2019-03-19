@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
   UncontrolledDropdown
-} from "reactstrap";
+} from 'reactstrap';
 
-export default class MenuItem extends React.Component {
+export default class MenuItemComponent extends React.Component {
   render() {
     let menuName = this.props.name;
     let menuData = this.props.data;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class PageHeader extends React.Component {
+export default class HeaderContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};

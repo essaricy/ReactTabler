@@ -1,17 +1,17 @@
 import React from 'react';
 
-import * as AppConstants from '../constants/app.constant';
+import * as AppConstants from '../_constants/app.constant';
 
-import Menu from '../components/menu/menu.component';
-import MenuService from '../services/page/menu.service';
+import MenuComponent from '../_components/menu.component';
+import MenuService from '../_services/menu.service';
 
-export default class PageMenu extends React.Component {
+export default class MenuContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       menus: {}
     };
-    this.menuService = new MenuService({});
+    this.menuService = new MenuService();
   }
 
   componentDidMount() {
@@ -40,7 +40,7 @@ export default class PageMenu extends React.Component {
               </form>
             </div>
             <div className="col-lg order-lg-first">
-              <Menu
+              <MenuComponent
                 data={this.state.menus}
                 onMenuChange={this.props.onMenuChange}
               />

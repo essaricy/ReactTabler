@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 
-import MenuItem from "./menu-item.component";
+import MenuItemComponent from './menuitem.component';
 
-export default class Menu extends React.Component {
+export default class MenuComponent extends React.Component {
   render() {
     return (
       <ul className="nav nav-tabs border-0 flex-column flex-lg-row">
         {Object.keys(this.props.data).map(key => (
-          <MenuItem
+          <MenuItemComponent
             key={key}
             name={key}
             data={this.props.data[key]}

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import * as AppConstants from '../../constants/app.constant';
-import ADMIN_ROLES from '../../data/role/ADMIN.json';
+import * as AppConstants from '../_constants/app.constant';
+import ADMIN_ROLES from '../_data/admin.role.json';
 
 export default class MenuService extends React.Component {
   accessList(role) {

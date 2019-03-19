@@ -1,16 +1,15 @@
-import React from "react";
-import { Route, BrowserRouter } from "react-router-dom";
+import React from 'react';
+import { Route, BrowserRouter } from 'react-router-dom';
+import './App.css';
 
-import "./App.css";
-import Login from "./pages/login/login.component";
-import Page from "./template/page.template";
-
-import LoginService from "./services/login/login.service";
+import LoginScene from './_scenes/login.scene';
+import PageContainer from './_containers/page.container';
+import LoginService from './_services/login.service';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.loginService = new LoginService({});
+    this.loginService = new LoginService();
     this.state = { isAutenticated: this.loginService.isUserAuthenticated() };
     this.onLoginSuccessful = this.onLoginSuccessful.bind(this);
     this.onLoginFailure = this.onLoginFailure.bind(this);
@@ -37,10 +36,10 @@ class App extends React.Component {
           path="/"
           render={props => {
             if (this.state.isAutenticated) {
-              return <Page onLogout={this.onLogout} {...this.props} />;
+              return <PageContainer onLogout={this.onLogout} {...this.props} />;
             } else {
               return (
-                <Login
+                <LoginScene
                   onLoginSuccessful={this.onLoginSuccessful}
                   {...this.props}
                 />

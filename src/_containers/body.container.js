@@ -1,21 +1,19 @@
-import React from "react";
+import React from 'react';
 import {
   BrowserRouter,
   //HashRouter,
   //Switch,
   Route
   //Link
-} from "react-router-dom";
+} from 'react-router-dom';
 
-import PageMenu from "./page-menu.template";
-import * as TableMock from "../data/mock/table.mock";
-import * as PageDefault from "../data/page.default";
+import MenuContainer from './menu.container';
+import * as PageDefault from '../_data/page.default';
 
-import Crud from "../pages/crud.page";
-import Profile from "../pages/profile.page";
-import DataTable from "../components/table/datatable.component";
+import CrudScene from '../_scenes/crud.scene';
+import ProfileScene from '../_scenes/profile.scene';
 
-export default class PageBody extends React.Component {
+export default class BodyContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,10 +30,10 @@ export default class PageBody extends React.Component {
   }
 
   onMenuChange(e) {
-    let id = e.target.getAttribute("data-id");
-    let title = e.target.getAttribute("data-title");
-    let url = e.target.getAttribute("data-url");
-    console.log("Requested for a new view: " + id + " with URL: " + url);
+    let id = e.target.getAttribute('data-id');
+    let title = e.target.getAttribute('data-title');
+    let url = e.target.getAttribute('data-url');
+    console.log('Requested for a new view: ' + id + ' with URL: ' + url);
     this.setState({ id: id, title: title, url: url });
     //this.props.history.push(url);
   }
@@ -43,17 +41,17 @@ export default class PageBody extends React.Component {
   render() {
     return (
       <div>
-        <PageMenu onMenuChange={this.onMenuChange} {...this.props} />
+        <MenuContainer onMenuChange={this.onMenuChange} {...this.props} />
         <BrowserRouter>
           <div>
             <Route
               exact
               path="/"
               render={props => {
-                if (this.state.id === "Pages/Crud") {
-                  return <Crud {...this.props} />;
+                if (this.state.id === 'Pages/Crud') {
+                  return <CrudScene {...this.props} />;
                 } else {
-                  return <Profile {...this.props} />;
+                  return <ProfileScene {...this.props} />;
                 }
               }}
             />

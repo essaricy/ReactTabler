@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class PageFooter extends React.Component {
+export default class FooterContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
