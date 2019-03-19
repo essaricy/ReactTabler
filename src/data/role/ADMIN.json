@@ -33,11 +33,6 @@
     "iconClass": "fe fe-file",
     "menuItems": [
       {
-        "id": "Pages/Dashboard",
-        "title": "Dashboard",
-        "url": "/pages/dashboard"
-      },
-      {
         "id": "Pages/Crud",
         "title": "Crud",
         "url": "/pages/crud"

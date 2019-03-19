@@ -37,9 +37,14 @@ class App extends React.Component {
           path="/"
           render={props => {
             if (this.state.isAutenticated) {
-              return <Page onLogout={this.onLogout} />;
+              return <Page onLogout={this.onLogout} {...this.props} />;
             } else {
-              return <Login onLoginSuccessful={this.onLoginSuccessful} />;
+              return (
+                <Login
+                  onLoginSuccessful={this.onLoginSuccessful}
+                  {...this.props}
+                />
+              );
             }
           }}
         />
