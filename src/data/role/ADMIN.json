@@ -6,22 +6,26 @@
     "url": "/dashboard"
   },
   "Interface": {
-    "iconClass": "fe fe-box"
+    "iconClass": "fe fe-box",
+    "url": "/interface"
   },
   "Components": {
     "iconClass": "fe fe-calendar",
     "menuItems": [
       {
         "id": "Components/DataTable",
-        "title": "Data Table"
+        "title": "Data Table",
+        "url": "/component/datatable"
       },
       {
         "id": "Components/Modal",
-        "title": "Modal"
+        "title": "Modal",
+        "url": "/component/modal"
       },
       {
         "id": "Components/Carousal",
-        "title": "Carousal"
+        "title": "Carousal",
+        "url": "/component/carousal"
       }
     ]
   },
@@ -30,30 +34,32 @@
     "menuItems": [
       {
         "id": "Pages/Dashboard",
-        "title": "Dashboard"
+        "title": "Dashboard",
+        "url": "/pages/dashboard"
       },
       {
         "id": "Pages/Crud",
-        "title": "Crud"
+        "title": "Crud",
+        "url": "/pages/crud"
       },
       {
         "id": "Pages/Profile",
-        "title": "Profile"
+        "title": "Profile",
+        "url": "/pages/profile"
       },
       {
         "id": "Pages/Empty Page",
-        "title": "Empty Page"
+        "title": "Empty Page",
+        "url": "/pages/blank"
       }
     ]
   },
   "Forms": {
     "iconClass": "fe fe-check-square",
-    "url": "/forms",
-    "menuItems": []
+    "url": "/forms"
   },
   "Gallery": {
     "iconClass": "fe fe-image",
-    "url": "/gallery",
-    "menuItems": []
+    "url": "/gallery"
   }
 }

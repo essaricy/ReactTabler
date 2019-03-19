@@ -1,12 +1,13 @@
 import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import { Pages } from "../constants/page.constant";
 import * as TableMock from "../data/mock/table.mock";
 import * as PageDefault from "../data/page.default";
 
 import PageHeader from "./page-header.template";
+import PageContainer from "./page-container.template";
 import PageFooter from "./page-footer.template";
-import PageMenu from "./page-menu.template";
 import Dashboard from "../pages/dashboard/dashboard.page";
 import Crud from "../pages/crud/crud.page";
 import DataTable from "../components/table/datatable.component";
@@ -23,6 +24,7 @@ export default class Page extends React.Component {
   onMenuChange(e) {
     let id = e.target.getAttribute("data-id");
     let title = e.target.getAttribute("data-title");
+    let url = e.target.getAttribute("data-url");
     console.log("Requested for a new view: " + id);
     this.setState({
       currentView: { id: id, title: title }
@@ -53,15 +55,7 @@ export default class Page extends React.Component {
       <div>
         <div className="page-main">
           <PageHeader />
-          <PageMenu onMenuChange={this.onMenuChange} />
-          <div className="my-3 my-md-5">
-            <div className="container">
-              <div className="page-header">
-                <h1 className="page-title">{currentViewTitle}</h1>
-              </div>
-              {currentPage}
-            </div>
-          </div>
+          <PageContainer />
           <PageFooter />
         </div>
       </div>

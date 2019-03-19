@@ -125,7 +125,7 @@ export default class Login extends React.Component {
     };
     this.loginService.login(payload).then(response => {
       if (response.code === ApiConstants.Result.SUCCESS) {
-        this.props.history.push("/dashboard");
+        this.props.onLoginSuccessful();
       } else {
         this.handleError(response.message);
       }

@@ -26,6 +26,7 @@ export default class MenuItem extends React.Component {
             tag="a"
             data-id={menuItemId}
             data-title={menuItemTitle}
+            data-url={menuItem.url}
             onClick={this.props.onMenuChange}
           >
             {menuItemTitle}
@@ -54,6 +55,7 @@ export default class MenuItem extends React.Component {
           aria-expanded="false"
           data-id={menuId}
           data-title={menuTitle}
+          data-url={menuData.url}
         >
           <i className={menuData.iconClass} /> {menuName}
         </a>
