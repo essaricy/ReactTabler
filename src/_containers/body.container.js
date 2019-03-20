@@ -1,8 +1,9 @@
 import React from 'react';
 import {
   BrowserRouter,
+  Router,
   //HashRouter,
-  //Switch,
+  Switch,
   Route
   //Link
 } from 'react-router-dom';
@@ -10,6 +11,9 @@ import {
 import MenuContainer from './menu.container';
 import * as PageDefault from '../_data/page.default';
 
+import FormsScene from '../_scenes/forms.scene';
+import GalleryScene from '../_scenes/gallery.scene';
+import InterfaceScene from '../_scenes/interface.scene';
 import CrudScene from '../_scenes/crud.scene';
 import ProfileScene from '../_scenes/profile.scene';
 
@@ -34,7 +38,7 @@ export default class BodyContainer extends React.Component {
     let title = e.target.getAttribute('data-title');
     let url = e.target.getAttribute('data-url');
     console.log('Requested for a new view: ' + id + ' with URL: ' + url);
-    this.setState({ id: id, title: title, url: url });
+    //this.setState({ id: id, title: title, url: url });
     //this.props.history.push(url);
   }
 
@@ -42,9 +46,7 @@ export default class BodyContainer extends React.Component {
     return (
       <div>
         <MenuContainer onMenuChange={this.onMenuChange} {...this.props} />
-        <BrowserRouter>
-          <div>
-            <Route
+        {/* <Route
               exact
               path="/"
               render={props => {
@@ -54,59 +56,45 @@ export default class BodyContainer extends React.Component {
                   return <ProfileScene {...this.props} />;
                 }
               }}
-            />
-            {/* <Route
-              exact
-              path="/pages/crud"
-              render={props => {
-                return <Crud {...this.props} />;
-              }}
-            />
-            <Route
-              exact
-              path="/pages/profile"
-              render={props => {
-                return <Profile {...this.props} />;
-              }}
             /> */}
-          </div>
-        </BrowserRouter>
+        <Switch>
+          <Route
+            exact
+            path="/forms"
+            render={props => {
+              return <FormsScene {...this.props} />;
+            }}
+          />
+          <Route
+            exact
+            path="/gallery"
+            render={props => {
+              return <GalleryScene {...this.props} />;
+            }}
+          />
+          <Route
+            exact
+            path="/interface"
+            render={props => {
+              return <InterfaceScene {...this.props} />;
+            }}
+          />
+          <Route
+            exact
+            path="/pages/crud"
+            render={props => {
+              return <CrudScene {...this.props} />;
+            }}
+          />
+          <Route
+            exact
+            path="/pages/profile"
+            render={props => {
+              return <ProfileScene {...this.props} />;
+            }}
+          />
+        </Switch>
       </div>
-
-      // <BrowserRouter>
-      //   <div>
-      //     <PageMenu onMenuChange={this.onMenuChange} {...this.props} />
-      //     <Route
-      //       exact
-      //       path="/pages/dashboard"
-      //       render={props => {
-      //         return <Dashboard {...this.props} />;
-      //       }}
-      //     />
-      //   </div>
-      // </BrowserRouter>
-      // <HashRouter>
-      //   <div>
-      //     <PageMenu onMenuChange={this.onMenuChange} />
-      //     <div className="my-3 my-md-5">
-      //       <div className="container">
-      //         <div className="page-header">
-      //           <h1 className="page-title">{this.state.title}</h1>
-      //         </div>
-      //         <Route
-      //           path="/component/table"
-      //           component={
-      //             <DataTable
-      //               title={TableMock.TITLE}
-      //               headerNames={TableMock.HEADER_NAMES}
-      //             />
-      //           }
-      //         />
-      //         <Route path="/pages/crud" component={<Crud />} />
-      //       </div>
-      //     </div>
-      //   </div>
-      // </HashRouter>
     );
   }
 }

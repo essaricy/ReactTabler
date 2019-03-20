@@ -30,24 +30,25 @@ class App extends React.Component {
 
   render() {
     return (
-      <BrowserRouter>
-        <Route
-          exact
-          path="/"
-          render={props => {
-            if (this.state.isAutenticated) {
-              return <PageContainer onLogout={this.onLogout} {...this.props} />;
-            } else {
-              return (
-                <LoginScene
-                  onLoginSuccessful={this.onLoginSuccessful}
-                  {...this.props}
-                />
-              );
-            }
-          }}
-        />
-      </BrowserRouter>
+      <PageContainer onLogout={this.onLogout} {...this.props} />
+      // <BrowserRouter>
+      //   <Route
+      //     exact
+      //     path="/"
+      //     render={props => {
+      //       if (this.state.isAutenticated) {
+      //         return <PageContainer onLogout={this.onLogout} {...this.props} />;
+      //       } else {
+      //         return (
+      //           <LoginScene
+      //             onLoginSuccessful={this.onLoginSuccessful}
+      //             {...this.props}
+      //           />
+      //         );
+      //       }
+      //     }}
+      //   />
+      // </BrowserRouter>
     );
   }
 }

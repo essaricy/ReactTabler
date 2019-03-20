@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   DropdownToggle,
   DropdownMenu,
@@ -14,6 +15,17 @@ export default class MenuItemComponent extends React.Component {
     let hasMenuItems = menuData.menuItems && menuItems.length !== 0;
 
     let dropdownMenu;
+    // if (!hasMenuItems) {
+    //   dropdownMenu = (<Link to={menuData.url} className="nav-link">
+    //     <i className={menuData.iconClass} /> {menuName}
+    //   </Link>);
+    // }
+    // return (
+    //   <li className="nav-item" key={this.props.menuName}>
+    //     {dropdownMenu}
+    //   </li>
+    // );
+
     if (hasMenuItems) {
       let dropdownItems = [];
       for (let menuItem of menuItems) {
@@ -21,16 +33,18 @@ export default class MenuItemComponent extends React.Component {
         let menuItemTitle = menuItem.title;
 
         dropdownItems.push(
-          <DropdownItem
-            key={menuItemId}
-            tag="a"
-            data-id={menuItemId}
-            data-title={menuItemTitle}
-            data-url={menuItem.url}
-            onClick={this.props.onMenuChange}
-          >
+          <Link to={menuItem.url} className="dropdown-item">
             {menuItemTitle}
-          </DropdownItem>
+          </Link>
+
+          // <DropdownItem
+          //   key={menuItemId}
+          //   onClick={this.props.onMenuChange}
+          // >
+          //   <Link to={menuItem.url} className="dropdown-item">
+          //     <i className={menuItem.iconClass} /> {menuItemTitle}
+          //   </Link>
+          // </DropdownItem>
         );
       }
 
@@ -48,17 +62,9 @@ export default class MenuItemComponent extends React.Component {
       let menuId = menuData.id;
       let menuTitle = menuData.title;
       dropdownMenu = (
-        <a
-          href={menuData.url}
-          aria-haspopup="false"
-          className="nav-link"
-          aria-expanded="false"
-          data-id={menuId}
-          data-title={menuTitle}
-          data-url={menuData.url}
-        >
+        <Link to={menuData.url} className="nav-link">
           <i className={menuData.iconClass} /> {menuName}
-        </a>
+        </Link>
       );
     }
     return (
