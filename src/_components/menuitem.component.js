@@ -1,13 +1,20 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import {
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown
-} from 'reactstrap';
+import React from "react";
+import { Link } from "react-router-dom";
+import { DropdownToggle, DropdownMenu, UncontrolledDropdown } from "reactstrap";
 
 export default class MenuItemComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { selectedMenuId: "" };
+    this.onMenuChange = this.onMenuChange.bind(this);
+  }
+
+  onMenuChange(e) {
+    let menuId = e.target.getAttribute("data-id");
+    console.log("Selected Menu Id " + menuId);
+    this.state.selectedMenuId = menuId;
+  }
+
   render() {
     let menuName = this.props.name;
     let menuData = this.props.data;
@@ -15,36 +22,22 @@ export default class MenuItemComponent extends React.Component {
     let hasMenuItems = menuData.menuItems && menuItems.length !== 0;
 
     let dropdownMenu;
-    // if (!hasMenuItems) {
-    //   dropdownMenu = (<Link to={menuData.url} className="nav-link">
-    //     <i className={menuData.iconClass} /> {menuName}
-    //   </Link>);
-    // }
-    // return (
-    //   <li className="nav-item" key={this.props.menuName}>
-    //     {dropdownMenu}
-    //   </li>
-    // );
-
     if (hasMenuItems) {
       let dropdownItems = [];
       for (let menuItem of menuItems) {
-        let menuItemId = menuItem.id;
         let menuItemTitle = menuItem.title;
 
+        let active = this.state.selectedMenuId === menuItem.id;
         dropdownItems.push(
-          <Link to={menuItem.url} className="dropdown-item">
+          <Link
+            data-id={menuItem.id}
+            key={menuItem.id}
+            to={menuItem.url}
+            className={active ? "dropdown-item active" : "dropdown-item"}
+            onClick={this.onMenuChange}
+          >
             {menuItemTitle}
           </Link>
-
-          // <DropdownItem
-          //   key={menuItemId}
-          //   onClick={this.props.onMenuChange}
-          // >
-          //   <Link to={menuItem.url} className="dropdown-item">
-          //     <i className={menuItem.iconClass} /> {menuItemTitle}
-          //   </Link>
-          // </DropdownItem>
         );
       }
 
@@ -59,8 +52,6 @@ export default class MenuItemComponent extends React.Component {
         </UncontrolledDropdown>
       );
     } else {
-      let menuId = menuData.id;
-      let menuTitle = menuData.title;
       dropdownMenu = (
         <Link to={menuData.url} className="nav-link">
           <i className={menuData.iconClass} /> {menuName}
