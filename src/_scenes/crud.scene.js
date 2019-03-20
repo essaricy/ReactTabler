@@ -1,7 +1,8 @@
-import React from 'react';
+import React from "react";
+import AbstractScene from "./abstract.scene";
 
-export default class CrudScene extends React.Component {
+export default class CrudScene extends AbstractScene {
   render() {
-    return <div>This is CRUD page</div>;
+    return super.getContent(<div>This is CRUD page</div>);
   }
 }

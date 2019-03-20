@@ -1,10 +1,10 @@
-import React from 'react';
-import { Route, BrowserRouter } from 'react-router-dom';
-import './App.css';
+import React from "react";
+import { withRouter } from "react-router-dom";
+import "./App.css";
 
-import LoginScene from './_scenes/login.scene';
-import PageContainer from './_containers/page.container';
-import LoginService from './_services/login.service';
+import LoginScene from "./_scenes/login.scene";
+import PageContainer from "./_containers/page.container";
+import LoginService from "./_services/login.service";
 
 class App extends React.Component {
   constructor(props) {
@@ -29,28 +29,14 @@ class App extends React.Component {
   }
 
   render() {
-    return (
-      <PageContainer onLogout={this.onLogout} {...this.props} />
-      // <BrowserRouter>
-      //   <Route
-      //     exact
-      //     path="/"
-      //     render={props => {
-      //       if (this.state.isAutenticated) {
-      //         return <PageContainer onLogout={this.onLogout} {...this.props} />;
-      //       } else {
-      //         return (
-      //           <LoginScene
-      //             onLoginSuccessful={this.onLoginSuccessful}
-      //             {...this.props}
-      //           />
-      //         );
-      //       }
-      //     }}
-      //   />
-      // </BrowserRouter>
-    );
+    let landingPage;
+    if (this.state.isAutenticated) {
+      landingPage = <PageContainer onLogout={this.onLogout} />;
+    } else {
+      landingPage = <LoginScene onLoginSuccessful={this.onLoginSuccessful} />;
+    }
+    return <div>{landingPage}</div>;
   }
 }
 
-export default App;
+export default withRouter(props => <App {...props} />);

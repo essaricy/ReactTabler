@@ -1,9 +1,9 @@
 {
   "Home": {
-    "id": "Dashboard",
-    "title": "Dashboard",
+    "id": "Home",
+    "title": "Home",
     "iconClass": "fe fe-home",
-    "url": "/dashboard"
+    "url": "/"
   },
   "Interface": {
     "iconClass": "fe fe-box",
@@ -35,17 +35,17 @@
       {
         "id": "Pages/Crud",
         "title": "Crud",
-        "url": "/pages/crud"
+        "url": "/page/crud"
       },
       {
         "id": "Pages/Profile",
         "title": "Profile",
-        "url": "/pages/profile"
+        "url": "/page/profile"
       },
       {
         "id": "Pages/Empty Page",
         "title": "Empty Page",
-        "url": "/pages/blank"
+        "url": "/page/blank"
       }
     ]
   },

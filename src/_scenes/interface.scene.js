@@ -1,7 +1,8 @@
-import React from 'react';
+import React from "react";
+import AbstractScene from "./abstract.scene";
 
-export default class InterfaceScene extends React.Component {
+export default class InterfaceScene extends AbstractScene {
   render() {
-    return <div>This is Interface page</div>;
+    return super.getContent(<div>This is Interface page</div>);
   }
 }

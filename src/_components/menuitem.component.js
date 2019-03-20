@@ -1,20 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { DropdownToggle, DropdownMenu, UncontrolledDropdown } from "reactstrap";
+import {
+  DropdownToggle,
+  DropdownMenu,
+  UncontrolledDropdown,
+  DropdownItem
+} from "reactstrap";
 
 export default class MenuItemComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { selectedMenuId: "" };
-    this.onMenuChange = this.onMenuChange.bind(this);
-  }
-
-  onMenuChange(e) {
-    let menuId = e.target.getAttribute("data-id");
-    console.log("Selected Menu Id " + menuId);
-    this.state.selectedMenuId = menuId;
-  }
-
   render() {
     let menuName = this.props.name;
     let menuData = this.props.data;
@@ -27,17 +20,16 @@ export default class MenuItemComponent extends React.Component {
       for (let menuItem of menuItems) {
         let menuItemTitle = menuItem.title;
 
-        let active = this.state.selectedMenuId === menuItem.id;
         dropdownItems.push(
-          <Link
-            data-id={menuItem.id}
+          <DropdownItem
             key={menuItem.id}
-            to={menuItem.url}
-            className={active ? "dropdown-item active" : "dropdown-item"}
-            onClick={this.onMenuChange}
+            data-id={menuItem.id}
+            className="dropdown-item"
           >
-            {menuItemTitle}
-          </Link>
+            <Link to={menuItem.url} style={{ color: "#6e7687" }}>
+              {menuItemTitle}
+            </Link>
+          </DropdownItem>
         );
       }
 

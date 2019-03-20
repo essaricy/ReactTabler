@@ -1,7 +1,8 @@
-import React from 'react';
+import React from "react";
+import AbstractScene from "./abstract.scene";
 
-export default class FormsScene extends React.Component {
+export default class FormsScene extends AbstractScene {
   render() {
-    return <div>This is Forms page</div>;
+    return super.getContent(<div>This is Forms page</div>);
   }
 }

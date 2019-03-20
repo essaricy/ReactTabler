@@ -1,7 +1,8 @@
-import React from 'react';
+import React from "react";
+import AbstractScene from "./abstract.scene";
 
-export default class GalleryScene extends React.Component {
+export default class GalleryScene extends AbstractScene {
   render() {
-    return <div>This is Gallery page</div>;
+    return super.getContent(<div>This is Gallery page</div>);
   }
 }
