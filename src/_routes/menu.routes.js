@@ -3,7 +3,8 @@ import { Switch, Route } from "react-router-dom";
 
 import CrudScene from "../_scenes/crud.scene";
 import CarousalScene from "../_scenes/carousal.scene";
-import DataTableScene from "../_scenes/datatable.scene";
+import ActionTableScene from "../_scenes/actiontable.scene";
+import SimpleTableScene from "../_scenes/simpletable.scene";
 import FormsScene from "../_scenes/forms.scene";
 import GalleryScene from "../_scenes/gallery.scene";
 import HomeScene from "../_scenes/home.scene";
@@ -45,9 +46,16 @@ export default class MenuRoutes extends React.Component {
         />
         <Route
           exact
-          path="/component/datatable"
+          path="/component/simpletable"
           render={props => {
-            return <DataTableScene {...this.props} title="Data Table" />;
+            return <SimpleTableScene {...this.props} title="Simple Table" />;
+          }}
+        />
+        <Route
+          exact
+          path="/component/actiontable"
+          render={props => {
+            return <ActionTableScene {...this.props} title="Action Table" />;
           }}
         />
         <Route

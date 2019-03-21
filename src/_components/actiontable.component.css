@@ -1,0 +1,23 @@
+#NoDataCell {
+  background-color: #f8f9fa;
+}
+#ERRORROW {
+  color: #ff0000;
+}
+.icon {
+  color: #9aa0ac !important;
+}
+
+.icon i {
+  vertical-align: -1px;
+  margin-left: 5px;
+}
+
+a.icon {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a.icon:hover {
+  color: #495057 !important;
+}

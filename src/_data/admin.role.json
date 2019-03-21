@@ -13,6 +13,16 @@
     "iconClass": "fe fe-calendar",
     "menuItems": [
       {
+        "id": "Components/SimpleTable",
+        "title": "Simple Table",
+        "url": "/component/simpletable"
+      },
+      {
+        "id": "Components/ActionTable",
+        "title": "Action Table",
+        "url": "/component/actiontable"
+      },
+      {
         "id": "Components/DataTable",
         "title": "Data Table",
         "url": "/component/datatable"
