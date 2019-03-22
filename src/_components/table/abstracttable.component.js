@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import "./simpletable.component.css";
 
 import CardComponent from "../card/card.component";
