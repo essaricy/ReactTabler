@@ -1,7 +1,7 @@
 import React from "react";
 import AbstractScene from "./abstract.scene";
 
-import SimpleTable from "../_components/simpletable.component";
+import SimpleTable from "../_components/table/simpletable.component";
 import * as TableMock from "../_data/table.mock";
 
 export default class DataTableScene extends AbstractScene {

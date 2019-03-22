@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import * as AppConstants from '../_constants/app.constant';
+import * as AppConstants from "../_constants/app.constant";
 
-import MenuComponent from '../_components/menu.component';
-import MenuService from '../_services/menu.service';
+import MenuComponent from "../_components/menu/menu.component";
+import MenuService from "../_services/menu.service";
 
 export default class MenuContainer extends React.Component {
   constructor(props) {

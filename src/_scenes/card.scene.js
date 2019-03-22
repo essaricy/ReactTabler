@@ -14,7 +14,7 @@ export default class CardScene extends AbstractScene {
         <Card>
           <CardHeader title="Card Title Here">
             <CardHeaderTools>
-              <a href="#" className="card-options-collapse">
+              <a href="/" className="card-options-collapse">
                 <i className="fe fe-chevron-up" />
               </a>
             </CardHeaderTools>

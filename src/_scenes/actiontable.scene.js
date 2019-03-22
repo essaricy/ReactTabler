@@ -1,7 +1,7 @@
 import React from "react";
 import AbstractScene from "./abstract.scene";
 
-import ActionTable from "../_components/actiontable.component";
+import ActionTable from "../_components/table/actiontable.component";
 import * as TableMock from "../_data/table.mock";
 
 export default class ActionTableScene extends AbstractScene {
