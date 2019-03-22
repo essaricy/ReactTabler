@@ -23,6 +23,11 @@
         "url": "/component/actiontable"
       },
       {
+        "id": "Components/Card",
+        "title": "Card",
+        "url": "/component/card"
+      },
+      {
         "id": "Components/DataTable",
         "title": "Data Table",
         "url": "/component/datatable"

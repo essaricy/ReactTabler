@@ -1,8 +1,9 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
-import CrudScene from "../_scenes/crud.scene";
+import CardScene from "../_scenes/card.scene";
 import CarousalScene from "../_scenes/carousal.scene";
+import CrudScene from "../_scenes/crud.scene";
 import ActionTableScene from "../_scenes/actiontable.scene";
 import SimpleTableScene from "../_scenes/simpletable.scene";
 import FormsScene from "../_scenes/forms.scene";
@@ -42,6 +43,13 @@ export default class MenuRoutes extends React.Component {
           path="/interface"
           render={props => {
             return <InterfaceScene {...this.props} title="Interface" />;
+          }}
+        />
+        <Route
+          exact
+          path="/component/card"
+          render={props => {
+            return <CardScene {...this.props} title="Card" />;
           }}
         />
         <Route

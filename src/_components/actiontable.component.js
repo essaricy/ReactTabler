@@ -90,7 +90,7 @@ export default class ActionTable extends React.Component {
         cellElements.push(
           <td cell-id={headerNames.length - 1} key={headerNames.length - 1}>
             <a className="icon">
-              <i className="fe fe-edit" />
+              <i className="fe fe-edit-3" />
             </a>
             <a className="icon">
               <i className="fe fe-trash" />
@@ -111,9 +111,7 @@ export default class ActionTable extends React.Component {
           <h3 className="card-title">{title}</h3>
           <div className="card-options">
             <span className="input-group-btn ml-2">
-              <button className="btn btn-sm btn-primary">
-                {/* <span className="fe fe-plus" /> */}Add New
-              </button>
+              <button className="btn btn-sm btn-primary">Add</button>
             </span>
           </div>
         </div>

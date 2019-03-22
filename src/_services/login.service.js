@@ -28,7 +28,7 @@ export default class LoginService {
     // TODO: Send the session id to API to check if the session is still valid or not.
     // and update prop accordingly
     console.log("Is User Authenticated? " + this.authenticated);
-    //return this.authenticated;
-    return true;
+    return this.authenticated;
+    //return true;
   }
 }
