@@ -18,11 +18,6 @@
         "url": "/component/simpletable"
       },
       {
-        "id": "Components/ActionTable",
-        "title": "Action Table",
-        "url": "/component/actiontable"
-      },
-      {
         "id": "Components/Card",
         "title": "Card",
         "url": "/component/card"
@@ -56,6 +51,11 @@
         "id": "Pages/Profile",
         "title": "Profile",
         "url": "/page/profile"
+      },
+      {
+        "id": "Pages/Invoices",
+        "title": "Invoices",
+        "url": "/pages/invoices"
       },
       {
         "id": "Pages/Empty Page",

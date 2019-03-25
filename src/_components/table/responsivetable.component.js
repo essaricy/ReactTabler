@@ -1,5 +1,4 @@
 import React from "react";
-import "./simpletable.component.css";
 
 export default class ResponsiveTableComponent extends React.Component {
   render() {

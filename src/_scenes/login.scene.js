@@ -35,9 +35,7 @@ export default class Login extends React.Component {
         <LogoComponent />
         <Card form="true" onSubmit={this.handleSubmit}>
           <CardHeader title="Login to your account" />
-          {this.state.error ? (
-            <AlertComponent message={this.state.error} />
-          ) : null}
+          <AlertComponent type="error" message={this.state.error} />
           <CardBody>
             <CardDimmer active={this.state.loggingIn}>
               <FormGroup>

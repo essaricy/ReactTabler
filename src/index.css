@@ -5402,7 +5402,12 @@ button.close {
   padding: 1rem;
   border-bottom: 1px solid #e9ecef;
   border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
+  border-top-right-radius: 3px  ;
+}
+
+.modal-header .close:before {
+   content: ''; 
+   display: none;
 }
 
 .modal-header .close {

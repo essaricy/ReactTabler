@@ -1,6 +1,7 @@
 import React from "react";
 
 export default class AbstractScene extends React.Component {
+  // THis should be called AbstractContainer
   getContent(pageContent) {
     return (
       <div className="container">

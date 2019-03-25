@@ -4,7 +4,7 @@ import { Switch, Route } from "react-router-dom";
 import CardScene from "../_scenes/card.scene";
 import CarousalScene from "../_scenes/carousal.scene";
 import CrudScene from "../_scenes/crud.scene";
-import ActionTableScene from "../_scenes/actiontable.scene";
+import InvoicesScene from "../_scenes/invoices.scene";
 import SimpleTableScene from "../_scenes/simpletable.scene";
 import FormsScene from "../_scenes/forms.scene";
 import GalleryScene from "../_scenes/gallery.scene";
@@ -61,13 +61,6 @@ export default class MenuRoutes extends React.Component {
         />
         <Route
           exact
-          path="/component/actiontable"
-          render={props => {
-            return <ActionTableScene {...this.props} title="Action Table" />;
-          }}
-        />
-        <Route
-          exact
           path="/component/modal"
           render={props => {
             return <ModalScene {...this.props} title="Modal" />;
@@ -92,6 +85,13 @@ export default class MenuRoutes extends React.Component {
           path="/pages/profile"
           render={props => {
             return <ProfileScene {...this.props} />;
+          }}
+        />
+        <Route
+          exact
+          path="/pages/invoices"
+          render={props => {
+            return <InvoicesScene {...this.props} title="Invoices" />;
           }}
         />
       </Switch>

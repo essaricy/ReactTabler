@@ -1,5 +1,5 @@
 import React from "react";
-import "./simpletable.component.css";
+import "./abstracttable.component.css";
 
 import CardComponent from "../card/card.component";
 import CardHeaderComponent from "../card/cardheader.component";
@@ -27,43 +27,10 @@ export default class AbstractTable extends React.Component {
     );
   }
 
-  validateAndGetRendingObject() {
-    let headerNames = this.props.headerNames;
-    let renderBy = this.props.renderBy; // data, elements
-    let tableDataRows = [];
-
-    let renderingData = null;
-    if (renderBy === "data") {
-      if (!this.props.data) {
-        tableDataRows.push(
-          this.getErrorContent(
-            headerNames.length,
-            "Prop 'data' is required when renderBy is set to 'data'"
-          )
-        );
-      } else {
-        renderingData = this.props.data;
-      }
-    } else if (renderBy === "elements") {
-      if (!this.props.elements) {
-        tableDataRows.push(
-          this.getErrorContent(
-            headerNames.length,
-            "Prop 'elements' is required when renderBy is set to 'elements'"
-          )
-        );
-      } else {
-        renderingData = this.props.elements;
-      }
-    } else {
-      tableDataRows.push(
-        this.getErrorContent(
-          headerNames.length,
-          "Prop 'renderBy' must be set either to 'data' or elements'"
-        )
-      );
+  validate() {
+    if (!this.props.url) {
+      throw Error("Prop 'url' is required when renderBy is set to 'api'");
     }
-    return renderingData;
   }
 
   getHeaderElements() {

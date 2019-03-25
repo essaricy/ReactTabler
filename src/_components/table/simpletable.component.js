@@ -1,5 +1,4 @@
 import React from "react";
-import "./simpletable.component.css";
 
 import AbstractTable from "./abstracttable.component";
 
