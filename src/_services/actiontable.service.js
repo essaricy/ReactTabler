@@ -1,4 +1,4 @@
-import * as FetchApi from "../_utils/fetchapi.util";
+import * as FetchApi from '../_utils/fetchapi.util';
 
 export default class ActionTableService {
   constructor(url) {
@@ -18,6 +18,8 @@ export default class ActionTableService {
     return FetchApi.get(this.url + id);
   }
   add(request) {
+    console.log('Sending request to add');
+    console.log(request);
     return FetchApi.post(this.url, request);
   }
   update(id, request) {

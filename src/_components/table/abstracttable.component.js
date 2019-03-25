@@ -1,21 +1,22 @@
-import React from "react";
-import "./abstracttable.component.css";
+import React from 'react';
+import './abstracttable.component.css';
 
-import CardComponent from "../card/card.component";
-import CardHeaderComponent from "../card/cardheader.component";
-import CardHeaderToolsComponent from "../card/cardheadertools.component";
-import ResponsiveTableComponent from "./responsivetable.component";
+import CardComponent from '../card/card.component';
+import CardHeaderComponent from '../card/cardheader.component';
+import CardHeaderToolsComponent from '../card/cardheadertools.component';
+import ResponsiveTableComponent from './responsivetable.component';
+import AlertComponent from '../alert.component';
 
 export default class AbstractTable extends React.Component {
   getNoDataContent(numberOfColumns) {
     return this.getSpannedContent(
       numberOfColumns,
-      "NOROW",
-      "No data available..."
+      'NOROW',
+      'No data available...'
     );
   }
   getErrorContent(numberOfColumns, message) {
-    return this.getSpannedContent(numberOfColumns, "ERRORROW", message);
+    return this.getSpannedContent(numberOfColumns, 'ERRORROW', message);
   }
   getSpannedContent(numberOfColumns, key, message) {
     return (
@@ -50,6 +51,10 @@ export default class AbstractTable extends React.Component {
         <CardHeaderComponent title={this.props.title}>
           <CardHeaderToolsComponent>{actionButtons}</CardHeaderToolsComponent>
         </CardHeaderComponent>
+        <AlertComponent
+          type={this.props.notificationType}
+          message={this.props.notificationMessage}
+        />
         <ResponsiveTableComponent
           headers={this.getHeaderElements()}
           data={tableDataRows}
