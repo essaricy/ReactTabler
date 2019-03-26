@@ -4,9 +4,9 @@ import { Switch, Route } from "react-router-dom";
 import CardScene from "../_scenes/card.scene";
 import CarousalScene from "../_scenes/carousal.scene";
 import CrudScene from "../_scenes/crud.scene";
-import InvoicesScene from "../_scenes/invoices.scene";
+import InvoiceScene from "../_scenes/invoice.scene";
 import SimpleTableScene from "../_scenes/simpletable.scene";
-import FormsScene from "../_scenes/forms.scene";
+import FormScene from "../_scenes/form.scene";
 import GalleryScene from "../_scenes/gallery.scene";
 import HomeScene from "../_scenes/home.scene";
 import InterfaceScene from "../_scenes/interface.scene";
@@ -26,9 +26,9 @@ export default class MenuRoutes extends React.Component {
         />
         <Route
           exact
-          path="/forms"
+          path="/form"
           render={props => {
-            return <FormsScene {...this.props} title="Forms" />;
+            return <FormScene {...this.props} title="Form" />;
           }}
         />
         <Route
@@ -82,16 +82,16 @@ export default class MenuRoutes extends React.Component {
         />
         <Route
           exact
-          path="/pages/profile"
+          path="/page/profile"
           render={props => {
-            return <ProfileScene {...this.props} />;
+            return <ProfileScene {...this.props} title="Profile" />;
           }}
         />
         <Route
           exact
-          path="/pages/invoices"
+          path="/page/invoice"
           render={props => {
-            return <InvoicesScene {...this.props} title="Invoices" />;
+            return <InvoiceScene {...this.props} title="Invoice" />;
           }}
         />
       </Switch>

@@ -1,11 +1,11 @@
-import React from 'react';
-import AbstractScene from './abstract.scene';
-import ActionTable from '../_components/table/actiontable.component';
+import React from "react";
+import SceneContainer from "./scene.container";
+import ActionTable from "../_components/table/actiontable.component";
 
-import * as TableMock from '../_data/table.mock';
+import * as TableMock from "../_data/table.mock";
+import * as ContainerUtils from "../_utils/container.util";
 
-// Change this to container
-export default class AbstractActionTableScene extends AbstractScene {
+export default class AbstractActionTableContainer extends SceneContainer {
   constructor(props) {
     super(props);
     this.state = {};
@@ -17,31 +17,31 @@ export default class AbstractActionTableScene extends AbstractScene {
   }
 
   getResourceUrl() {
-    throw Error('Must implement abstract method getResourceUrl');
+    throw Error("Must implement abstract method getResourceUrl");
   }
 
   getRenderer(row) {
-    throw Error('Must implement abstract method getRenderer');
+    throw Error("Must implement abstract method getRenderer");
   }
 
   getAllowedActions() {
-    throw Error('Must implement abstract method getAllowedActions');
+    throw Error("Must implement abstract method getAllowedActions");
   }
 
   getAddTitle() {
-    throw Error('Must implement abstract method getAddTitle');
+    throw Error("Must implement abstract method getAddTitle");
   }
 
   getUpdateTitle() {
-    throw Error('Must implement abstract method getUpdateTitle');
+    throw Error("Must implement abstract method getUpdateTitle");
   }
 
   renderAddScene() {
-    throw Error('Must implement abstract method renderAddScene');
+    throw Error("Must implement abstract method renderAddScene");
   }
 
   renderUpdateScene() {
-    throw Error('Must implement abstract method renderUpdateScene');
+    throw Error("Must implement abstract method renderUpdateScene");
   }
 
   // onCreate() {
@@ -54,8 +54,8 @@ export default class AbstractActionTableScene extends AbstractScene {
   //   throw Error("Must implement abstract method onDelete");
   // }
 
-  render() {
-    return super.getContent(
+  scene() {
+    return (
       <div className="row">
         <div className="col-12">
           <ActionTable
@@ -68,21 +68,21 @@ export default class AbstractActionTableScene extends AbstractScene {
             notificationMessage={this.props.notificationMessage}
             actions={this.getAllowedActions()}
             addAction={{
-              label: 'Add',
+              label: "Add",
               modalTitle: this.getAddTitle(),
               render: this.renderAddScene()
               //handler: this.onCreate,
               //errorMessage: null
             }}
             updateAction={{
-              label: 'Update',
+              label: "Update",
               modalTitle: this.getUpdateTitle(),
               render: this.renderUpdateScene()
               //handler: this.onUpdate,
               //errorMessage: null
             }}
             deleteAction={{
-              label: 'delete'
+              label: "delete"
             }}
           />
         </div>

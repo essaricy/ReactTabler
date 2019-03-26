@@ -1,8 +1,8 @@
 import React from "react";
-import AbstractScene from "./abstract.scene";
+import SceneContainer from "../_containers/scene.container";
 import ModalComponent from "../_components/modal.component";
 
-export default class ModalScene extends AbstractScene {
+export default class ModalScene extends SceneContainer {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,8 +23,8 @@ export default class ModalScene extends AbstractScene {
     this.toggle();
   }
 
-  render() {
-    return super.getContent(
+  scene() {
+    return (
       <div>
         <button className="btn btn-primary" onClick={this.toggle}>
           Launch Modal

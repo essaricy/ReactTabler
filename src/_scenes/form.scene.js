@@ -1,8 +1,8 @@
 import React from "react";
 import SceneContainer from "../_containers/scene.container";
 
-export default class InterfaceScene extends SceneContainer {
+export default class FormScene extends SceneContainer {
   scene() {
-    return <div>This is Interface page</div>;
+    return <div>This is Form scene</div>;
   }
 }

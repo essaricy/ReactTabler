@@ -1,8 +1,8 @@
 import React from "react";
-import AbstractScene from "./abstract.scene";
+import SceneContainer from "../_containers/scene.container";
 
-export default class CarousalScene extends AbstractScene {
-  render() {
-    return super.getContent(<div>This is Carousal page</div>);
+export default class CarousalScene extends SceneContainer {
+  scene() {
+    return <div>This is Carousal page</div>;
   }
 }

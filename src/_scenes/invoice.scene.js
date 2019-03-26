@@ -1,26 +1,24 @@
-import React from 'react';
-import AbstractActionTableScene from './abstractactiontable.scene';
+import React from "react";
+import ActionTableContainer from "../_containers/abstractactiontable.container";
 
-import FormGroup from '../_components/form/formgroup.component';
-import FormLabel from '../_components/form/formlabel.component';
-import FormText from '../_components/form/formtext.component';
+import FormGroup from "../_components/form/formgroup.component";
+import FormLabel from "../_components/form/formlabel.component";
+import FormText from "../_components/form/formtext.component";
+import * as Urls from "../_constants/url.constant";
 
-import * as ApiConstants from '../_constants/api.constant';
-import * as Urls from '../_constants/url.constant';
-
-export default class InvoicesScene extends AbstractActionTableScene {
+export default class InvoiceScene extends ActionTableContainer {
   constructor(props) {
     super(props);
     //this.currentRowData = { id: "001406", subject: "Software Update", client: "Shiskha", vat: "87956421", created: "24 Aug 2018", status: "Paid", price: "365" };
     //this.state = { currentRowData: this.currentRowData };
     this.state = {
-      id: '001406',
-      subject: 'Software Update',
-      client: 'Shiskha',
-      vat: '87956421',
-      created: '24 Aug 2018',
-      status: 'Paid',
-      price: '365'
+      id: "001406",
+      subject: "Software Update",
+      client: "Shiskha",
+      vat: "87956421",
+      created: "24 Aug 2018",
+      status: "Paid",
+      price: "365"
     };
     this.setData = this.setData.bind(this);
   }
@@ -31,14 +29,14 @@ export default class InvoicesScene extends AbstractActionTableScene {
 
   getRenderer(data) {
     let statusColor;
-    if (data.status === 'Paid' || data.status === 'Paid Today') {
-      statusColor = 'bg-success';
-    } else if (data.status === 'Pending') {
-      statusColor = 'bg-danger';
-    } else if (data.status === 'Due in 2 Weeks') {
-      statusColor = 'bg-warning';
+    if (data.status === "Paid" || data.status === "Paid Today") {
+      statusColor = "bg-success";
+    } else if (data.status === "Pending") {
+      statusColor = "bg-danger";
+    } else if (data.status === "Due in 2 Weeks") {
+      statusColor = "bg-warning";
     } else {
-      statusColor = 'bg-grey';
+      statusColor = "bg-grey";
     }
 
     return [
@@ -50,23 +48,23 @@ export default class InvoicesScene extends AbstractActionTableScene {
       data.vat,
       data.created,
       <span>
-        <span className={'status-icon ' + statusColor} />
+        <span className={"status-icon " + statusColor} />
         {data.status}
       </span>,
-      '$' + data.price
+      "$" + data.price
     ];
   }
 
   getAllowedActions() {
-    return ['Add', 'Update', 'Delete'];
+    return ["Add", "Update", "Delete"];
   }
 
   getAddTitle() {
-    return 'Create new record';
+    return "Create new record";
   }
 
   getUpdateTitle() {
-    return 'Update record';
+    return "Update record";
   }
   renderAddScene() {
     let data = this.state;
@@ -169,8 +167,4 @@ export default class InvoicesScene extends AbstractActionTableScene {
   // onDelete() {
   //   console.log("On Delete");
   // }
-
-  render() {
-    return super.render();
-  }
 }

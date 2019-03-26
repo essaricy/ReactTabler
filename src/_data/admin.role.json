@@ -13,27 +13,27 @@
     "iconClass": "fe fe-calendar",
     "menuItems": [
       {
-        "id": "Components/SimpleTable",
+        "id": "Component/SimpleTable",
         "title": "Simple Table",
         "url": "/component/simpletable"
       },
       {
-        "id": "Components/Card",
+        "id": "Component/Card",
         "title": "Card",
         "url": "/component/card"
       },
       {
-        "id": "Components/DataTable",
+        "id": "Component/DataTable",
         "title": "Data Table",
         "url": "/component/datatable"
       },
       {
-        "id": "Components/Modal",
+        "id": "Component/Modal",
         "title": "Modal",
         "url": "/component/modal"
       },
       {
-        "id": "Components/Carousal",
+        "id": "Component/Carousal",
         "title": "Carousal",
         "url": "/component/carousal"
       }
@@ -43,22 +43,22 @@
     "iconClass": "fe fe-file",
     "menuItems": [
       {
-        "id": "Pages/Crud",
+        "id": "Page/Crud",
         "title": "Crud",
         "url": "/page/crud"
       },
       {
-        "id": "Pages/Profile",
+        "id": "Page/Profile",
         "title": "Profile",
         "url": "/page/profile"
       },
       {
-        "id": "Pages/Invoices",
-        "title": "Invoices",
-        "url": "/pages/invoices"
+        "id": "Page/Invoices",
+        "title": "Invoice",
+        "url": "/page/invoice"
       },
       {
-        "id": "Pages/Empty Page",
+        "id": "Page/Empty Page",
         "title": "Empty Page",
         "url": "/page/blank"
       }
@@ -66,7 +66,7 @@
   },
   "Forms": {
     "iconClass": "fe fe-check-square",
-    "url": "/forms"
+    "url": "/form"
   },
   "Gallery": {
     "iconClass": "fe fe-image",

@@ -1,8 +1,8 @@
 import React from "react";
-import AbstractScene from "./abstract.scene";
+import SceneContainer from "../_containers/scene.container";
 
-export default class HomeScene extends AbstractScene {
-  render() {
-    return super.getContent(<div>This is Home page</div>);
+export default class HomeScene extends SceneContainer {
+  scene() {
+    return <div>This is Home page</div>;
   }
 }
