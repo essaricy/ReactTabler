@@ -3,25 +3,23 @@ import SceneContainer from "./scene.container";
 import ActionTable from "../_components/table/actiontable.component";
 
 import * as TableMock from "../_data/table.mock";
-import * as ContainerUtils from "../_utils/container.util";
 
 export default class AbstractActionTableContainer extends SceneContainer {
   constructor(props) {
     super(props);
-    this.state = {};
+    //this.state = {};
+    this.model = {};
     this.currentRowData = {};
-    this.renderAddScene = this.renderAddScene.bind(this);
-    //this.onCreate = this.onCreate.bind(this);
-    //this.onUpdate = this.onUpdate.bind(this);
-    //this.onDelete = this.onDelete.bind(this);
+    this.getAddScene = this.getAddScene.bind(this);
+    this.getUpdateScene = this.getUpdateScene.bind(this);
   }
 
   getResourceUrl() {
     throw Error("Must implement abstract method getResourceUrl");
   }
 
-  getRenderer(row) {
-    throw Error("Must implement abstract method getRenderer");
+  populate(row) {
+    throw Error("Must implement abstract method populate");
   }
 
   getAllowedActions() {
@@ -36,23 +34,13 @@ export default class AbstractActionTableContainer extends SceneContainer {
     throw Error("Must implement abstract method getUpdateTitle");
   }
 
-  renderAddScene() {
-    throw Error("Must implement abstract method renderAddScene");
+  getAddScene() {
+    throw Error("Must implement abstract method getAddScene");
   }
 
-  renderUpdateScene() {
-    throw Error("Must implement abstract method renderUpdateScene");
+  getUpdateScene() {
+    throw Error("Must implement abstract method getUpdateScene");
   }
-
-  // onCreate() {
-  //   throw Error("Must implement abstract method onCreate");
-  // }
-  // onUpdate() {
-  //   throw Error("Must implement abstract method onUpdate");
-  // }
-  // onDelete() {
-  //   throw Error("Must implement abstract method onDelete");
-  // }
 
   scene() {
     return (
@@ -61,8 +49,8 @@ export default class AbstractActionTableContainer extends SceneContainer {
           <ActionTable
             title={TableMock.Title}
             url={this.getResourceUrl()}
-            dataRenderer={this.getRenderer}
-            dataProvider={this.state}
+            populate={this.populate}
+            dataProvider={this.model}
             headerNames={TableMock.HeaderNamesAction}
             notificationType={this.props.notificationType}
             notificationMessage={this.props.notificationMessage}
@@ -70,16 +58,12 @@ export default class AbstractActionTableContainer extends SceneContainer {
             addAction={{
               label: "Add",
               modalTitle: this.getAddTitle(),
-              render: this.renderAddScene()
-              //handler: this.onCreate,
-              //errorMessage: null
+              scene: this.getAddScene()
             }}
             updateAction={{
               label: "Update",
               modalTitle: this.getUpdateTitle(),
-              render: this.renderUpdateScene()
-              //handler: this.onUpdate,
-              //errorMessage: null
+              scene: this.getUpdateScene()
             }}
             deleteAction={{
               label: "delete"

@@ -1,18 +1,16 @@
 import React from "react";
-import ActionTableContainer from "../_containers/abstractactiontable.container";
+import AbstractActionTableContainer from "../_containers/abstractactiontable.container";
 
 import FormGroup from "../_components/form/formgroup.component";
 import FormLabel from "../_components/form/formlabel.component";
 import FormText from "../_components/form/formtext.component";
 import * as Urls from "../_constants/url.constant";
 
-export default class InvoiceScene extends ActionTableContainer {
+export default class InvoiceScene extends AbstractActionTableContainer {
   constructor(props) {
     super(props);
-    //this.currentRowData = { id: "001406", subject: "Software Update", client: "Shiskha", vat: "87956421", created: "24 Aug 2018", status: "Paid", price: "365" };
-    //this.state = { currentRowData: this.currentRowData };
-    this.state = {
-      id: "001406",
+    this.model = {
+      id: "001407",
       subject: "Software Update",
       client: "Shiskha",
       vat: "87956421",
@@ -27,7 +25,7 @@ export default class InvoiceScene extends ActionTableContainer {
     return Urls.API_URL.BASE + Urls.API_URL.INVOICE;
   }
 
-  getRenderer(data) {
+  populate(data) {
     let statusColor;
     if (data.status === "Paid" || data.status === "Paid Today") {
       statusColor = "bg-success";
@@ -66,8 +64,8 @@ export default class InvoiceScene extends ActionTableContainer {
   getUpdateTitle() {
     return "Update record";
   }
-  renderAddScene() {
-    let data = this.state;
+  getAddScene() {
+    let data = this.model;
     return (
       <div>
         <FormGroup>
@@ -131,40 +129,21 @@ export default class InvoiceScene extends ActionTableContainer {
   setData(e) {
     let id = e.target.id;
     let value = e.target.value;
-    //this.currentRowData[id] = e.target.value;
-    //this.setState({ currentRowData: this.currentRowData });
-    this.setState({ [id]: value });
+    this.model[id] = value;
+    //this.setState({ [id]: value });
   }
 
-  renderUpdateScene() {
+  getUpdateScene() {
     return (
       <FormGroup>
         <FormLabel>Enter Name:</FormLabel>
         <FormText
           required
           autoFocus
-          defaultValue={this.state.name}
+          //defaultValue={this.state.name}
           onChange={this.setName}
         />
       </FormGroup>
     );
   }
-
-  // onCreate() {
-  //   console.log("ActionTableScene onCreate: called");
-  //   return {
-  //     code: ApiConstants.Result.FAILURE,
-  //     message: "Name is required"
-  //   };
-  // }
-  // onUpdate() {
-  //   console.log("ActionTableScene onUpdate: called");
-  //   return {
-  //     code: ApiConstants.Result.FAILURE,
-  //     message: "Name is required"
-  //   };
-  // }
-  // onDelete() {
-  //   console.log("On Delete");
-  // }
 }
