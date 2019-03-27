@@ -9,21 +9,28 @@ export default class AbstractActionTableScene extends SceneContainer {
     super(props);
     //this.state = {};
     this.model = {};
+
+    this.getTableConfig = this.getTableConfig.bind(this);
+    this.tableConfig = this.getTableConfig();
+    // this.tableConfig = {
+    //   title: "Table Title",
+    //   url: "dummy",
+    //   actions: [],
+    //   columnConfig: []
+
+    // };
+    //this.getApiUrl = this.getApiUrl.bind(this);
     this.currentRowData = {};
     this.getAddScene = this.getAddScene.bind(this);
     this.getUpdateScene = this.getUpdateScene.bind(this);
   }
 
-  getResourceUrl() {
-    throw Error('Must implement abstract method getResourceUrl');
+  getTableConfig() {
+    throw new Error('Subclasses must implement getTableConfig method');
   }
 
   populate(row) {
     throw Error('Must implement abstract method populate');
-  }
-
-  getAllowedActions() {
-    throw Error('Must implement abstract method getAllowedActions');
   }
 
   getAddTitle() {
@@ -47,14 +54,13 @@ export default class AbstractActionTableScene extends SceneContainer {
       <div className="row">
         <div className="col-12">
           <ActionTable
-            title={TableMock.Title}
-            url={this.getResourceUrl()}
+            config={this.tableConfig}
+            //title={this.tableConfig.title}
+            //url={this.tableConfig.url}
+            //config={this.tableConfig}
             populate={this.populate}
             dataProvider={this.model}
             headerNames={TableMock.HeaderNamesAction}
-            notificationType={this.props.notificationType}
-            notificationMessage={this.props.notificationMessage}
-            actions={this.getAllowedActions()}
             addAction={{
               label: 'Add',
               modalTitle: this.getAddTitle(),

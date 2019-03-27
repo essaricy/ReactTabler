@@ -1,23 +1,24 @@
-import React from "react";
-import PropTypes from "prop-types";
-import "./actiontable.component.css";
+import React from 'react';
+import PropTypes from 'prop-types';
+import './actiontable.component.css';
 
-import AbstractTable from "./abstracttable.component";
-import FeIconLink from "../icons/fe-icon-link.component";
-import Button from "../form/button.component";
-import ModalComponent from "../modal.component";
-import * as ApiConstants from "../../_constants/api.constant";
-import ActionTableService from "../../_services/actiontable.service";
-import NotificationService from "../../_services/notification.service";
+import CardComponent from '../card/card.component';
+import CardHeaderComponent from '../card/cardheader.component';
+import CardHeaderToolsComponent from '../card/cardheadertools.component';
+import ResponsiveTableComponent from './responsivetable.component';
+import Button from '../form/button.component';
+import ModalComponent from '../modal.component';
+import FeIconLink from '../icons/fe-icon-link.component';
 
-export default class ActionTable extends AbstractTable {
+import * as ApiConstants from '../../_constants/api.constant';
+import ActionTableService from '../../_services/actiontable.service';
+import NotificationService from '../../_services/notification.service';
+
+export default class ActionTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       data: null,
-      allowAdd: props.actions.includes("Add") && this.props.addAction,
-      allowEdit: props.actions.includes("Update") && this.props.updateAction,
-      allowDelete: props.actions.includes("Delete") && this.props.deleteAction,
       isAddOpen: false,
       isUpdateOpen: false
     };
@@ -29,7 +30,7 @@ export default class ActionTable extends AbstractTable {
 
     this.onAddAction = this.onAddAction.bind(this);
     this.onUpdateAction = this.onUpdateAction.bind(this);
-    this.actionTableService = new ActionTableService(props.url);
+    this.actionTableService = new ActionTableService(this.props.config.url);
     this.notificationService = NotificationService.getInstance();
   }
 
@@ -61,7 +62,7 @@ export default class ActionTable extends AbstractTable {
   }
 
   onAddAction() {
-    console.log("ActionTableComponent: onAddAction called");
+    console.log('ActionTableComponent: onAddAction called');
     // Call API and get the response
     this.actionTableService.add(this.props.dataProvider).then(response => {
       // Check the response and close add popup
@@ -77,54 +78,91 @@ export default class ActionTable extends AbstractTable {
   }
 
   onUpdateAction() {
-    console.log("ActionTableComponent: onUpdateAction called");
+    console.log('ActionTableComponent: onUpdateAction called');
     // Check the response and close update popup
     let response = this.props.addAction.handler();
     if (response.code === ApiConstants.Result.SUCCESS) {
       this.toggleUpdate();
     } else {
-      console.log("ActionTableComponent: onUpdateAction failed");
+      console.log('ActionTableComponent: onUpdateAction failed');
       this.setState({ updateErrorMessage: response.message });
     }
   }
 
+  validate() {
+    if (!this.props.config.url) {
+      throw Error("Prop 'config.url' is required");
+    }
+  }
+
+  getHeaderNames() {
+    let headerNames = [];
+    this.props.config.columns.forEach(column => {
+      headerNames.push(<th key={column.name}>{column.name}</th>);
+    });
+    return headerNames;
+  }
+
+  getPermissions() {
+    let actions = this.props.config.actions;
+    return {
+      add: actions.includes('Add') && this.props.addAction,
+      edit: actions.includes('Update') && this.props.updateAction,
+      delete: actions.includes('Delete') && this.props.deleteAction
+    };
+  }
+
   render() {
-    super.validate();
+    this.validate();
 
-    let numberOfColumns = this.props.headerNames.length;
+    let headerNames = this.getHeaderNames();
+    let permissions = this.getPermissions();
+    let headerTools = [];
     let tableDataRows = [];
-    let actionButtons = [];
 
-    if (this.model == null || this.model.length === 0) {
-      // No records found
-      tableDataRows.push(this.getNoDataContent(numberOfColumns));
-    } else {
-      this.model.forEach((rowData, rowIndex) => {
-        let columns = [];
-        tableDataRows.push(
-          <tr row-id={rowIndex} key={rowIndex}>
-            {this.props.populate(rowData).forEach((cellData, cellIndex) =>
-              columns.push(
-                <td cell-id={cellIndex} key={cellIndex}>
-                  {cellData}
-                </td>
-              )
-            )}
-            {columns}
-            <td cell-id={numberOfColumns - 1} key={numberOfColumns - 1}>
-              {this.state.allowEdit ? this.getUpdateLink() : ""}
-              {rowIndex === 0 ? this.getUpdateModal() : ""}
-              {this.state.allowDelete ? this.getDeleteContent() : ""}
-            </td>
-          </tr>
-        );
-      });
+    if (permissions.add) {
+      headerTools.push(this.getAddContent());
     }
+
+    // let numberOfColumns = this.props.headerNames.length;
+
+    // if (this.model == null || this.model.length === 0) {
+    //   // No records found
+    //   tableDataRows.push(this.getNoDataContent(numberOfColumns));
+    // } else {
+    //   this.model.forEach((rowData, rowIndex) => {
+    //     let columns = [];
+    //     tableDataRows.push(
+    //       <tr row-id={rowIndex} key={rowIndex}>
+    //         {this.props.populate(rowData).forEach((cellData, cellIndex) =>
+    //           columns.push(
+    //             <td cell-id={cellIndex} key={cellIndex}>
+    //               {cellData}
+    //             </td>
+    //           )
+    //         )}
+    //         {columns}
+    //         <td cell-id={numberOfColumns - 1} key={numberOfColumns - 1}>
+    //           {this.state.allowEdit ? this.getUpdateLink() : ""}
+    //           {rowIndex === 0 ? this.getUpdateModal() : ""}
+    //           {this.state.allowDelete ? this.getDeleteContent() : ""}
+    //         </td>
+    //       </tr>
+    //     );
+    //   });
+    // }
     // Add "+" button if action contains "Add"
-    if (this.state.allowAdd) {
-      actionButtons.push(this.getAddContent());
-    }
-    return super.getRenderingContent(actionButtons, tableDataRows);
+    // if (this.state.allowAdd) {
+    //   actionButtons.push(this.getAddContent());
+    // }
+    return (
+      <CardComponent>
+        <CardHeaderComponent title={this.props.config.title}>
+          <CardHeaderToolsComponent>{headerTools}</CardHeaderToolsComponent>
+        </CardHeaderComponent>
+        <ResponsiveTableComponent headers={headerNames} data={tableDataRows} />
+      </CardComponent>
+    );
   }
 
   getAddContent() {
@@ -133,7 +171,7 @@ export default class ActionTable extends AbstractTable {
       <div key="Add">
         <Button
           mode="primary"
-          value={addAction.label ? addAction.label : "Add"}
+          value={addAction.label ? addAction.label : 'Add'}
           onClick={this.toggleAdd}
         />
         <ModalComponent
@@ -178,7 +216,4 @@ export default class ActionTable extends AbstractTable {
   }
 }
 
-ActionTable.propTypes = {
-  title: PropTypes.string.isRequired,
-  headerNames: PropTypes.array.isRequired
-};
+ActionTable.propTypes = {};

@@ -5,7 +5,6 @@ import CardComponent from '../card/card.component';
 import CardHeaderComponent from '../card/cardheader.component';
 import CardHeaderToolsComponent from '../card/cardheadertools.component';
 import ResponsiveTableComponent from './responsivetable.component';
-import AlertComponent from '../alert.component';
 
 export default class AbstractTable extends React.Component {
   getNoDataContent(numberOfColumns) {
@@ -29,8 +28,8 @@ export default class AbstractTable extends React.Component {
   }
 
   validate() {
-    if (!this.props.url) {
-      throw Error("Prop 'url' is required when renderBy is set to 'api'");
+    if (!this.props.config.url) {
+      throw Error("Prop 'config.url' is required");
     }
   }
 
@@ -51,10 +50,6 @@ export default class AbstractTable extends React.Component {
         <CardHeaderComponent title={this.props.title}>
           <CardHeaderToolsComponent>{actionButtons}</CardHeaderToolsComponent>
         </CardHeaderComponent>
-        <AlertComponent
-          type={this.props.notificationType}
-          message={this.props.notificationMessage}
-        />
         <ResponsiveTableComponent
           headers={this.getHeaderElements()}
           data={tableDataRows}

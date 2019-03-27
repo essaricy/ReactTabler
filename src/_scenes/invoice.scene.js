@@ -21,10 +21,45 @@ export default class InvoiceScene extends AbstractActionTableScene {
     this.setData = this.setData.bind(this);
   }
 
-  getResourceUrl() {
-    return Urls.API_URL.BASE + Urls.API_URL.INVOICE;
+  getTableConfig() {
+    return {
+      title: 'Invoices',
+      url: Urls.API_URL.BASE + Urls.API_URL.INVOICE,
+      actions: ['Add', 'Update', 'Delete'],
+      columns: [
+        {
+          name: '#',
+          field: 'id',
+          show: false,
+          sort: false
+        },
+        {
+          name: 'Subject',
+          field: 'subject'
+        },
+        {
+          name: 'Client',
+          field: 'client'
+        },
+        {
+          name: 'Vat #',
+          field: 'vat'
+        },
+        {
+          name: 'Created',
+          field: 'created'
+        },
+        {
+          name: 'Status',
+          field: 'status'
+        },
+        {
+          name: 'Price',
+          field: 'price'
+        }
+      ]
+    };
   }
-
   populate(data) {
     let statusColor;
     if (data.status === 'Paid' || data.status === 'Paid Today') {
@@ -51,10 +86,6 @@ export default class InvoiceScene extends AbstractActionTableScene {
       </span>,
       '$' + data.price
     ];
-  }
-
-  getAllowedActions() {
-    return ['Add', 'Update', 'Delete'];
   }
 
   getAddTitle() {
