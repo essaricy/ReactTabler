@@ -1,10 +1,10 @@
-import React from "react";
-import SceneContainer from "./scene.container";
-import ActionTable from "../_components/table/actiontable.component";
+import React from 'react';
+import SceneContainer from '../_containers/scene.container';
+import ActionTable from '../_components/table/actiontable.component';
 
-import * as TableMock from "../_data/table.mock";
+import * as TableMock from '../_data/table.mock';
 
-export default class AbstractActionTableContainer extends SceneContainer {
+export default class AbstractActionTableScene extends SceneContainer {
   constructor(props) {
     super(props);
     //this.state = {};
@@ -15,31 +15,31 @@ export default class AbstractActionTableContainer extends SceneContainer {
   }
 
   getResourceUrl() {
-    throw Error("Must implement abstract method getResourceUrl");
+    throw Error('Must implement abstract method getResourceUrl');
   }
 
   populate(row) {
-    throw Error("Must implement abstract method populate");
+    throw Error('Must implement abstract method populate');
   }
 
   getAllowedActions() {
-    throw Error("Must implement abstract method getAllowedActions");
+    throw Error('Must implement abstract method getAllowedActions');
   }
 
   getAddTitle() {
-    throw Error("Must implement abstract method getAddTitle");
+    throw Error('Must implement abstract method getAddTitle');
   }
 
   getUpdateTitle() {
-    throw Error("Must implement abstract method getUpdateTitle");
+    throw Error('Must implement abstract method getUpdateTitle');
   }
 
   getAddScene() {
-    throw Error("Must implement abstract method getAddScene");
+    throw Error('Must implement abstract method getAddScene');
   }
 
   getUpdateScene() {
-    throw Error("Must implement abstract method getUpdateScene");
+    throw Error('Must implement abstract method getUpdateScene');
   }
 
   scene() {
@@ -56,17 +56,17 @@ export default class AbstractActionTableContainer extends SceneContainer {
             notificationMessage={this.props.notificationMessage}
             actions={this.getAllowedActions()}
             addAction={{
-              label: "Add",
+              label: 'Add',
               modalTitle: this.getAddTitle(),
               scene: this.getAddScene()
             }}
             updateAction={{
-              label: "Update",
+              label: 'Update',
               modalTitle: this.getUpdateTitle(),
               scene: this.getUpdateScene()
             }}
             deleteAction={{
-              label: "delete"
+              label: 'delete'
             }}
           />
         </div>
