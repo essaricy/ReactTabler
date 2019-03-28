@@ -1,8 +1,8 @@
-import React from 'react';
-import SceneContainer from '../_containers/scene.container';
-import ActionTable from '../_components/table/actiontable.component';
+import React from "react";
+import SceneContainer from "../_containers/scene.container";
+import ActionTable from "../_components/table/actiontable.component";
 
-import * as TableMock from '../_data/table.mock';
+import * as TableMock from "../_data/table.mock";
 
 export default class AbstractActionTableScene extends SceneContainer {
   constructor(props) {
@@ -11,42 +11,56 @@ export default class AbstractActionTableScene extends SceneContainer {
     this.model = {};
 
     this.getTableConfig = this.getTableConfig.bind(this);
-    this.tableConfig = this.getTableConfig();
-    // this.tableConfig = {
-    //   title: "Table Title",
-    //   url: "dummy",
-    //   actions: [],
-    //   columnConfig: []
-
-    // };
-    //this.getApiUrl = this.getApiUrl.bind(this);
-    this.currentRowData = {};
     this.getAddScene = this.getAddScene.bind(this);
     this.getUpdateScene = this.getUpdateScene.bind(this);
+
+    this.currentRowData = {};
+
+    this.tableConfig = this.getTableConfig();
+    this.setActionDefaults();
   }
 
   getTableConfig() {
-    throw new Error('Subclasses must implement getTableConfig method');
+    throw new Error("Subclasses must implement getTableConfig method");
   }
 
-  populate(row) {
-    throw Error('Must implement abstract method populate');
-  }
-
-  getAddTitle() {
-    throw Error('Must implement abstract method getAddTitle');
-  }
-
-  getUpdateTitle() {
-    throw Error('Must implement abstract method getUpdateTitle');
+  setActionDefaults() {
+    // Populate action defaults
+    let actions = this.tableConfig.actions;
+    if (actions) {
+      if (actions.add) {
+        actions.add.triggerName = actions.add.triggerName
+          ? actions.add.triggerName
+          : "Add";
+        actions.add.modalTitle = actions.add.modalTitle
+          ? actions.add.modalTitle
+          : "Add new record";
+        actions.add.scene = this.getAddScene();
+        actions.add.actionName = actions.add.actionName
+          ? actions.add.actionName
+          : "Submit";
+      }
+    }
+    if (actions.update) {
+      actions.update.triggerName = actions.update.triggerName
+        ? actions.update.triggerName
+        : "Update";
+      actions.update.modalTitle = actions.update.modalTitle
+        ? actions.update.modalTitle
+        : "Update record";
+      actions.update.scene = this.getUpdateScene();
+      actions.update.actionName = actions.update.actionName
+        ? actions.update.actionName
+        : "Update";
+    }
   }
 
   getAddScene() {
-    throw Error('Must implement abstract method getAddScene');
+    throw Error("Must implement abstract method getAddScene");
   }
 
   getUpdateScene() {
-    throw Error('Must implement abstract method getUpdateScene');
+    throw Error("Must implement abstract method getUpdateScene");
   }
 
   scene() {
@@ -55,25 +69,9 @@ export default class AbstractActionTableScene extends SceneContainer {
         <div className="col-12">
           <ActionTable
             config={this.tableConfig}
-            //title={this.tableConfig.title}
-            //url={this.tableConfig.url}
-            //config={this.tableConfig}
             populate={this.populate}
             dataProvider={this.model}
             headerNames={TableMock.HeaderNamesAction}
-            addAction={{
-              label: 'Add',
-              modalTitle: this.getAddTitle(),
-              scene: this.getAddScene()
-            }}
-            updateAction={{
-              label: 'Update',
-              modalTitle: this.getUpdateTitle(),
-              scene: this.getUpdateScene()
-            }}
-            deleteAction={{
-              label: 'delete'
-            }}
           />
         </div>
       </div>

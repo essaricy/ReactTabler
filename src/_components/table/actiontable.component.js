@@ -1,18 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import './actiontable.component.css';
+import React from "react";
+import PropTypes from "prop-types";
+import "./actiontable.component.css";
 
-import CardComponent from '../card/card.component';
-import CardHeaderComponent from '../card/cardheader.component';
-import CardHeaderToolsComponent from '../card/cardheadertools.component';
-import ResponsiveTableComponent from './responsivetable.component';
-import Button from '../form/button.component';
-import ModalComponent from '../modal.component';
-import FeIconLink from '../icons/fe-icon-link.component';
+import CardComponent from "../card/card.component";
+import CardHeaderComponent from "../card/cardheader.component";
+import CardHeaderToolsComponent from "../card/cardheadertools.component";
+import ResponsiveTableComponent from "./responsivetable.component";
+import Button from "../form/button.component";
+import ModalComponent from "../modal.component";
+import FeIconLink from "../icons/fe-icon-link.component";
 
-import * as ApiConstants from '../../_constants/api.constant';
-import ActionTableService from '../../_services/actiontable.service';
-import NotificationService from '../../_services/notification.service';
+import * as ApiConstants from "../../_constants/api.constant";
+import ActionTableService from "../../_services/actiontable.service";
+import NotificationService from "../../_services/notification.service";
 
 export default class ActionTable extends React.Component {
   constructor(props) {
@@ -23,7 +23,7 @@ export default class ActionTable extends React.Component {
       isUpdateOpen: false
     };
 
-    this.model = [];
+    this.dataset = [];
     this.updateModel = this.updateModel.bind(this);
     this.toggleAdd = this.toggleAdd.bind(this);
     this.toggleUpdate = this.toggleUpdate.bind(this);
@@ -36,92 +36,76 @@ export default class ActionTable extends React.Component {
 
   componentWillMount() {
     this.actionTableService.getAll().then(response => {
-      this.model = response;
-      this.setState({ data: this.model });
+      this.dataset = response;
+      //this.dataset = [];
+      this.setState({ dataset: this.model });
     });
   }
 
-  updateModel(record) {
-    // Update the corresponding record and change the state
-    //this.model = response;
-    //let data = this.state.data;
-    // TODO update the model, based on uniqueness of the record
-    this.model[this.model.length] = record;
-    this.setState({ data: this.model });
-  }
-
-  toggleAdd() {
-    this.setState(prevState => ({
-      isAddOpen: !prevState.isAddOpen
-    }));
-  }
-  toggleUpdate() {
-    this.setState(prevState => ({
-      isUpdateOpen: !prevState.isUpdateOpen
-    }));
-  }
-
-  onAddAction() {
-    console.log('ActionTableComponent: onAddAction called');
-    // Call API and get the response
-    this.actionTableService.add(this.props.dataProvider).then(response => {
-      // Check the response and close add popup
-      if (response.code === ApiConstants.Result.SUCCESS) {
-        // Add Record to the table.
-        this.updateModel(this.props.dataProvider);
-        this.toggleAdd();
-        this.notificationService.success(response.message);
-      } else {
-        this.notificationService.error(response.message);
-      }
-    });
-  }
-
-  onUpdateAction() {
-    console.log('ActionTableComponent: onUpdateAction called');
-    // Check the response and close update popup
-    let response = this.props.addAction.handler();
-    if (response.code === ApiConstants.Result.SUCCESS) {
-      this.toggleUpdate();
-    } else {
-      console.log('ActionTableComponent: onUpdateAction failed');
-      this.setState({ updateErrorMessage: response.message });
-    }
-  }
-
-  validate() {
-    if (!this.props.config.url) {
-      throw Error("Prop 'config.url' is required");
-    }
-  }
-
-  getHeaderNames() {
-    let headerNames = [];
-    this.props.config.columns.forEach(column => {
-      headerNames.push(<th key={column.name}>{column.name}</th>);
-    });
-    return headerNames;
-  }
-
-  getPermissions() {
+  getRenderedRow(index, data, columnsConfig) {
+    let rowActions = [];
     let actions = this.props.config.actions;
-    return {
-      add: actions.includes('Add') && this.props.addAction,
-      edit: actions.includes('Update') && this.props.updateAction,
-      delete: actions.includes('Delete') && this.props.deleteAction
-    };
+    if (actions.update) {
+      rowActions.push(this.getUpdateLink());
+    }
+    if (actions.delete) {
+      rowActions.push(this.getDeleteLink());
+    }
+    return (
+      <tr row-id={index} key={index}>
+        {this.getRenderedColumns(data, columnsConfig)}
+        <td cell-id="action-cell" key="action-cell">
+          {index === 0 && this.props.config.actions.update
+            ? this.getUpdateModal(this.props.config.actions.update)
+            : ""}
+          {rowActions}
+        </td>
+      </tr>
+    );
   }
 
+  getRenderedColumns(data, columnsConfig) {
+    let columnElements = [];
+    columnsConfig.forEach((columnConfig, index) => {
+      columnElements.push(this.getRenderedColumn(index, data, columnConfig));
+    });
+    return columnElements;
+  }
+
+  getRenderedColumn(index, data, columnConfig) {
+    let renderedElement;
+    if (columnConfig.render) {
+      renderedElement = columnConfig.render(data);
+    } else {
+      renderedElement = data[columnConfig.field];
+    }
+    return (
+      <td cell-id={index} key={index}>
+        {renderedElement}
+      </td>
+    );
+  }
   render() {
     this.validate();
 
     let headerNames = this.getHeaderNames();
-    let permissions = this.getPermissions();
     let headerTools = [];
     let tableDataRows = [];
 
-    if (permissions.add) {
-      headerTools.push(this.getAddContent());
+    let actions = this.props.config.actions;
+    if (actions.add) {
+      headerTools.push(this.getAddContent(actions.add));
+    }
+
+    console.log(this.dataset);
+    if (this.dataset == null || this.dataset.length === 0) {
+      // No records found
+      tableDataRows.push(this.getNoDataContent());
+    } else {
+      let columnsConfig = this.props.config.columns;
+      this.dataset.forEach((row, index) => {
+        tableDataRows.push(this.getRenderedRow(index, row, columnsConfig));
+      });
     }
 
     // let numberOfColumns = this.props.headerNames.length;
@@ -165,52 +149,138 @@ export default class ActionTable extends React.Component {
     );
   }
 
-  getAddContent() {
-    let addAction = this.props.addAction;
+  validate() {
+    if (!this.props.config.url) {
+      throw Error("Prop 'config.url' is required");
+    }
+  }
+
+  getHeaderNames() {
+    let headerNames = [];
+    this.props.config.columns.forEach(column => {
+      headerNames.push(<th key={column.name}>{column.name}</th>);
+    });
+    let actions = this.props.config.actions;
+    if (actions.update || actions.delete) {
+      headerNames.push(<th key="Actions">-</th>);
+    }
+    return headerNames;
+  }
+
+  getAddContent(config) {
+    let triggerName = config.triggerName;
+    let modalTitle = config.modalTitle;
+    let actionName = config.actionName;
+
     return (
       <div key="Add">
-        <Button
-          mode="primary"
-          value={addAction.label ? addAction.label : 'Add'}
-          onClick={this.toggleAdd}
-        />
+        <Button mode="primary" value={triggerName} onClick={this.toggleAdd} />
         <ModalComponent
-          title={addAction.modalTitle}
+          title={modalTitle}
           isOpen={this.state.isAddOpen}
           toggle={this.toggleAdd}
           buttons={[
             <Button type="submit" mode="primary" onClick={this.onAddAction}>
-              Create
+              {actionName}
             </Button>
           ]}
         >
-          {addAction.scene}
+          {config.scene}
         </ModalComponent>
       </div>
     );
   }
-  getUpdateLink() {
-    return <FeIconLink onClick={this.toggleUpdate} name="edit-3" />;
+
+  toggleAdd() {
+    this.setState(prevState => ({
+      isAddOpen: !prevState.isAddOpen
+    }));
   }
-  getUpdateModal() {
-    // Get the selected record and set the data
-    let updateAction = this.props.updateAction;
+  toggleUpdate() {
+    this.setState(prevState => ({
+      isUpdateOpen: !prevState.isUpdateOpen
+    }));
+  }
+
+  getNoDataContent() {
+    return this.getSpannedContent("EMPTYROW", "No data available...");
+  }
+
+  getSpannedContent(key, message) {
+    return (
+      <tr key={key}>
+        <td id={key} colSpan="100%">
+          {message}
+        </td>
+      </tr>
+    );
+  }
+
+  getUpdateLink() {
+    return <FeIconLink key="edit" onClick={this.toggleUpdate} name="edit-3" />;
+  }
+  getDeleteLink() {
+    return <FeIconLink key="delete" name="trash" />;
+  }
+  getUpdateModal(config) {
+    let modalTitle = config.modalTitle;
+    let actionName = config.actionName;
+
     return (
       <ModalComponent
-        title={updateAction.modalTitle}
+        title={modalTitle}
         isOpen={this.state.isUpdateOpen}
         toggle={this.toggleUpdate}
         buttons={[
           <Button type="submit" mode="primary" onClick={this.onUpdateAction}>
-            Update
+            {actionName}
           </Button>
         ]}
       >
-        {updateAction.scene}
+        {config.scene}
       </ModalComponent>
     );
   }
 
+  /////////////////////////////////////////////////////////////////////
+
+  onAddAction() {
+    console.log("ActionTableComponent: onAddAction called");
+    // Call API and get the response
+    this.actionTableService.add(this.props.dataProvider).then(response => {
+      // Check the response and close add popup
+      if (response.code === ApiConstants.Result.SUCCESS) {
+        // Add Record to the table.
+        this.updateModel(this.props.dataProvider);
+        this.toggleAdd();
+        this.notificationService.success(response.message);
+      } else {
+        this.notificationService.error(response.message);
+      }
+    });
+  }
+
+  onUpdateAction() {
+    console.log("ActionTableComponent: onUpdateAction called");
+    // Check the response and close update popup
+    let response = this.props.addAction.handler();
+    if (response.code === ApiConstants.Result.SUCCESS) {
+      this.toggleUpdate();
+    } else {
+      console.log("ActionTableComponent: onUpdateAction failed");
+      this.setState({
+        updateErrorMessage: response.message
+      });
+    }
+  }
+  updateModel(record) {
+    // Update the corresponding record and change the state
+    //this.model = response;
+    //let data = this.state.data;
+    // TODO update the model, based on uniqueness of the record
+    this.model[this.model.length] = record;
+    this.setState({ data: this.model });
+  }
   getDeleteContent() {
     return <FeIconLink url="/" name="trash" />;
   }

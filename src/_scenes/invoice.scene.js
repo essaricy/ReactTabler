@@ -1,100 +1,105 @@
-import React from 'react';
-import AbstractActionTableScene from './abstractactiontable.scene';
+import React from "react";
+import AbstractActionTableScene from "./abstractactiontable.scene";
 
-import FormGroup from '../_components/form/formgroup.component';
-import FormLabel from '../_components/form/formlabel.component';
-import FormText from '../_components/form/formtext.component';
-import * as Urls from '../_constants/url.constant';
+import FormGroup from "../_components/form/formgroup.component";
+import FormLabel from "../_components/form/formlabel.component";
+import FormText from "../_components/form/formtext.component";
+import * as Urls from "../_constants/url.constant";
 
 export default class InvoiceScene extends AbstractActionTableScene {
   constructor(props) {
     super(props);
     this.model = {
-      id: '001407',
-      subject: 'Software Update',
-      client: 'Shiskha',
-      vat: '87956421',
-      created: '24 Aug 2018',
-      status: 'Paid',
-      price: '365'
+      id: "001407",
+      subject: "Software Update",
+      client: "Shiskha",
+      vat: "87956421",
+      created: "24 Aug 2018",
+      status: "Paid",
+      price: "365"
     };
     this.setData = this.setData.bind(this);
   }
 
   getTableConfig() {
     return {
-      title: 'Invoices',
+      title: "Invoices",
       url: Urls.API_URL.BASE + Urls.API_URL.INVOICE,
-      actions: ['Add', 'Update', 'Delete'],
       columns: [
         {
-          name: '#',
-          field: 'id',
-          show: false,
-          sort: false
+          name: "#",
+          field: "id",
+          //show: false,
+          //sort: false,
+          render: data => <span className="text-muted">{data.id}</span>
         },
         {
-          name: 'Subject',
-          field: 'subject'
+          name: "Subject",
+          field: "subject",
+          render: data => (
+            <a href="/page/invoice" className="text-inherit">
+              {data.subject}
+            </a>
+          )
         },
         {
-          name: 'Client',
-          field: 'client'
+          name: "Client",
+          field: "client"
         },
         {
-          name: 'Vat #',
-          field: 'vat'
+          name: "Vat #",
+          field: "vat"
         },
         {
-          name: 'Created',
-          field: 'created'
+          name: "Created",
+          field: "created"
         },
         {
-          name: 'Status',
-          field: 'status'
+          name: "Status",
+          field: "status",
+          render: data => (
+            <span>
+              <span
+                className={"status-icon " + this.getStatusColor(data.status)}
+              />
+              {data.status}
+            </span>
+          )
         },
         {
-          name: 'Price',
-          field: 'price'
+          name: "Price",
+          field: "price",
+          render: data => {
+            return "$" + data.price;
+          }
         }
-      ]
+      ],
+      actions: {
+        add: {
+          modalTitle: "Add New Invoice"
+        },
+        update: {
+          modalTitle: "Update Invoice"
+        },
+        delete: {}
+      }
     };
   }
-  populate(data) {
+
+  getStatusColor(status) {
     let statusColor;
-    if (data.status === 'Paid' || data.status === 'Paid Today') {
-      statusColor = 'bg-success';
-    } else if (data.status === 'Pending') {
-      statusColor = 'bg-danger';
-    } else if (data.status === 'Due in 2 Weeks') {
-      statusColor = 'bg-warning';
+    if (status === "Paid" || status === "Paid Today") {
+      statusColor = "bg-success";
+    } else if (status === "Pending") {
+      statusColor = "bg-danger";
+    } else if (status === "Due in 2 Weeks") {
+      statusColor = "bg-warning";
     } else {
-      statusColor = 'bg-grey';
+      statusColor = "bg-grey";
     }
-
-    return [
-      <span className="text-muted">{data.id}</span>,
-      <a href="/pages/invoices" className="text-inherit">
-        {data.subject}
-      </a>,
-      data.client,
-      data.vat,
-      data.created,
-      <span>
-        <span className={'status-icon ' + statusColor} />
-        {data.status}
-      </span>,
-      '$' + data.price
-    ];
+    return statusColor;
   }
 
-  getAddTitle() {
-    return 'Create new record';
-  }
-
-  getUpdateTitle() {
-    return 'Update record';
-  }
   getAddScene() {
     let data = this.model;
     return (

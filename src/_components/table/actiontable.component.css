@@ -1,3 +1,10 @@
+#EMPTYROW {
+  background-color: #f0f0f0;
+}
+#ERRORROW {
+  color: #ff0000;
+}
+
 .icon {
   color: #9aa0ac !important;
 }
