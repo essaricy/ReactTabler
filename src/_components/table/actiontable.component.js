@@ -9,6 +9,8 @@ import ResponsiveTableComponent from "./responsivetable.component";
 import Button from "../form/button.component";
 import ModalComponent from "../modal.component";
 import FeIconLink from "../icons/fe-icon-link.component";
+import FaIcon from "../icons/fa-icon.component";
+import FeIcon from "../icons/fe-icon.component";
 
 import * as ApiConstants from "../../_constants/api.constant";
 import ActionTableService from "../../_services/actiontable.service";
@@ -22,7 +24,12 @@ export default class ActionTable extends React.Component {
       isAddOpen: false,
       isUpdateOpen: false
     };
+    this.sortBy = {
+      column: "",
+      order: ""
+    };
 
+    // Data is contained in dataset
     this.dataset = [];
     this.updateModel = this.updateModel.bind(this);
     this.toggleAdd = this.toggleAdd.bind(this);
@@ -38,7 +45,7 @@ export default class ActionTable extends React.Component {
     this.actionTableService.getAll().then(response => {
       this.dataset = response;
       //this.dataset = [];
-      this.setState({ dataset: this.model });
+      this.setState({ dataset: this.dataset });
     });
   }
 
@@ -79,8 +86,11 @@ export default class ActionTable extends React.Component {
     } else {
       renderedElement = data[columnConfig.field];
     }
+    let display = {
+      display: columnConfig.hide ? "none" : ""
+    };
     return (
-      <td cell-id={index} key={index}>
+      <td cell-id={index} key={index} style={display}>
         {renderedElement}
       </td>
     );
@@ -97,7 +107,6 @@ export default class ActionTable extends React.Component {
       headerTools.push(this.getAddContent(actions.add));
     }
 
-    console.log(this.dataset);
     if (this.dataset == null || this.dataset.length === 0) {
       // No records found
       tableDataRows.push(this.getNoDataContent());
@@ -157,8 +166,19 @@ export default class ActionTable extends React.Component {
 
   getHeaderNames() {
     let headerNames = [];
-    this.props.config.columns.forEach(column => {
-      headerNames.push(<th key={column.name}>{column.name}</th>);
+    this.props.config.columns.forEach((column, index) => {
+      let classNames =
+        (column.hide ? "at-col-hidden" : "") +
+        (column.sort ? "at-col-sortable" : "");
+      headerNames.push(
+        <th
+          key={column.name}
+          className={classNames}
+          onClick={() => this.sort(column)}
+        >
+          {column.name}
+        </th>
+      );
     });
     let actions = this.props.config.actions;
     if (actions.update || actions.delete) {
@@ -242,6 +262,31 @@ export default class ActionTable extends React.Component {
     );
   }
 
+  sort(column) {
+    if (column.sort === true) {
+      let sortBy = this.sortBy;
+
+      if (sortBy.column === column.name) {
+        let sortOrder = sortBy.order;
+        sortBy.order =
+          sortOrder == null || sortOrder === "" || sortOrder === "DESC"
+            ? "ASC"
+            : "DESC";
+      } else {
+        sortBy.column = column.name;
+        sortBy.order = "ASC";
+      }
+      console.log("sortBy: " + JSON.stringify(sortBy));
+      this.dataset.sort(function(a, b) {
+        if (sortBy.order == "ASC") {
+          return a[column.field] > b[column.field] ? 1 : -1;
+        } else {
+          return a[column.field] < b[column.field] ? 1 : -1;
+        }
+      });
+      this.setState({ dataset: this.dataset });
+    }
+  }
   /////////////////////////////////////////////////////////////////////
 
   onAddAction() {

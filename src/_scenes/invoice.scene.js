@@ -27,15 +27,21 @@ export default class InvoiceScene extends AbstractActionTableScene {
       url: Urls.API_URL.BASE + Urls.API_URL.INVOICE,
       columns: [
         {
+          name: "Id",
+          field: "id",
+          hide: true,
+          render: data => <span className="text-muted">{data.id}</span>
+        },
+        {
           name: "#",
           field: "id",
-          //show: false,
-          //sort: false,
+          sort: true,
           render: data => <span className="text-muted">{data.id}</span>
         },
         {
           name: "Subject",
           field: "subject",
+          sort: true,
           render: data => (
             <a href="/page/invoice" className="text-inherit">
               {data.subject}
@@ -44,7 +50,8 @@ export default class InvoiceScene extends AbstractActionTableScene {
         },
         {
           name: "Client",
-          field: "client"
+          field: "client",
+          sort: true
         },
         {
           name: "Vat #",
@@ -52,11 +59,13 @@ export default class InvoiceScene extends AbstractActionTableScene {
         },
         {
           name: "Created",
-          field: "created"
+          field: "created",
+          sort: true
         },
         {
           name: "Status",
           field: "status",
+          sort: true,
           render: data => (
             <span>
               <span
@@ -69,6 +78,7 @@ export default class InvoiceScene extends AbstractActionTableScene {
         {
           name: "Price",
           field: "price",
+          sort: true,
           render: data => {
             return "$" + data.price;
           }

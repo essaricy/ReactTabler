@@ -67,12 +67,7 @@ export default class AbstractActionTableScene extends SceneContainer {
     return (
       <div className="row">
         <div className="col-12">
-          <ActionTable
-            config={this.tableConfig}
-            populate={this.populate}
-            dataProvider={this.model}
-            headerNames={TableMock.HeaderNamesAction}
-          />
+          <ActionTable config={this.tableConfig} dataProvider={this.model} />
         </div>
       </div>
     );

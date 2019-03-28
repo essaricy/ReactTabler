@@ -22,3 +22,13 @@ a.icon {
 a.icon:hover {
   color: #495057 !important;
 }
+
+.at-col-hidden {
+  display: none;
+}
+.at-col-sortable {
+  cursor: pointer;
+}
+/* .at-col-sortable::after {
+  content: '<i class= "fa fa-arrows-v" / >';
+} */
