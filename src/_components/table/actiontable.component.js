@@ -1,20 +1,20 @@
-import React from "react";
-import PropTypes from "prop-types";
-import "./actiontable.component.css";
+import React from 'react';
+//import PropTypes from "prop-types";
+import './actiontable.component.css';
 
-import CardComponent from "../card/card.component";
-import CardHeaderComponent from "../card/cardheader.component";
-import CardHeaderToolsComponent from "../card/cardheadertools.component";
-import ResponsiveTableComponent from "./responsivetable.component";
-import Button from "../form/button.component";
-import ModalComponent from "../modal.component";
-import FeIconLink from "../icons/fe-icon-link.component";
-import FaIcon from "../icons/fa-icon.component";
-import FeIcon from "../icons/fe-icon.component";
+import CardComponent from '../card/card.component';
+import CardHeaderComponent from '../card/cardheader.component';
+import CardHeaderToolsComponent from '../card/cardheadertools.component';
+import ResponsiveTableComponent from './responsivetable.component';
+import Button from '../form/button.component';
+import ModalComponent from '../modal.component';
+import FeIconLink from '../icons/fe-icon-link.component';
 
-import * as ApiConstants from "../../_constants/api.constant";
-import ActionTableService from "../../_services/actiontable.service";
-import NotificationService from "../../_services/notification.service";
+import * as ApiConstants from '../../_constants/api.constant';
+import * as ActionTableConstants from '../../_constants/actiontable.constant';
+
+import ActionTableService from '../../_services/actiontable.service';
+import NotificationService from '../../_services/notification.service';
 
 export default class ActionTable extends React.Component {
   constructor(props) {
@@ -25,18 +25,27 @@ export default class ActionTable extends React.Component {
       isUpdateOpen: false
     };
     this.sortBy = {
-      column: "",
-      order: ""
+      column: null,
+      order: null
     };
 
     // Data is contained in dataset
     this.dataset = [];
-    this.updateModel = this.updateModel.bind(this);
+    this.validate = this.validate.bind(this);
+    this.getHeaderNames = this.getHeaderNames.bind(this);
+
+    this.getAddContent = this.getAddContent.bind(this);
+    this.getUpdateLink = this.getUpdateLink.bind(this);
+    this.getUpdateModal = this.getUpdateModal.bind(this);
+    this.getDeleteLink = this.getDeleteLink.bind(this);
+
     this.toggleAdd = this.toggleAdd.bind(this);
     this.toggleUpdate = this.toggleUpdate.bind(this);
-
+    this.sort = this.sort.bind(this);
     this.onAddAction = this.onAddAction.bind(this);
     this.onUpdateAction = this.onUpdateAction.bind(this);
+    //this.onDeleteAction = this.onDeleteAction.bind(this);
+
     this.actionTableService = new ActionTableService(this.props.config.url);
     this.notificationService = NotificationService.getInstance();
   }
@@ -49,52 +58,6 @@ export default class ActionTable extends React.Component {
     });
   }
 
-  getRenderedRow(index, data, columnsConfig) {
-    let rowActions = [];
-    let actions = this.props.config.actions;
-    if (actions.update) {
-      rowActions.push(this.getUpdateLink());
-    }
-    if (actions.delete) {
-      rowActions.push(this.getDeleteLink());
-    }
-    return (
-      <tr row-id={index} key={index}>
-        {this.getRenderedColumns(data, columnsConfig)}
-        <td cell-id="action-cell" key="action-cell">
-          {index === 0 && this.props.config.actions.update
-            ? this.getUpdateModal(this.props.config.actions.update)
-            : ""}
-          {rowActions}
-        </td>
-      </tr>
-    );
-  }
-
-  getRenderedColumns(data, columnsConfig) {
-    let columnElements = [];
-    columnsConfig.forEach((columnConfig, index) => {
-      columnElements.push(this.getRenderedColumn(index, data, columnConfig));
-    });
-    return columnElements;
-  }
-
-  getRenderedColumn(index, data, columnConfig) {
-    let renderedElement;
-    if (columnConfig.render) {
-      renderedElement = columnConfig.render(data);
-    } else {
-      renderedElement = data[columnConfig.field];
-    }
-    let display = {
-      display: columnConfig.hide ? "none" : ""
-    };
-    return (
-      <td cell-id={index} key={index} style={display}>
-        {renderedElement}
-      </td>
-    );
-  }
   render() {
     this.validate();
 
@@ -116,38 +79,6 @@ export default class ActionTable extends React.Component {
         tableDataRows.push(this.getRenderedRow(index, row, columnsConfig));
       });
     }
-
-    // let numberOfColumns = this.props.headerNames.length;
-
-    // if (this.model == null || this.model.length === 0) {
-    //   // No records found
-    //   tableDataRows.push(this.getNoDataContent(numberOfColumns));
-    // } else {
-    //   this.model.forEach((rowData, rowIndex) => {
-    //     let columns = [];
-    //     tableDataRows.push(
-    //       <tr row-id={rowIndex} key={rowIndex}>
-    //         {this.props.populate(rowData).forEach((cellData, cellIndex) =>
-    //           columns.push(
-    //             <td cell-id={cellIndex} key={cellIndex}>
-    //               {cellData}
-    //             </td>
-    //           )
-    //         )}
-    //         {columns}
-    //         <td cell-id={numberOfColumns - 1} key={numberOfColumns - 1}>
-    //           {this.state.allowEdit ? this.getUpdateLink() : ""}
-    //           {rowIndex === 0 ? this.getUpdateModal() : ""}
-    //           {this.state.allowDelete ? this.getDeleteContent() : ""}
-    //         </td>
-    //       </tr>
-    //     );
-    //   });
-    // }
-    // Add "+" button if action contains "Add"
-    // if (this.state.allowAdd) {
-    //   actionButtons.push(this.getAddContent());
-    // }
     return (
       <CardComponent>
         <CardHeaderComponent title={this.props.config.title}>
@@ -168,8 +99,8 @@ export default class ActionTable extends React.Component {
     let headerNames = [];
     this.props.config.columns.forEach((column, index) => {
       let classNames =
-        (column.hide ? "at-col-hidden" : "") +
-        (column.sort ? "at-col-sortable" : "");
+        (column.hide ? 'at-col-hidden' : '') +
+        (column.sort ? 'at-col-sortable' : '');
       headerNames.push(
         <th
           key={column.name}
@@ -192,6 +123,18 @@ export default class ActionTable extends React.Component {
     let modalTitle = config.modalTitle;
     let actionName = config.actionName;
 
+    let content;
+    if (this.state.isAddOpen) {
+      content = config.scene({
+        id: null,
+        subject: null,
+        client: null,
+        vat: null,
+        created: null,
+        status: null,
+        price: null
+      });
+    }
     return (
       <div key="Add">
         <Button mode="primary" value={triggerName} onClick={this.toggleAdd} />
@@ -205,7 +148,7 @@ export default class ActionTable extends React.Component {
             </Button>
           ]}
         >
-          {config.scene}
+          {content}
         </ModalComponent>
       </div>
     );
@@ -223,7 +166,7 @@ export default class ActionTable extends React.Component {
   }
 
   getNoDataContent() {
-    return this.getSpannedContent("EMPTYROW", "No data available...");
+    return this.getSpannedContent('EMPTYROW', 'No data available...');
   }
 
   getSpannedContent(key, message) {
@@ -236,6 +179,53 @@ export default class ActionTable extends React.Component {
     );
   }
 
+  getRenderedRow(index, data, columnsConfig) {
+    let rowActions = [];
+    let actions = this.props.config.actions;
+    if (actions.update) {
+      rowActions.push(this.getUpdateLink());
+    }
+    if (actions.delete) {
+      rowActions.push(this.getDeleteLink());
+    }
+    return (
+      <tr row-id={index} key={index}>
+        {this.getRenderedColumns(data, columnsConfig)}
+        <td cell-id="action-cell" key="action-cell">
+          {index === 0 && this.props.config.actions.update
+            ? this.getUpdateModal(this.props.config.actions.update)
+            : ''}
+          {rowActions}
+        </td>
+      </tr>
+    );
+  }
+
+  getRenderedColumns(data, columnsConfig) {
+    let columnElements = [];
+    columnsConfig.forEach((columnConfig, index) => {
+      columnElements.push(this.getRenderedColumn(index, data, columnConfig));
+    });
+    return columnElements;
+  }
+
+  getRenderedColumn(index, data, columnConfig) {
+    let renderedElement;
+    if (columnConfig.render) {
+      renderedElement = columnConfig.render(data);
+    } else {
+      renderedElement = data[columnConfig.field];
+    }
+    let style = {
+      display: columnConfig.hide ? 'none' : ''
+    };
+    return (
+      <td cell-id={index} key={index} style={style}>
+        {renderedElement}
+      </td>
+    );
+  }
+
   getUpdateLink() {
     return <FeIconLink key="edit" onClick={this.toggleUpdate} name="edit-3" />;
   }
@@ -245,7 +235,18 @@ export default class ActionTable extends React.Component {
   getUpdateModal(config) {
     let modalTitle = config.modalTitle;
     let actionName = config.actionName;
-
+    let content;
+    if (this.state.isUpdateOpen) {
+      content = config.scene({
+        id: '001407',
+        subject: 'Software Update',
+        client: 'Shiskha',
+        vat: '87956421',
+        created: '24 Aug 2018',
+        status: 'Paid',
+        price: '365'
+      });
+    }
     return (
       <ModalComponent
         title={modalTitle}
@@ -257,7 +258,7 @@ export default class ActionTable extends React.Component {
           </Button>
         ]}
       >
-        {config.scene}
+        {content}
       </ModalComponent>
     );
   }
@@ -269,16 +270,16 @@ export default class ActionTable extends React.Component {
       if (sortBy.column === column.name) {
         let sortOrder = sortBy.order;
         sortBy.order =
-          sortOrder == null || sortOrder === "" || sortOrder === "DESC"
-            ? "ASC"
-            : "DESC";
+          sortOrder == null || sortOrder === ActionTableConstants.SortOrder.DESC
+            ? ActionTableConstants.SortOrder.ASC
+            : ActionTableConstants.SortOrder.DESC;
       } else {
         sortBy.column = column.name;
-        sortBy.order = "ASC";
+        sortBy.order = ActionTableConstants.SortOrder.ASC;
       }
-      console.log("sortBy: " + JSON.stringify(sortBy));
+      console.log('sortBy: ' + JSON.stringify(sortBy));
       this.dataset.sort(function(a, b) {
-        if (sortBy.order == "ASC") {
+        if (sortBy.order === ActionTableConstants.SortOrder.ASC) {
           return a[column.field] > b[column.field] ? 1 : -1;
         } else {
           return a[column.field] < b[column.field] ? 1 : -1;
@@ -290,7 +291,7 @@ export default class ActionTable extends React.Component {
   /////////////////////////////////////////////////////////////////////
 
   onAddAction() {
-    console.log("ActionTableComponent: onAddAction called");
+    console.log('ActionTableComponent: onAddAction called');
     // Call API and get the response
     this.actionTableService.add(this.props.dataProvider).then(response => {
       // Check the response and close add popup
@@ -306,13 +307,13 @@ export default class ActionTable extends React.Component {
   }
 
   onUpdateAction() {
-    console.log("ActionTableComponent: onUpdateAction called");
+    console.log('ActionTableComponent: onUpdateAction called');
     // Check the response and close update popup
     let response = this.props.addAction.handler();
     if (response.code === ApiConstants.Result.SUCCESS) {
       this.toggleUpdate();
     } else {
-      console.log("ActionTableComponent: onUpdateAction failed");
+      console.log('ActionTableComponent: onUpdateAction failed');
       this.setState({
         updateErrorMessage: response.message
       });
