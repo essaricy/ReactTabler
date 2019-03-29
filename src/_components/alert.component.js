@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import AlertConstants from "../_constants/alert.constant";
+//import AlertConstants from "../_constants/alert.constant";
 
 export default class AlertComponent extends React.Component {
   static propTypes = {

@@ -1,46 +1,37 @@
-import React from 'react';
-import AbstractActionTableScene from './abstractactiontable.scene';
+import React from "react";
+import AbstractActionTableScene from "./abstractactiontable.scene";
 
-import FormGroup from '../_components/form/formgroup.component';
-import FormLabel from '../_components/form/formlabel.component';
-import FormText from '../_components/form/formtext.component';
-import * as Urls from '../_constants/url.constant';
+import FormGroup from "../_components/form/formgroup.component";
+import FormLabel from "../_components/form/formlabel.component";
+import FormText from "../_components/form/formtext.component";
+import * as Urls from "../_constants/url.constant";
 
 export default class InvoiceScene extends AbstractActionTableScene {
   constructor(props) {
     super(props);
-    // this.model = {
-    //   id: "001407",
-    //   subject: "Software Update",
-    //   client: "Shiskha",
-    //   vat: "87956421",
-    //   created: "24 Aug 2018",
-    //   status: "Paid",
-    //   price: "365"
-    // };
-    //this.setData = this.setData.bind(this);
+    this.modalData = {};
   }
 
   getTableConfig() {
     return {
-      title: 'Invoices',
+      title: "Invoices",
       url: Urls.API_URL.BASE + Urls.API_URL.INVOICE,
       columns: [
         {
-          name: 'Id',
-          field: 'id',
+          name: "Id",
+          field: "id",
           hide: true,
           render: data => <span className="text-muted">{data.id}</span>
         },
         {
-          name: '#',
-          field: 'id',
+          name: "#",
+          field: "id",
           sort: true,
           render: data => <span className="text-muted">{data.id}</span>
         },
         {
-          name: 'Subject',
-          field: 'subject',
+          name: "Subject",
+          field: "subject",
           sort: true,
           render: data => (
             <a href="/page/invoice" className="text-inherit">
@@ -49,47 +40,47 @@ export default class InvoiceScene extends AbstractActionTableScene {
           )
         },
         {
-          name: 'Client',
-          field: 'client',
+          name: "Client",
+          field: "client",
           sort: true
         },
         {
-          name: 'Vat #',
-          field: 'vat'
+          name: "Vat #",
+          field: "vat"
         },
         {
-          name: 'Created',
-          field: 'created',
+          name: "Created",
+          field: "created",
           sort: true
         },
         {
-          name: 'Status',
-          field: 'status',
+          name: "Status",
+          field: "status",
           sort: true,
           render: data => (
             <span>
               <span
-                className={'status-icon ' + this.getStatusColor(data.status)}
+                className={"status-icon " + this.getStatusColor(data.status)}
               />
               {data.status}
             </span>
           )
         },
         {
-          name: 'Price',
-          field: 'price',
+          name: "Price",
+          field: "price",
           sort: true,
           render: data => {
-            return '$' + data.price;
+            return "$" + data.price;
           }
         }
       ],
       actions: {
         add: {
-          modalTitle: 'Add New Invoice'
+          modalTitle: "Add New Invoice"
         },
         update: {
-          modalTitle: 'Update Invoice'
+          modalTitle: "Update Invoice"
         },
         delete: {}
       }
@@ -98,20 +89,25 @@ export default class InvoiceScene extends AbstractActionTableScene {
 
   getStatusColor(status) {
     let statusColor;
-    if (status === 'Paid' || status === 'Paid Today') {
-      statusColor = 'bg-success';
-    } else if (status === 'Pending') {
-      statusColor = 'bg-danger';
-    } else if (status === 'Due in 2 Weeks') {
-      statusColor = 'bg-warning';
+    if (status === "Paid" || status === "Paid Today") {
+      statusColor = "bg-success";
+    } else if (status === "Pending") {
+      statusColor = "bg-danger";
+    } else if (status === "Due in 2 Weeks") {
+      statusColor = "bg-warning";
     } else {
-      statusColor = 'bg-grey';
+      statusColor = "bg-grey";
     }
     return statusColor;
   }
 
-  getModalScene(model) {
-    console.log('getModalScene ======>' + JSON.stringify(model));
+  getModelId(model) {
+    return model.id;
+  }
+
+  getModalScene(data) {
+    //this.resetModalData(data);
+    console.log("getModalScene ======>" + JSON.stringify(data));
     return (
       <div>
         <FormGroup>
@@ -120,62 +116,59 @@ export default class InvoiceScene extends AbstractActionTableScene {
             id="id"
             required
             autoFocus
-            defaultValue={model.id}
-            //onChange={this.setData}
+            defaultValue={data.id}
+            onChange={this.setModalDataById}
           />
         </FormGroup>
         <FormGroup>
           <FormLabel>Subject</FormLabel>
           <FormText
             id="subject"
-            defaultValue={model.subject}
-            // onChange={this.setData}
+            defaultValue={data.subject}
+            onChange={this.setModalDataById}
           />
         </FormGroup>
         <FormGroup>
           <FormLabel>Client</FormLabel>
           <FormText
             id="client"
-            defaultValue={model.client}
-            // onChange={this.setData}
+            defaultValue={data.client}
+            onChange={this.setModalDataById}
           />
         </FormGroup>
         <FormGroup>
           <FormLabel>VAT#</FormLabel>
-          <FormText id="vat" defaultValue={model.vat} />
+          <FormText
+            id="vat"
+            defaultValue={data.vat}
+            onChange={this.setModalDataById}
+          />
         </FormGroup>
         <FormGroup>
           <FormLabel>Created</FormLabel>
           <FormText
             id="created"
-            defaultValue={model.created}
-            // onChange={this.setData}
+            defaultValue={data.created}
+            onChange={this.setModalDataById}
           />
         </FormGroup>
         <FormGroup>
           <FormLabel>Status</FormLabel>
           <FormText
             id="status"
-            defaultValue={model.status}
-            // onChange={this.setData}
+            defaultValue={data.status}
+            onChange={this.setModalDataById}
           />
         </FormGroup>
         <FormGroup>
           <FormLabel>Price</FormLabel>
           <FormText
             id="price"
-            defaultValue={model.price}
-            // onChange={this.setData}
+            defaultValue={data.price}
+            onChange={this.setModalDataById}
           />
         </FormGroup>
       </div>
     );
   }
-
-  // setData(e) {
-  //   let id = e.target.id;
-  //   let value = e.target.value;
-  //   this.model[id] = value;
-  //   //this.setState({ [id]: value });
-  // }
 }
