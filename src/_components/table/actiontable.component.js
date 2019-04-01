@@ -1,5 +1,9 @@
 import React from "react";
-//import PropTypes from "prop-types";
+import PropTypes from "prop-types";
+import {
+  ActionConfigComponentProtoType,
+  ColumnConfigProtoType
+} from "../../_prototypes/actiontable.prototype";
 import "./actiontable.component.css";
 
 import CardComponent from "../card/card.component";
@@ -33,8 +37,8 @@ export default class ActionTable extends React.Component {
 
     // Data is contained in dataset
     this.dataset = [];
-    this.validate = this.validate.bind(this);
     this.getHeaderNames = this.getHeaderNames.bind(this);
+    this.hasActions = this.hasActions.bind(this);
 
     this.getAddContent = this.getAddContent.bind(this);
     this.getUpdateLink = this.getUpdateLink.bind(this);
@@ -48,14 +52,13 @@ export default class ActionTable extends React.Component {
     this.onUpdateAction = this.onUpdateAction.bind(this);
     this.onDeleteAction = this.onDeleteAction.bind(this);
 
-    this.actionTableService = new ActionTableService(this.props.config.url);
+    this.actionTableService = new ActionTableService(this.props.url);
     this.notificationService = NotificationService.getInstance();
   }
 
   componentWillMount() {
     this.actionTableService.getAll().then(response => {
       this.dataset = response;
-      //this.dataset = [];
       this.setState({
         dataset: this.dataset,
         isDataLoading: false
@@ -66,14 +69,12 @@ export default class ActionTable extends React.Component {
   }
 
   render() {
-    this.validate();
-
     let headerNames = this.getHeaderNames();
     let headerTools = [];
     let tableDataRows = [];
 
-    let actions = this.props.config.actions;
-    if (actions.add) {
+    let actions = this.props.actions;
+    if (actions != null && actions.add) {
       headerTools.push(this.getAddContent(actions.add));
     }
 
@@ -81,14 +82,14 @@ export default class ActionTable extends React.Component {
       // No records found
       tableDataRows.push(this.getNoDataContent());
     } else {
-      let columnsConfig = this.props.config.columns;
+      let columnsConfig = this.props.columns;
       this.dataset.forEach((row, index) => {
         tableDataRows.push(this.getRenderedRow(index, row, columnsConfig));
       });
     }
     return (
       <CardComponent>
-        <CardHeaderComponent title={this.props.config.title}>
+        <CardHeaderComponent title={this.props.title}>
           <CardHeaderToolsComponent>{headerTools}</CardHeaderToolsComponent>
         </CardHeaderComponent>
         <CardDimmer active={this.state.isDataLoading}>
@@ -101,15 +102,9 @@ export default class ActionTable extends React.Component {
     );
   }
 
-  validate() {
-    if (!this.props.config.url) {
-      throw Error("Prop 'config.url' is required");
-    }
-  }
-
   getHeaderNames() {
     let headerNames = [];
-    this.props.config.columns.forEach((column, index) => {
+    this.props.columns.forEach((column, index) => {
       let classNames =
         (column.hide ? "at-col-hidden" : "") +
         (column.sort ? "at-col-sortable" : "");
@@ -123,11 +118,15 @@ export default class ActionTable extends React.Component {
         </th>
       );
     });
-    let actions = this.props.config.actions;
-    if (actions.update || actions.delete) {
+    if (this.hasActions()) {
       headerNames.push(<th key="Actions">-</th>);
     }
     return headerNames;
+  }
+
+  hasActions() {
+    let actions = this.props.actions;
+    return actions != null && (actions.update || actions.delete);
   }
 
   getAddContent(config) {
@@ -137,15 +136,16 @@ export default class ActionTable extends React.Component {
 
     let content;
     if (this.state.isAddOpen) {
-      content = config.scene({
-        id: null,
-        subject: null,
-        client: null,
-        vat: null,
-        created: null,
-        status: null,
-        price: null
-      });
+      let testData = {
+        id: 0,
+        subject: "Test subject",
+        client: "Test client",
+        vat: "87956421",
+        created: "24 Aug 2018",
+        status: "Pending",
+        price: 10
+      };
+      content = config.content(testData);
     }
     return (
       <div key="Add">
@@ -194,22 +194,29 @@ export default class ActionTable extends React.Component {
 
   getRenderedRow(index, data, columnsConfig) {
     let rowActions = [];
-    let actions = this.props.config.actions;
-    if (actions.update) {
-      rowActions.push(this.getUpdateLink(index));
-    }
-    if (actions.delete) {
-      rowActions.push(this.getDeleteLink(index));
+    let actionColumnContent;
+    let actions = this.props.actions;
+
+    if (this.hasActions()) {
+      if (actions.update) {
+        rowActions.push(this.getUpdateLink(index));
+      }
+      if (actions.delete) {
+        rowActions.push(this.getDeleteLink(index));
+      }
+      actionColumnContent = (
+        <td cell-id="action-cell" key="action-cell">
+          {index === 0 && actions.update
+            ? this.getUpdateModal(actions.update)
+            : ""}
+          {rowActions}
+        </td>
+      );
     }
     return (
       <tr row-id={index} key={index}>
         {this.getRenderedColumns(data, columnsConfig)}
-        <td cell-id="action-cell" key="action-cell">
-          {index === 0 && this.props.config.actions.update
-            ? this.getUpdateModal(this.props.config.actions.update)
-            : ""}
-          {rowActions}
-        </td>
+        {actionColumnContent}
       </tr>
     );
   }
@@ -265,7 +272,7 @@ export default class ActionTable extends React.Component {
     let content;
     if (this.state.isUpdateOpen) {
       // Get selected record and data
-      content = config.scene(this.dataset[this.state.actionRowIndex]);
+      content = config.content(this.dataset[this.state.actionRowIndex]);
     }
     return (
       <ModalComponent
@@ -392,4 +399,13 @@ export default class ActionTable extends React.Component {
   }
 }
 
-ActionTable.propTypes = {};
+ActionTable.propTypes = {
+  title: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+  columns: PropTypes.arrayOf(PropTypes.exact(ColumnConfigProtoType)).isRequired,
+  actions: PropTypes.exact({
+    add: PropTypes.exact(ActionConfigComponentProtoType),
+    update: PropTypes.exact(ActionConfigComponentProtoType),
+    delete: PropTypes.any
+  })
+};

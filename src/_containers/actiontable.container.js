@@ -1,12 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {
+  ActionConfigContainerProtoType,
+  ColumnConfigProtoType
+} from "../_prototypes/actiontable.prototype";
 import ActionTable from "../_components/table/actiontable.component";
 
-export default class ActionTableContainer {
+export default class ActionTableContainer extends React.Component {
   constructor(props) {
     super(props);
 
-    // let error = null;
+    if (props.columns.length === 0) {
+      throw Error("At least one column must be configured");
+    }
+    // Populate action defaults
+    this.setActionDefault("add", "Add", "ADD NEW RECORD", "Submit");
+    this.setActionDefault("update", "Update", "UPDATE RECORD", "Save");
 
     // this.getTableConfig = this.getTableConfig.bind(this);
     // this.getModalScene = this.getModalScene.bind(this);
@@ -21,44 +30,24 @@ export default class ActionTableContainer {
   //   throw new Error("Subclasses must implement getTableConfig method");
   // }
 
-  // setActionDefaults() {
-  //   // Populate action defaults
-  //   let actions = this.tableConfig.actions;
-  //   if (actions) {
-  //     if (actions.add) {
-  //       actions.add.triggerName = actions.add.triggerName
-  //         ? actions.add.triggerName
-  //         : "Add";
-  //       actions.add.modalTitle = actions.add.modalTitle
-  //         ? actions.add.modalTitle
-  //         : "Add new record";
-  //       actions.add.scene = this.getModalScene;
-  //       actions.add.actionName = actions.add.actionName
-  //         ? actions.add.actionName
-  //         : "Submit";
-  //     }
-  //   }
-  //   if (actions.update) {
-  //     actions.update.triggerName = actions.update.triggerName
-  //       ? actions.update.triggerName
-  //       : "Update";
-  //     actions.update.modalTitle = actions.update.modalTitle
-  //       ? actions.update.modalTitle
-  //       : "Update record";
-  //     actions.update.scene = this.getModalScene;
-  //     actions.update.actionName = actions.update.actionName
-  //       ? actions.update.actionName
-  //       : "Update";
-  //   }
-  // }
-
-  // getModalScene() {
-  //   throw Error("Must implement abstract method getModalScene");
-  // }
-
-  // getModelId(model) {
-  //   throw Error("Must implement abstract method getModelId");
-  // }
+  setActionDefault(key, triggerName, modalTitle, actionName) {
+    let actions = this.props.actions;
+    let hasActions = actions != null && (actions.update || actions.delete);
+    if (hasActions) {
+      let action = this.props.actions[key];
+      if (action != null) {
+        if (!action.triggerName) {
+          action.triggerName = triggerName;
+        }
+        if (!action.modalTitle) {
+          action.modalTitle = modalTitle;
+        }
+        if (!action.actionName) {
+          action.actionName = actionName;
+        }
+      }
+    }
+  }
 
   // setModalDataById(e) {
   //   let id = e.target.id;
@@ -82,9 +71,10 @@ export default class ActionTableContainer {
         <div className="row">
           <div className="col-12">
             <ActionTable
-              config={this.tableConfig}
-              modalData={this.state.modalData}
-              getModelId={this.getModelId}
+              title={this.props.title}
+              url={this.props.url}
+              columns={this.props.columns}
+              actions={this.props.actions}
             />
           </div>
         </div>
@@ -95,6 +85,15 @@ export default class ActionTableContainer {
 
 ActionTableContainer.propTypes = {
   title: PropTypes.string.isRequired,
-  url: PropTypes.url.isRequired,
-  columns: null
+  url: PropTypes.string.isRequired,
+  columns: PropTypes.arrayOf(PropTypes.exact(ColumnConfigProtoType)).isRequired,
+  actions: PropTypes.exact({
+    add: PropTypes.exact(ActionConfigContainerProtoType),
+    update: PropTypes.exact(ActionConfigContainerProtoType),
+    delete: PropTypes.any
+  })
+};
+
+ActionTableContainer.defaultProps = {
+  title: "Action Table Title"
 };
