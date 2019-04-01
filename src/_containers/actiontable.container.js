@@ -1,34 +1,24 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   ActionConfigContainerProtoType,
   ColumnConfigProtoType
-} from "../_prototypes/actiontable.prototype";
-import ActionTable from "../_components/table/actiontable.component";
+} from '../_prototypes/actiontable.prototype';
+import ActionTable from '../_components/table/actiontable.component';
 
 export default class ActionTableContainer extends React.Component {
   constructor(props) {
     super(props);
 
     if (props.columns.length === 0) {
-      throw Error("At least one column must be configured");
+      throw Error('At least one column must be configured');
     }
+    this.setActionDefault = this.setActionDefault.bind(this);
+
     // Populate action defaults
-    this.setActionDefault("add", "Add", "ADD NEW RECORD", "Submit");
-    this.setActionDefault("update", "Update", "UPDATE RECORD", "Save");
-
-    // this.getTableConfig = this.getTableConfig.bind(this);
-    // this.getModalScene = this.getModalScene.bind(this);
-    // this.setModalDataById = this.setModalDataById.bind(this);
-    // this.setModalDataByName = this.setModalDataByName.bind(this);
-
-    // this.tableConfig = this.getTableConfig();
-    // this.setActionDefaults();
+    this.setActionDefault('add', 'Add', 'ADD NEW RECORD', 'Submit');
+    this.setActionDefault('update', 'Update', 'UPDATE RECORD', 'Save');
   }
-
-  // getTableConfig() {
-  //   throw new Error("Subclasses must implement getTableConfig method");
-  // }
 
   setActionDefault(key, triggerName, modalTitle, actionName) {
     let actions = this.props.actions;
@@ -48,19 +38,6 @@ export default class ActionTableContainer extends React.Component {
       }
     }
   }
-
-  // setModalDataById(e) {
-  //   let id = e.target.id;
-  //   let value = e.target.value;
-  //   console.log(id + "=" + value);
-  //   this.modalData[id] = value;
-  // }
-
-  // setModalDataByName(e) {
-  //   let name = e.target.name;
-  //   let value = e.target.value;
-  //   this.modalData[name] = value;
-  // }
 
   render() {
     return (
@@ -95,5 +72,5 @@ ActionTableContainer.propTypes = {
 };
 
 ActionTableContainer.defaultProps = {
-  title: "Action Table Title"
+  title: 'Action Table Title'
 };

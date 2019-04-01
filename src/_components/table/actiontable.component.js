@@ -64,8 +64,6 @@ export default class ActionTable extends React.Component {
         dataset: this.dataset,
         isDataLoading: false
       });
-      let index = this.dataset.filter(x => x.id === '1');
-      console.log('Filterd record id: ' + JSON.stringify(index));
     });
   }
 
@@ -153,17 +151,18 @@ export default class ActionTable extends React.Component {
     let actionName = config.actionName;
 
     let content;
+    // TODO added for testing. remove later
+    let modalData = {
+      id: 0,
+      subject: 'Test subject',
+      client: 'Test client',
+      vat: '87956421',
+      created: '24 Aug 2018',
+      status: 'Pending',
+      price: 10
+    };
     if (this.state.isAddOpen) {
-      let testData = {
-        id: 0,
-        subject: 'Test subject',
-        client: 'Test client',
-        vat: '87956421',
-        created: '24 Aug 2018',
-        status: 'Pending',
-        price: 10
-      };
-      content = config.content(testData);
+      content = config.content(modalData);
     }
     return (
       <div key="Add">
@@ -173,7 +172,11 @@ export default class ActionTable extends React.Component {
           isOpen={this.state.isAddOpen}
           toggle={this.toggleAdd}
           buttons={[
-            <Button type="submit" mode="primary" onClick={this.onAddAction}>
+            <Button
+              type="submit"
+              mode="primary"
+              onClick={() => this.onAddAction(modalData)}
+            >
               {actionName}
             </Button>
           ]}
@@ -288,9 +291,10 @@ export default class ActionTable extends React.Component {
     let modalTitle = config.modalTitle;
     let actionName = config.actionName;
     let content;
+    let modalData = this.dataset[this.state.actionRowIndex];
     if (this.state.isUpdateOpen) {
       // Get selected record and data
-      content = config.content(this.dataset[this.state.actionRowIndex]);
+      content = config.content(modalData);
     }
     return (
       <ModalComponent
@@ -298,7 +302,11 @@ export default class ActionTable extends React.Component {
         isOpen={this.state.isUpdateOpen}
         toggle={this.toggleUpdate}
         buttons={[
-          <Button type="submit" mode="primary" onClick={this.onUpdateAction}>
+          <Button
+            type="submit"
+            mode="primary"
+            onClick={() => this.onUpdateAction(modalData)}
+          >
             {actionName}
           </Button>
         ]}
@@ -334,16 +342,14 @@ export default class ActionTable extends React.Component {
     }
   }
 
-  onAddAction() {
+  onAddAction(modalData) {
     console.log('ActionTableComponent: onAddAction called');
-    console.log(this.props.modalData);
-
     // Call API and get the response
-    this.actionTableService.add(this.props.modalData).then(response => {
+    this.actionTableService.add(modalData).then(response => {
       // Check the response and close add popup
       if (response.code === ApiConstants.Result.SUCCESS) {
         // Add Record to the table.
-        this.addToDataset(this.props.modalData, response);
+        this.addToDataset(modalData, response);
         this.toggleAdd();
         this.notificationService.success(response.message);
       } else {
@@ -352,34 +358,32 @@ export default class ActionTable extends React.Component {
     });
   }
 
-  onUpdateAction() {
+  onUpdateAction(modalData) {
     console.log('ActionTableComponent: onUpdateAction called');
-    let modelId = this.props.getModelId(this.props.modalData);
+    let modelId = modalData.id;
     // Call API and get the response
-    this.actionTableService
-      .update(modelId, this.props.modalData)
-      .then(response => {
-        // Check the response and close add popup
-        if (response.code === ApiConstants.Result.SUCCESS) {
-          // Update Record to the table.
-          this.updateDataset(this.props.modalData, response);
-          this.toggleUpdate();
-          this.notificationService.success(response.message);
-        } else {
-          this.notificationService.error(response.message);
-        }
-      });
+    this.actionTableService.update(modelId, modalData).then(response => {
+      // Check the response and close add popup
+      if (response.code === ApiConstants.Result.SUCCESS) {
+        // Update Record to the table.
+        this.updateDataset(modalData, response);
+        this.toggleUpdate();
+        this.notificationService.success(response.message);
+      } else {
+        this.notificationService.error(response.message);
+      }
+    });
   }
 
   onDeleteAction(index) {
     console.log('ActionTableComponent: onDeleteAction called at: ' + index);
-    let modelId = this.props.getModelId(this.dataset[index]);
+    let modelId = this.dataset[index].id;
     // Call API and get the response
     this.actionTableService.delete(modelId).then(response => {
       // Check the response and close add popup
       if (response.code === ApiConstants.Result.SUCCESS) {
         // Add Record to the table.
-        this.deleteFromDataset(modelId);
+        this.deleteFromDataset(index);
         this.notificationService.success(response.message);
       } else {
         this.notificationService.error(response.message);
@@ -395,6 +399,7 @@ export default class ActionTable extends React.Component {
     }
     console.log(this.dataset);
   }
+
   updateDataset(modalData, response) {
     let index = this.dataset.findIndex(item => item.id === modalData.id);
     console.log(
@@ -407,13 +412,10 @@ export default class ActionTable extends React.Component {
     }
   }
 
-  deleteFromDataset(modelId) {
-    let index = this.dataset.findIndex(item => item.id === modelId);
-    console.log(
-      'will delete from dataset where id: ' + modelId + ' at index: ' + index
-    );
+  deleteFromDataset(index) {
+    console.log('will delete from dataset where index: ' + index);
     this.dataset.splice(index, 1);
-    console.log(this.dataset);
+    this.setState({ dataset: this.dataset });
   }
 }
 
