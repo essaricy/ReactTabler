@@ -1,25 +1,26 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   ActionConfigComponentProtoType,
   ColumnConfigProtoType
-} from "../../_prototypes/actiontable.prototype";
-import "./actiontable.component.css";
+} from '../../_prototypes/actiontable.prototype';
+import './actiontable.component.css';
 
-import CardComponent from "../card/card.component";
-import CardHeaderComponent from "../card/cardheader.component";
-import CardHeaderToolsComponent from "../card/cardheadertools.component";
-import ResponsiveTableComponent from "./responsivetable.component";
-import Button from "../form/button.component";
-import ModalComponent from "../modal.component";
-import FeIconLink from "../icons/fe-icon-link.component";
+import CardComponent from '../card/card.component';
+import CardHeaderComponent from '../card/cardheader.component';
+import CardHeaderToolsComponent from '../card/cardheadertools.component';
+import ResponsiveTableComponent from './responsivetable.component';
+import Button from '../form/button.component';
+import ModalComponent from '../modal.component';
+import FaIcon from '../icons/fa-icon.component';
+import FeIconLink from '../icons/fe-icon-link.component';
 
-import * as ApiConstants from "../../_constants/api.constant";
-import * as ActionTableConstants from "../../_constants/actiontable.constant";
+import * as ApiConstants from '../../_constants/api.constant';
+import * as ActionTableConstants from '../../_constants/actiontable.constant';
 
-import ActionTableService from "../../_services/actiontable.service";
-import NotificationService from "../../_services/notification.service";
-import CardDimmer from "../card/carddimmer.component";
+import ActionTableService from '../../_services/actiontable.service';
+import NotificationService from '../../_services/notification.service';
+import CardDimmer from '../card/carddimmer.component';
 
 export default class ActionTable extends React.Component {
   constructor(props) {
@@ -63,8 +64,8 @@ export default class ActionTable extends React.Component {
         dataset: this.dataset,
         isDataLoading: false
       });
-      let index = this.dataset.filter(x => x.id === "1");
-      console.log("Filterd record id: " + JSON.stringify(index));
+      let index = this.dataset.filter(x => x.id === '1');
+      console.log('Filterd record id: ' + JSON.stringify(index));
     });
   }
 
@@ -105,16 +106,33 @@ export default class ActionTable extends React.Component {
   getHeaderNames() {
     let headerNames = [];
     this.props.columns.forEach((column, index) => {
-      let classNames =
-        (column.hide ? "at-col-hidden" : "") +
-        (column.sort ? "at-col-sortable" : "");
+      let sortIcon;
+      let sortClassName = '';
+      let hideClassName = '';
+      if (column.sort) {
+        sortClassName = 'actiontable-col-sortable';
+        sortIcon =
+          this.sortBy.column == column.name ? (
+            this.sortBy.order == ActionTableConstants.SortOrder.ASC ? (
+              <FaIcon name="sort-amount-asc" />
+            ) : (
+              <FaIcon name="sort-amount-desc" />
+            )
+          ) : (
+            <FaIcon name="sort" />
+          );
+      }
+      if (column.hide) {
+        hideClassName = 'actiontable-col-hidden';
+      }
       headerNames.push(
         <th
           key={column.name}
-          className={classNames}
+          className={hideClassName + sortClassName}
           onClick={() => this.sort(column)}
         >
           {column.name}
+          {sortIcon}
         </th>
       );
     });
@@ -138,11 +156,11 @@ export default class ActionTable extends React.Component {
     if (this.state.isAddOpen) {
       let testData = {
         id: 0,
-        subject: "Test subject",
-        client: "Test client",
-        vat: "87956421",
-        created: "24 Aug 2018",
-        status: "Pending",
+        subject: 'Test subject',
+        client: 'Test client',
+        vat: '87956421',
+        created: '24 Aug 2018',
+        status: 'Pending',
         price: 10
       };
       content = config.content(testData);
@@ -179,7 +197,7 @@ export default class ActionTable extends React.Component {
   }
 
   getNoDataContent() {
-    return this.getSpannedContent("EMPTYROW", "No data available...");
+    return this.getSpannedContent('EMPTYROW', 'No data available...');
   }
 
   getSpannedContent(key, message) {
@@ -208,7 +226,7 @@ export default class ActionTable extends React.Component {
         <td cell-id="action-cell" key="action-cell">
           {index === 0 && actions.update
             ? this.getUpdateModal(actions.update)
-            : ""}
+            : ''}
           {rowActions}
         </td>
       );
@@ -237,7 +255,7 @@ export default class ActionTable extends React.Component {
       renderedElement = data[columnConfig.field];
     }
     let style = {
-      display: columnConfig.hide ? "none" : ""
+      display: columnConfig.hide ? 'none' : ''
     };
     return (
       <td cell-id={index} key={index} style={style}>
@@ -251,7 +269,7 @@ export default class ActionTable extends React.Component {
       <FeIconLink
         key="edit"
         onClick={() => this.toggleUpdate(index)}
-        name="edit-3"
+        name="edit"
       />
     );
   }
@@ -304,7 +322,7 @@ export default class ActionTable extends React.Component {
         sortBy.column = column.name;
         sortBy.order = ActionTableConstants.SortOrder.ASC;
       }
-      console.log("sortBy: " + JSON.stringify(sortBy));
+      console.log('sortBy: ' + JSON.stringify(sortBy));
       this.dataset.sort(function(a, b) {
         if (sortBy.order === ActionTableConstants.SortOrder.ASC) {
           return a[column.field] > b[column.field] ? 1 : -1;
@@ -317,7 +335,7 @@ export default class ActionTable extends React.Component {
   }
 
   onAddAction() {
-    console.log("ActionTableComponent: onAddAction called");
+    console.log('ActionTableComponent: onAddAction called');
     console.log(this.props.modalData);
 
     // Call API and get the response
@@ -335,7 +353,7 @@ export default class ActionTable extends React.Component {
   }
 
   onUpdateAction() {
-    console.log("ActionTableComponent: onUpdateAction called");
+    console.log('ActionTableComponent: onUpdateAction called');
     let modelId = this.props.getModelId(this.props.modalData);
     // Call API and get the response
     this.actionTableService
@@ -354,7 +372,7 @@ export default class ActionTable extends React.Component {
   }
 
   onDeleteAction(index) {
-    console.log("ActionTableComponent: onDeleteAction called at: " + index);
+    console.log('ActionTableComponent: onDeleteAction called at: ' + index);
     let modelId = this.props.getModelId(this.dataset[index]);
     // Call API and get the response
     this.actionTableService.delete(modelId).then(response => {
@@ -380,7 +398,7 @@ export default class ActionTable extends React.Component {
   updateDataset(modalData, response) {
     let index = this.dataset.findIndex(item => item.id === modalData.id);
     console.log(
-      "will update dataset for the id: " + modalData.id + " at index: " + index
+      'will update dataset for the id: ' + modalData.id + ' at index: ' + index
     );
     if (response.content) {
       this.dataset[index] = response.content;
@@ -392,7 +410,7 @@ export default class ActionTable extends React.Component {
   deleteFromDataset(modelId) {
     let index = this.dataset.findIndex(item => item.id === modelId);
     console.log(
-      "will delete from dataset where id: " + modelId + " at index: " + index
+      'will delete from dataset where id: ' + modelId + ' at index: ' + index
     );
     this.dataset.splice(index, 1);
     console.log(this.dataset);

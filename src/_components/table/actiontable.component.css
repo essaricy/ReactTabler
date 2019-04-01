@@ -23,12 +23,12 @@ a.icon:hover {
   color: #495057 !important;
 }
 
-.at-col-hidden {
+.actiontable-col-hidden {
   display: none;
 }
-.at-col-sortable {
+.actiontable-col-sortable {
   cursor: pointer;
 }
-/* .at-col-sortable::after {
-  content: '<i class= "fa fa-arrows-v" / >';
-} */
+.actiontable-col-sortable .fa {
+  margin-left: 20px;
+}
