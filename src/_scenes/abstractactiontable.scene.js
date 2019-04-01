@@ -5,7 +5,6 @@ import ActionTable from "../_components/table/actiontable.component";
 export default class AbstractActionTableScene extends SceneContainer {
   constructor(props) {
     super(props);
-    //this.state = {};
 
     this.getTableConfig = this.getTableConfig.bind(this);
     this.getModalScene = this.getModalScene.bind(this);
@@ -72,19 +71,14 @@ export default class AbstractActionTableScene extends SceneContainer {
     this.modalData[name] = value;
   }
 
-  resetModalData(data) {
-    // Not used
-    this.modalData = data;
-  }
-
   scene() {
     return (
       <div className="row">
         <div className="col-12">
           <ActionTable
             config={this.tableConfig}
-            modalData={this.modalData}
-            modelId={this.getModelId}
+            modalData={this.state.modalData}
+            getModelId={this.getModelId}
           />
         </div>
       </div>

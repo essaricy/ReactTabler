@@ -9,7 +9,10 @@ import * as Urls from "../_constants/url.constant";
 export default class InvoiceScene extends AbstractActionTableScene {
   constructor(props) {
     super(props);
-    this.modalData = {};
+    this.modalData = { id: null };
+    this.state = { modalData: { id: "" } };
+
+    this.getModalScene = this.getModalScene.bind(this);
   }
 
   getTableConfig() {
@@ -20,14 +23,7 @@ export default class InvoiceScene extends AbstractActionTableScene {
         {
           name: "Id",
           field: "id",
-          hide: true,
-          render: data => <span className="text-muted">{data.id}</span>
-        },
-        {
-          name: "#",
-          field: "id",
-          sort: true,
-          render: data => <span className="text-muted">{data.id}</span>
+          hide: true
         },
         {
           name: "Subject",
@@ -46,7 +42,8 @@ export default class InvoiceScene extends AbstractActionTableScene {
         },
         {
           name: "Vat #",
-          field: "vat"
+          field: "vat",
+          render: data => <span className="text-muted">{data.vat}</span>
         },
         {
           name: "Created",
@@ -106,27 +103,31 @@ export default class InvoiceScene extends AbstractActionTableScene {
   }
 
   getModalScene(data) {
-    //this.resetModalData(data);
     console.log("getModalScene ======>" + JSON.stringify(data));
+    console.log(
+      "this.state.modelData ======>" + JSON.stringify(this.state.modelData)
+    );
+    if (!this.state.modelData) {
+      return "";
+    }
+    if (data == null || data.id == null) {
+      // Added below code for testing
+      data = {
+        id: 0,
+        subject: "Test",
+        client: "Test",
+        vat: "Test",
+        created: "Test",
+        status: "Test",
+        price: 10
+      };
+    }
     return (
       <div>
-        <FormGroup>
-          <FormLabel>Enter Id</FormLabel>
-          <FormText
-            id="id"
-            required
-            autoFocus
-            defaultValue={data.id}
-            onChange={this.setModalDataById}
-          />
-        </FormGroup>
+        <input type="hidden" id="id" defaultValue={this.state.modelData.id} />
         <FormGroup>
           <FormLabel>Subject</FormLabel>
-          <FormText
-            id="subject"
-            defaultValue={data.subject}
-            onChange={this.setModalDataById}
-          />
+          <FormText id="subject" defaultValue={this.state.modelData.subject} />
         </FormGroup>
         <FormGroup>
           <FormLabel>Client</FormLabel>

@@ -60,6 +60,8 @@ export default class ActionTable extends React.Component {
         dataset: this.dataset,
         isDataLoading: false
       });
+      let index = this.dataset.filter(x => x.id === "1");
+      console.log("Filterd record id: " + JSON.stringify(index));
     });
   }
 
@@ -316,7 +318,7 @@ export default class ActionTable extends React.Component {
       // Check the response and close add popup
       if (response.code === ApiConstants.Result.SUCCESS) {
         // Add Record to the table.
-        this.updateDataset(this.props.modalData);
+        this.addToDataset(this.props.modalData, response);
         this.toggleAdd();
         this.notificationService.success(response.message);
       } else {
@@ -325,17 +327,34 @@ export default class ActionTable extends React.Component {
     });
   }
 
-  updateDataset(modalData) {
-    this.dataset[this.dataset.length] = modalData;
+  onUpdateAction() {
+    console.log("ActionTableComponent: onUpdateAction called");
+    let modelId = this.props.getModelId(this.props.modalData);
+    // Call API and get the response
+    this.actionTableService
+      .update(modelId, this.props.modalData)
+      .then(response => {
+        // Check the response and close add popup
+        if (response.code === ApiConstants.Result.SUCCESS) {
+          // Update Record to the table.
+          this.updateDataset(this.props.modalData, response);
+          this.toggleUpdate();
+          this.notificationService.success(response.message);
+        } else {
+          this.notificationService.error(response.message);
+        }
+      });
   }
 
   onDeleteAction(index) {
+    console.log("ActionTableComponent: onDeleteAction called at: " + index);
+    let modelId = this.props.getModelId(this.dataset[index]);
     // Call API and get the response
-    this.actionTableService.delete(this.props.modelId).then(response => {
+    this.actionTableService.delete(modelId).then(response => {
       // Check the response and close add popup
       if (response.code === ApiConstants.Result.SUCCESS) {
         // Add Record to the table.
-        //this.updateDataset(this.props.modalData);
+        this.deleteFromDataset(modelId);
         this.notificationService.success(response.message);
       } else {
         this.notificationService.error(response.message);
@@ -343,29 +362,34 @@ export default class ActionTable extends React.Component {
     });
   }
 
-  /////////////////////////////////////////////////////////////////////
-
-  onUpdateAction() {
-    console.log("ActionTableComponent: onUpdateAction called");
-    // Check the response and close update popup
-    let response = this.props.addAction.handler();
-    if (response.code === ApiConstants.Result.SUCCESS) {
-      this.toggleUpdate();
+  addToDataset(modalData, response) {
+    if (response.content) {
+      this.dataset[this.dataset.length] = response.content;
     } else {
-      console.log("ActionTableComponent: onUpdateAction failed");
-      this.setState({
-        updateErrorMessage: response.message
-      });
+      this.dataset[this.dataset.length] = modalData;
+    }
+    console.log(this.dataset);
+  }
+  updateDataset(modalData, response) {
+    let index = this.dataset.findIndex(item => item.id === modalData.id);
+    console.log(
+      "will update dataset for the id: " + modalData.id + " at index: " + index
+    );
+    if (response.content) {
+      this.dataset[index] = response.content;
+    } else {
+      this.dataset[index] = modalData;
     }
   }
-  // updateModel(record) {
-  //   // Update the corresponding record and change the state
-  //   //this.model = response;
-  //   //let data = this.state.data;
-  //   // TODO update the model, based on uniqueness of the record
-  //   this.model[this.model.length] = record;
-  //   this.setState({ data: this.model });
-  // }
+
+  deleteFromDataset(modelId) {
+    let index = this.dataset.findIndex(item => item.id === modelId);
+    console.log(
+      "will delete from dataset where id: " + modelId + " at index: " + index
+    );
+    this.dataset.splice(index, 1);
+    console.log(this.dataset);
+  }
 }
 
 ActionTable.propTypes = {};
