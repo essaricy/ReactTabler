@@ -5,7 +5,6 @@ import CardScene from "../_scenes/card.scene";
 import CarousalScene from "../_scenes/carousal.scene";
 import CrudScene from "../_scenes/crud.scene";
 import InvoiceScene from "../_scenes/invoice.scene";
-import SimpleTableScene from "../_scenes/simpletable.scene";
 import FormScene from "../_scenes/form.scene";
 import GalleryScene from "../_scenes/gallery.scene";
 import HomeScene from "../_scenes/home.scene";
@@ -50,13 +49,6 @@ export default class MenuRoutes extends React.Component {
           path="/component/card"
           render={props => {
             return <CardScene {...this.props} title="Card" />;
-          }}
-        />
-        <Route
-          exact
-          path="/component/simpletable"
-          render={props => {
-            return <SimpleTableScene {...this.props} title="Simple Table" />;
           }}
         />
         <Route
