@@ -1,15 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-//import AlertConstants from "../_constants/alert.constant";
 
-export default class AlertComponent extends React.Component {
+export default class InlineAlertComponent extends React.Component {
   static propTypes = {
     type: PropTypes.string,
     message: PropTypes.string
   };
 
   render() {
-    //AlertConstants.Config;
     let alertContent = "";
     if (this.props.message && this.props.message !== "") {
       let type = this.props.type;

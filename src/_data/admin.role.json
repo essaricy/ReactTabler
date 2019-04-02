@@ -18,9 +18,9 @@
         "url": "/component/card"
       },
       {
-        "id": "Component/DataTable",
-        "title": "Data Table",
-        "url": "/component/datatable"
+        "id": "Component/Alert",
+        "title": "Alerts",
+        "url": "/component/alert"
       },
       {
         "id": "Component/Modal",

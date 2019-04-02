@@ -11,6 +11,7 @@ import HomeScene from "../_scenes/home.scene";
 import InterfaceScene from "../_scenes/interface.scene";
 import ModalScene from "../_scenes/modal.scene";
 import ProfileScene from "../_scenes/profile.scene";
+import AlertScene from "../_scenes/alert.scene";
 
 export default class MenuRoutes extends React.Component {
   render() {
@@ -56,6 +57,13 @@ export default class MenuRoutes extends React.Component {
           path="/component/modal"
           render={props => {
             return <ModalScene {...this.props} title="Modal" />;
+          }}
+        />
+        <Route
+          exact
+          path="/component/alert"
+          render={props => {
+            return <AlertScene {...this.props} title="Alerts" />;
           }}
         />
         <Route

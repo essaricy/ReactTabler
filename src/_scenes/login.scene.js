@@ -5,7 +5,7 @@ import LoginService from "../_services/login.service";
 import Card from "../_components/card/card.component";
 import CardHeader from "../_components/card/cardheader.component";
 import CardBody from "../_components/card/cardbody.component";
-import AlertComponent from "../_components/alert.component";
+import InlineAlertComponent from "../_components/inlinealert.component";
 import FormGroup from "../_components/form/formgroup.component";
 import FormLabel from "../_components/form/formlabel.component";
 import FormText from "../_components/form/formtext.component";
@@ -35,7 +35,7 @@ export default class Login extends React.Component {
         <LogoComponent />
         <Card form="true" onSubmit={this.handleSubmit}>
           <CardHeader title="Login to your account" />
-          <AlertComponent type="error" message={this.state.error} />
+          <InlineAlertComponent type="error" message={this.state.error} />
           <CardBody>
             <CardDimmer active={this.state.loggingIn}>
               <FormGroup>
