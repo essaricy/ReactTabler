@@ -1,10 +1,11 @@
-import React from "react";
+import React from 'react';
 
 export default class Button extends React.Component {
   render() {
+    const size = this.props.size ? 'btn-' + this.props.size : '';
     return (
       <button
-        className={"btn btn-" + this.props.mode}
+        className={'btn btn-' + this.props.mode + ' ' + size}
         onClick={this.props.onClick}
       >
         {this.props.value}

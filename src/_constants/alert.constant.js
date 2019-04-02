@@ -1,6 +1,16 @@
-export const Config = {
-  INFO: { name: "info", icon: "fe fe-info" },
-  SUCCESS: { name: "success", icon: "fe fe-check" },
-  WARNING: { name: "warning", icon: "fe fe-alert-triangle" },
-  ERROR: { name: "danger", icon: "fe fe-x-circle" }
-};
+export const Types = [
+  {
+    name: 'info',
+    title: 'Information',
+    faIcon: 'info-circle',
+    color: '#1594ef'
+  },
+  {
+    name: 'success',
+    title: 'Success!',
+    faIcon: 'check-circle',
+    color: '#448700'
+  },
+  { name: 'warning', title: 'Warning!', faIcon: 'warning', color: '#c29d0b' },
+  { name: 'error', title: 'Error!', faIcon: 'times-circle', color: '#a11918' }
+];

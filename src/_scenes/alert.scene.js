@@ -1,65 +1,85 @@
-import React from "react";
-import SceneContainer from "../_containers/scene.container";
-import AlertComponent from "../_components/modal/alert.component";
+import React from 'react';
+import './alert.scene.css';
+
+import SceneContainer from '../_containers/scene.container';
+import AlertComponent from '../_components/modal/alert.component';
 
 export default class AlertScene extends SceneContainer {
   constructor(props) {
     super(props);
     this.state = {
-      alertType: "",
+      alertType: '',
+      alertMessage: '',
       isOpen: false
     };
     this.toggle = this.toggle.bind(this);
     this.showSuccessAlert = this.showSuccessAlert.bind(this);
-    this.save = this.save.bind(this);
+    this.showWarningAlert = this.showWarningAlert.bind(this);
+    this.showErrorAlert = this.showErrorAlert.bind(this);
+    this.showInfoAlert = this.showInfoAlert.bind(this);
   }
 
-  toggle() {
+  toggle(e) {
     this.setState(prevState => ({
       isOpen: !prevState.isOpen
     }));
   }
 
-  save() {
-    console.log("Saving Data");
-    this.toggle();
+  showSuccessAlert() {
+    this.setState(prevState => ({
+      alertType: 'success',
+      alertMessage: 'Your data has been saved successfully',
+      isOpen: !prevState.isOpen
+    }));
   }
 
-  showSuccessAlert(e) {
+  showWarningAlert() {
     this.setState(prevState => ({
-      alertType: "success",
+      alertType: 'warning',
+      alertMessage:
+        'Your data has been saved successfully but there were errors',
+      isOpen: !prevState.isOpen
+    }));
+  }
+
+  showErrorAlert() {
+    this.setState(prevState => ({
+      alertType: 'error',
+      alertMessage: 'There was an error doing what is requested for',
+      isOpen: !prevState.isOpen
+    }));
+  }
+
+  showInfoAlert() {
+    this.setState(prevState => ({
+      alertType: 'info',
+      alertMessage:
+        'Your data has been saved successfully. Now make sure you go to some other screen and do some other operation',
       isOpen: !prevState.isOpen
     }));
   }
 
   scene() {
     return (
-      <div>
+      <div className="row">
         <button className="btn btn-success" onClick={this.showSuccessAlert}>
-          Launch Success Alert
+          Success Alert
         </button>
-        <button className="btn btn-warning" onClick={this.toggle}>
-          Launch Warning Alert
+        <button className="btn btn-warning" onClick={this.showWarningAlert}>
+          Warning Alert
         </button>
-        <button className="btn btn-danger" onClick={this.toggle}>
-          Launch Failure Alert
+        <button className="btn btn-danger" onClick={this.showErrorAlert}>
+          Failure Alert
         </button>
-        <button className="btn btn-info" onClick={this.toggle}>
-          Launch Info Alert
-        </button>
-        <button className="btn btn-primary" onClick={this.toggle}>
-          Launch Alert
+        <button className="btn btn-info" onClick={this.showInfoAlert}>
+          Info Alert
         </button>
         <AlertComponent
           type={this.state.alertType}
-          message="Testing Message"
-          //title="Sample Title"
+          message={this.state.alertMessage}
           isOpen={this.state.isOpen}
           toggle={this.toggle}
-          //buttons={[<button onClick={this.save}>Save</button>]}
-        >
-          <label>Alert Body</label>
-        </AlertComponent>
+        />
       </div>
     );
   }
