@@ -1,24 +1,24 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   DropdownToggle,
   DropdownMenu,
   UncontrolledDropdown,
   DropdownItem
-} from "reactstrap";
+} from 'reactstrap';
 
 export default class MenuItemComponent extends React.Component {
   render() {
-    let menuName = this.props.name;
-    let menuData = this.props.data;
-    let menuItems = menuData.menuItems;
-    let hasMenuItems = menuData.menuItems && menuItems.length !== 0;
+    const menuName = this.props.name;
+    const menuData = this.props.data;
+    const menuItems = menuData.menuItems;
+    const hasMenuItems = menuData.menuItems && menuItems.length !== 0;
 
     let dropdownMenu;
     if (hasMenuItems) {
-      let dropdownItems = [];
-      for (let menuItem of menuItems) {
-        let menuItemTitle = menuItem.title;
+      const dropdownItems = [];
+      for (const menuItem of menuItems) {
+        const menuItemTitle = menuItem.title;
 
         dropdownItems.push(
           <DropdownItem
@@ -26,7 +26,7 @@ export default class MenuItemComponent extends React.Component {
             data-id={menuItem.id}
             className="dropdown-item"
           >
-            <Link to={menuItem.url} style={{ color: "#6e7687" }}>
+            <Link to={menuItem.url} style={{ color: '#6e7687' }}>
               {menuItemTitle}
             </Link>
           </DropdownItem>

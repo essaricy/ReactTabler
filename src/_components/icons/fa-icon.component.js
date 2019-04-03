@@ -2,7 +2,7 @@ import React from 'react';
 
 export default class FaIcon extends React.Component {
   render() {
-    let size =
+    const size =
       this.props.size && this.props.size <= 1
         ? ''
         : ' fa-' + this.props.size + 'x';

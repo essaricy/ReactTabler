@@ -1,6 +1,6 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-export let ColumnConfigProtoType = {
+export const ColumnConfigProtoType = {
   name: PropTypes.string.isRequired,
   field: PropTypes.string.isRequired,
   render: PropTypes.func,
@@ -8,14 +8,14 @@ export let ColumnConfigProtoType = {
   sort: PropTypes.bool
 };
 
-export let ActionConfigContainerProtoType = {
+export const ActionConfigContainerProtoType = {
   triggerName: PropTypes.string,
   modalTitle: PropTypes.string,
   content: PropTypes.func.isRequired,
   actionName: PropTypes.string
 };
 
-export let ActionConfigComponentProtoType = {
+export const ActionConfigComponentProtoType = {
   triggerName: PropTypes.string.isRequired,
   modalTitle: PropTypes.string.isRequired,
   content: PropTypes.func.isRequired,

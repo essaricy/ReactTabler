@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class InlineAlertComponent extends React.Component {
   static propTypes = {
@@ -8,22 +8,22 @@ export default class InlineAlertComponent extends React.Component {
   };
 
   render() {
-    let alertContent = "";
-    if (this.props.message && this.props.message !== "") {
-      let type = this.props.type;
+    let alertContent = '';
+    if (this.props.message && this.props.message !== '') {
+      const type = this.props.type;
       let cssClasses;
-      if (type === "error") {
-        cssClasses = "danger";
-      } else if (type === "warning") {
-        cssClasses = "warning";
+      if (type === 'error') {
+        cssClasses = 'danger';
+      } else if (type === 'warning') {
+        cssClasses = 'warning';
       }
-      if (type === "success") {
-        cssClasses = "success";
+      if (type === 'success') {
+        cssClasses = 'success';
       }
       alertContent = (
         <div
           className={
-            "card-alert alert alert-icon alert-" + cssClasses + " mb-0"
+            'card-alert alert alert-icon alert-' + cssClasses + ' mb-0'
           }
         >
           <i className="fe fe-x-circle mr-2" aria-hidden="true" />

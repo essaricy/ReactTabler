@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 export default class CardHeaderTools extends React.Component {
   render() {
-    let tools = React.Children.map(this.props.children, child => {
+    const tools = React.Children.map(this.props.children, child => {
       return <span className="input-group-btn ml-2">{child}</span>;
     });
     return <div className="card-options">{tools}</div>;

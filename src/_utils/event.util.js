@@ -1,12 +1,13 @@
 export function setDataById(e, data) {
-  let id = e.target.id;
-  let value = e.target.value;
+  const id = e.target.id;
+  const value = e.target.value;
   console.log(id + '=' + value);
   data[id] = value;
 }
 
 export function setDataByName(e, data) {
-  let name = e.target.name;
-  let value = e.target.value;
+  const name = e.target.name;
+  const value = e.target.value;
+  console.log(name + '=' + value);
   data[name] = value;
 }

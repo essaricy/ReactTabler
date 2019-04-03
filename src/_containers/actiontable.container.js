@@ -21,10 +21,10 @@ export default class ActionTableContainer extends React.Component {
   }
 
   setActionDefault(key, triggerName, modalTitle, actionName) {
-    let actions = this.props.actions;
-    let hasActions = actions != null && (actions.update || actions.delete);
+    const actions = this.props.actions;
+    const hasActions = actions != null && (actions.update || actions.delete);
     if (hasActions) {
-      let action = this.props.actions[key];
+      const action = this.props.actions[key];
       if (action != null) {
         if (!action.triggerName) {
           action.triggerName = triggerName;

@@ -18,8 +18,7 @@ export default class ActionTableService {
     return FetchApi.get(this.url + id);
   }
   add(request) {
-    console.log('Sending request to add');
-    console.log(request);
+    console.log('Sending request to add: ' + JSON.stringify(request));
     return FetchApi.post(this.url, request);
   }
   update(id, request) {

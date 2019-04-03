@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import Button from "../form/button.component";
-import FaIcon from "../icons/fa-icon.component";
-import * as AlertUtil from "../../_utils/alert.util";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import Button from '../form/button.component';
+import FaIcon from '../icons/fa-icon.component';
+import * as AlertUtil from '../../_utils/alert.util';
 
 export default class AlertComponent extends React.Component {
   constructor(props) {
@@ -13,7 +13,7 @@ export default class AlertComponent extends React.Component {
 
   render() {
     if (!this.props.isOpen) {
-      return "";
+      return '';
     }
     const type = this.props.type;
     return (
@@ -36,14 +36,14 @@ export default class AlertComponent extends React.Component {
     return (
       <span>
         <FaIcon name={alertType.faIcon} style={{ color: alertType.color }} />
-        {" " + alertType.title}
+        {' ' + alertType.title}
       </span>
     );
   }
 
   getFooterButtons(type) {
-    let buttons = [];
-    if (type === "confirm") {
+    const buttons = [];
+    if (type === 'confirm') {
       buttons.push(
         <Button
           key="confirm_yes"

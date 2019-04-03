@@ -1,6 +1,6 @@
-import React from "react";
-import SceneContainer from "../_containers/scene.container";
-import ActionTable from "../_components/table/actiontable.component";
+import React from 'react';
+import SceneContainer from '../_containers/scene.container';
+import ActionTable from '../_components/table/actiontable.component';
 
 export default class AbstractActionTableScene extends SceneContainer {
   constructor(props) {
@@ -16,58 +16,57 @@ export default class AbstractActionTableScene extends SceneContainer {
   }
 
   getTableConfig() {
-    throw new Error("Subclasses must implement getTableConfig method");
+    throw new Error('Subclasses must implement getTableConfig method');
   }
 
   setActionDefaults() {
     // Populate action defaults
-    let actions = this.tableConfig.actions;
+    const actions = this.tableConfig.actions;
     if (actions) {
       if (actions.add) {
         actions.add.triggerName = actions.add.triggerName
           ? actions.add.triggerName
-          : "Add";
+          : 'Add';
         actions.add.modalTitle = actions.add.modalTitle
           ? actions.add.modalTitle
-          : "Add new record";
+          : 'Add new record';
         actions.add.scene = this.getModalScene;
         actions.add.actionName = actions.add.actionName
           ? actions.add.actionName
-          : "Submit";
+          : 'Submit';
       }
     }
     if (actions.update) {
       actions.update.triggerName = actions.update.triggerName
         ? actions.update.triggerName
-        : "Update";
+        : 'Update';
       actions.update.modalTitle = actions.update.modalTitle
         ? actions.update.modalTitle
-        : "Update record";
+        : 'Update record';
       actions.update.scene = this.getModalScene;
       actions.update.actionName = actions.update.actionName
         ? actions.update.actionName
-        : "Update";
+        : 'Update';
     }
   }
 
   getModalScene() {
-    throw Error("Must implement abstract method getModalScene");
+    throw Error('Must implement abstract method getModalScene');
   }
 
   getModelId(model) {
-    throw Error("Must implement abstract method getModelId");
+    throw Error('Must implement abstract method getModelId');
   }
 
   setModalDataById(e) {
-    let id = e.target.id;
-    let value = e.target.value;
-    console.log(id + "=" + value);
+    const id = e.target.id;
+    const value = e.target.value;
     this.modalData[id] = value;
   }
 
   setModalDataByName(e) {
-    let name = e.target.name;
-    let value = e.target.value;
+    const name = e.target.name;
+    const value = e.target.value;
     this.modalData[name] = value;
   }
 

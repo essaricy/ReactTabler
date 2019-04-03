@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import Button from "./form/button.component";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import Button from './form/button.component';
 
 export default class ModalComponent extends React.Component {
   static propTypes = {
@@ -18,9 +18,10 @@ export default class ModalComponent extends React.Component {
           {this.props.buttons.map((button, index) => (
             <Button
               key={index}
-              kind="primary"
-              type="submit"
-              value={button.props.children}
+              kind={button.props.kind}
+              disabled={button.props.disabled}
+              //type="submit"
+              value={button.props.value}
               onClick={button.props.onClick}
             />
           ))}
