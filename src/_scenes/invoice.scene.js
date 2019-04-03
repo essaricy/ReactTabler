@@ -1,11 +1,11 @@
-import React from 'react';
-import ActionTableContainer from '../_containers/actiontable.container';
+import React from "react";
+import ActionTableContainer from "../_containers/actiontable.container";
 
-import FormGroup from '../_components/form/formgroup.component';
-import FormLabel from '../_components/form/formlabel.component';
-import FormText from '../_components/form/formtext.component';
-import * as Urls from '../_constants/url.constant';
-import * as Events from '../_utils/event.util';
+import FormGroup from "../_components/form/formgroup.component";
+import FormLabel from "../_components/form/formlabel.component";
+import FormText from "../_components/form/formtext.component";
+import * as Urls from "../_constants/url.constant";
+import * as Events from "../_utils/event.util";
 
 export default class InvoiceScene extends React.Component {
   constructor(props) {
@@ -28,13 +28,13 @@ export default class InvoiceScene extends React.Component {
   getColumns() {
     return [
       {
-        name: 'Id',
-        field: 'id',
+        name: "Id",
+        field: "id",
         hide: true
       },
       {
-        name: 'Subject',
-        field: 'subject',
+        name: "Subject",
+        field: "subject",
         sort: true,
         render: data => (
           <a href="/page/invoice" className="text-inherit">
@@ -43,39 +43,39 @@ export default class InvoiceScene extends React.Component {
         )
       },
       {
-        name: 'Client',
-        field: 'client',
+        name: "Client",
+        field: "client",
         sort: true
       },
       {
-        name: 'Vat #',
-        field: 'vat',
+        name: "Vat #",
+        field: "vat",
         render: data => <span className="text-muted">{data.vat}</span>
       },
       {
-        name: 'Created',
-        field: 'created',
+        name: "Created",
+        field: "created",
         sort: true
       },
       {
-        name: 'Status',
-        field: 'status',
+        name: "Status",
+        field: "status",
         sort: true,
         render: data => (
           <span>
             <span
-              className={'status-icon ' + this.getStatusColor(data.status)}
+              className={"status-icon " + this.getStatusColor(data.status)}
             />
             {data.status}
           </span>
         )
       },
       {
-        name: 'Price',
-        field: 'price',
+        name: "Price",
+        field: "price",
         sort: true,
         render: data => {
-          return '$' + data.price;
+          return "$" + data.price;
         }
       }
     ];
@@ -84,33 +84,35 @@ export default class InvoiceScene extends React.Component {
   getActions() {
     return {
       add: {
-        modalTitle: 'Add New Invoice',
+        modalTitle: "Add New Invoice",
         content: this.getModalScene
       },
       update: {
-        modalTitle: 'Update Invoice',
+        modalTitle: "Update Invoice",
         content: this.getModalScene
       },
-      delete: {}
+      delete: {
+        message: "Do you really want to delete this invoice?"
+      }
     };
   }
 
   getStatusColor(status) {
     let statusColor;
-    if (status === 'Paid' || status === 'Paid Today') {
-      statusColor = 'bg-success';
-    } else if (status === 'Pending') {
-      statusColor = 'bg-danger';
-    } else if (status === 'Due in 2 Weeks') {
-      statusColor = 'bg-warning';
+    if (status === "Paid" || status === "Paid Today") {
+      statusColor = "bg-success";
+    } else if (status === "Pending") {
+      statusColor = "bg-danger";
+    } else if (status === "Due in 2 Weeks") {
+      statusColor = "bg-warning";
     } else {
-      statusColor = 'bg-grey';
+      statusColor = "bg-grey";
     }
     return statusColor;
   }
 
   getModalScene(data) {
-    console.log('getModalScene ======>' + JSON.stringify(data));
+    console.log("getModalScene ======>" + JSON.stringify(data));
     return (
       <div>
         <input type="hidden" id="id" defaultValue={data.id} />

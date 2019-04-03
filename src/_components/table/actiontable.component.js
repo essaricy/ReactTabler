@@ -21,6 +21,7 @@ import * as ActionTableConstants from "../../_constants/actiontable.constant";
 
 import ActionTableService from "../../_services/actiontable.service";
 import NotificationService from "../../_services/notification.service";
+import AlertService from "../../_services/alert.service";
 
 export default class ActionTable extends React.Component {
   constructor(props) {
@@ -52,9 +53,11 @@ export default class ActionTable extends React.Component {
     this.onAddAction = this.onAddAction.bind(this);
     this.onUpdateAction = this.onUpdateAction.bind(this);
     this.onDeleteAction = this.onDeleteAction.bind(this);
+    this.onDeleteConfirmation = this.onDeleteConfirmation.bind(this);
 
     this.actionTableService = new ActionTableService(this.props.url);
     this.notificationService = NotificationService.getInstance();
+    this.alertService = AlertService.getInstance();
   }
 
   componentWillMount() {
@@ -377,6 +380,19 @@ export default class ActionTable extends React.Component {
 
   onDeleteAction(index) {
     console.log("ActionTableComponent: onDeleteAction called at: " + index);
+    if (this.hasActions()) {
+      this.alertService.confirm(
+        this.props.actions.delete.message,
+        "Yes, Delete!",
+        () => {
+          this.onDeleteConfirmation(index);
+        }
+      );
+    }
+  }
+
+  onDeleteConfirmation(index) {
+    this.setState({ isDataLoading: true });
     let modelId = this.dataset[index].id;
     // Call API and get the response
     this.actionTableService.delete(modelId).then(response => {
@@ -388,6 +404,7 @@ export default class ActionTable extends React.Component {
       } else {
         this.notificationService.error(response.message);
       }
+      this.setState({ isDataLoading: false });
     });
   }
 
