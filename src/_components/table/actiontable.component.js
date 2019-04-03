@@ -169,7 +169,12 @@ export default class ActionTable extends React.Component {
     }
     return (
       <div key="Add">
-        <Button kind="primary" value={triggerName} onClick={this.toggleAdd} />
+        <Button
+          kind="primary"
+          disabled={this.state.isDataLoading}
+          value={triggerName}
+          onClick={this.toggleAdd}
+        />
         <ModalComponent
           title={modalTitle}
           isOpen={this.state.isAddOpen}
@@ -177,14 +182,15 @@ export default class ActionTable extends React.Component {
           buttons={[
             <Button
               kind="primary"
-              type="submit"
+              //type="submit"
+              disabled={this.state.isDataLoading}
               onClick={() => this.onAddAction(modalData)}
             >
               {actionName}
             </Button>
           ]}
         >
-          {content}
+          <CardDimmer active={this.state.isDataLoading}>{content}</CardDimmer>
         </ModalComponent>
       </div>
     );
@@ -308,6 +314,7 @@ export default class ActionTable extends React.Component {
           <Button
             type="submit"
             mode="primary"
+            disabled={this.state.isDataLoading}
             onClick={() => this.onUpdateAction(modalData)}
           >
             {actionName}
@@ -346,6 +353,7 @@ export default class ActionTable extends React.Component {
   }
 
   onAddAction(modalData) {
+    this.setState({ isDataLoading: true });
     console.log("ActionTableComponent: onAddAction called");
     // Call API and get the response
     this.actionTableService.add(modalData).then(response => {
@@ -358,11 +366,13 @@ export default class ActionTable extends React.Component {
       } else {
         this.notificationService.error(response.message);
       }
+      this.setState({ isDataLoading: false });
     });
   }
 
   onUpdateAction(modalData) {
     console.log("ActionTableComponent: onUpdateAction called");
+    this.setState({ isDataLoading: true });
     let modelId = modalData.id;
     // Call API and get the response
     this.actionTableService.update(modelId, modalData).then(response => {
@@ -375,6 +385,7 @@ export default class ActionTable extends React.Component {
       } else {
         this.notificationService.error(response.message);
       }
+      this.setState({ isDataLoading: false });
     });
   }
 
