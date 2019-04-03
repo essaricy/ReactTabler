@@ -1,85 +1,56 @@
-import React from 'react';
-import './alert.scene.css';
+import React from "react";
+import "./alert.scene.css";
 
-import SceneContainer from '../_containers/scene.container';
-import AlertComponent from '../_components/modal/alert.component';
+import SceneContainer from "../_containers/scene.container";
+import AlertService from "../_services/alert.service";
 
 export default class AlertScene extends SceneContainer {
   constructor(props) {
     super(props);
-    this.state = {
-      alertType: '',
-      alertMessage: '',
-      isOpen: false
-    };
-    this.toggle = this.toggle.bind(this);
-    this.showSuccessAlert = this.showSuccessAlert.bind(this);
-    this.showWarningAlert = this.showWarningAlert.bind(this);
-    this.showErrorAlert = this.showErrorAlert.bind(this);
-    this.showInfoAlert = this.showInfoAlert.bind(this);
-  }
-
-  toggle(e) {
-    this.setState(prevState => ({
-      isOpen: !prevState.isOpen
-    }));
-  }
-
-  showSuccessAlert() {
-    this.setState(prevState => ({
-      alertType: 'success',
-      alertMessage: 'Your data has been saved successfully',
-      isOpen: !prevState.isOpen
-    }));
-  }
-
-  showWarningAlert() {
-    this.setState(prevState => ({
-      alertType: 'warning',
-      alertMessage:
-        'Your data has been saved successfully but there were errors',
-      isOpen: !prevState.isOpen
-    }));
-  }
-
-  showErrorAlert() {
-    this.setState(prevState => ({
-      alertType: 'error',
-      alertMessage: 'There was an error doing what is requested for',
-      isOpen: !prevState.isOpen
-    }));
-  }
-
-  showInfoAlert() {
-    this.setState(prevState => ({
-      alertType: 'info',
-      alertMessage:
-        'Your data has been saved successfully. Now make sure you go to some other screen and do some other operation',
-      isOpen: !prevState.isOpen
-    }));
+    this.alertService = AlertService.getInstance();
   }
 
   scene() {
     return (
       <div className="row">
-        <button className="btn btn-success" onClick={this.showSuccessAlert}>
+        <button
+          className="btn btn-success"
+          onClick={() =>
+            this.alertService.success("Your data has been saved successfully")
+          }
+        >
           Success Alert
         </button>
-        <button className="btn btn-warning" onClick={this.showWarningAlert}>
+        <button
+          className="btn btn-warning"
+          onClick={() =>
+            this.alertService.warning(
+              "Your data has been saved successfully but there were errors"
+            )
+          }
+        >
           Warning Alert
         </button>
-        <button className="btn btn-danger" onClick={this.showErrorAlert}>
-          Failure Alert
+        <button
+          className="btn btn-danger"
+          onClick={() =>
+            this.alertService.error(
+              "There was an error doing what is requested for"
+            )
+          }
+        >
+          Error Alert
         </button>
-        <button className="btn btn-info" onClick={this.showInfoAlert}>
+        <button
+          className="btn btn-info"
+          onClick={() =>
+            this.alertService.info(
+              "Your data has been saved successfully. Now make sure you go to some other screen and do some other operation"
+            )
+          }
+        >
           Info Alert
         </button>
-        <AlertComponent
-          type={this.state.alertType}
-          message={this.state.alertMessage}
-          isOpen={this.state.isOpen}
-          toggle={this.toggle}
-        />
       </div>
     );
   }
