@@ -18,7 +18,7 @@ export default class ModalComponent extends React.Component {
           {this.props.buttons.map((button, index) => (
             <Button
               key={index}
-              mode="primary"
+              kind="primary"
               type="submit"
               value={button.props.children}
               onClick={button.props.onClick}

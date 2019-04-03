@@ -8,6 +8,9 @@ export default class AlertContainer extends React.Component {
     this.state = {
       type: "",
       message: "",
+      //confirmLabel: props.confirmLabel ? props.confirmLabel : "Yes",
+      confirmLabel: "",
+      onConfirm: null,
       isOpen: false
     };
     this.toggle = this.toggle.bind(this);
@@ -26,6 +29,8 @@ export default class AlertContainer extends React.Component {
         message={this.state.message}
         isOpen={this.state.isOpen}
         toggle={this.toggle}
+        confirmLabel={this.state.confirmLabel}
+        onConfirm={this.state.onConfirm}
       />
     );
   }

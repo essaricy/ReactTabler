@@ -1,11 +1,15 @@
-import React from 'react';
+import React from "react";
+import PropTypes from "prop-types";
 
 export default class Button extends React.Component {
   render() {
-    const size = this.props.size ? 'btn-' + this.props.size : '';
+    const size = this.props.size ? "btn-" + this.props.size : "";
+    const kind =
+      this.props.kind === "error" ? "btn-danger" : "btn-" + this.props.kind;
+
     return (
       <button
-        className={'btn btn-' + this.props.mode + ' ' + size}
+        className={"btn " + kind + " " + size}
         onClick={this.props.onClick}
       >
         {this.props.value}
@@ -14,3 +18,7 @@ export default class Button extends React.Component {
     );
   }
 }
+
+Button.prototypes = {
+  kind: PropTypes.string.isRequired
+};

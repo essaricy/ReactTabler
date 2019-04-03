@@ -40,4 +40,12 @@ export default class AlertService {
     this.alertDOMRef.current.state.message = message;
     this.alertDOMRef.current.toggle();
   }
+
+  confirm(message, confirmLabel = "Yes", onConfirm = function() {}) {
+    this.alertDOMRef.current.state.type = "confirm";
+    this.alertDOMRef.current.state.message = message;
+    this.alertDOMRef.current.state.confirmLabel = confirmLabel;
+    this.alertDOMRef.current.state.onConfirm = onConfirm;
+    this.alertDOMRef.current.toggle();
+  }
 }

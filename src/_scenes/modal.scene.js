@@ -1,6 +1,7 @@
 import React from "react";
 import SceneContainer from "../_containers/scene.container";
 import ModalComponent from "../_components/modal.component";
+import Button from "../_components/form/button.component";
 
 export default class ModalScene extends SceneContainer {
   constructor(props) {
@@ -26,9 +27,7 @@ export default class ModalScene extends SceneContainer {
   scene() {
     return (
       <div>
-        <button className="btn btn-primary" onClick={this.toggle}>
-          Launch Modal
-        </button>
+        <Button kind="primary" value="Launch Modal" onClick={this.toggle} />
         <ModalComponent
           title="Sample Title"
           isOpen={this.state.isOpen}
