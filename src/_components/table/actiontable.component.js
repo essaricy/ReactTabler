@@ -151,16 +151,10 @@ export default class ActionTable extends React.Component {
     const actionName = config.actionName;
 
     let content;
-    // TODO added for testing. remove later
-    const modalData = {
-      id: 0,
-      subject: "Test subject",
-      client: "Test client",
-      vat: "87956421",
-      created: "24 Aug 2018",
-      status: "Pending",
-      price: 10
-    };
+    if (!config.getEmpty) {
+      throw Error("Missing declaration of getEmpty for add configuration");
+    }
+    const modalData = config.getEmpty();
     if (this.state.isAddOpen) {
       content = config.content(modalData);
     }

@@ -85,6 +85,7 @@ export default class InvoiceScene extends React.Component {
     return {
       add: {
         modalTitle: "Add New Invoice",
+        getEmpty: this.getEmpty,
         content: this.getModalScene
       },
       update: {
@@ -97,32 +98,19 @@ export default class InvoiceScene extends React.Component {
     };
   }
 
-  getStatusColor(status) {
-    let statusColor;
-    if (status === "Paid" || status === "Paid Today") {
-      statusColor = "bg-success";
-    } else if (status === "Pending") {
-      statusColor = "bg-danger";
-    } else if (status === "Due in 2 Weeks") {
-      statusColor = "bg-warning";
-    } else {
-      statusColor = "bg-grey";
-    }
-    return statusColor;
+  getEmpty() {
+    return {
+      id: 0,
+      subject: "Test subject",
+      client: "Test client",
+      vat: "87956421",
+      created: "24 Aug 2018",
+      status: "Pending",
+      price: 10
+    };
   }
 
   getModalScene(data) {
-    if (data == null || !data.id) {
-      // data = {
-      //   id: 0,
-      //   subject: "Test subject",
-      //   client: "Test client",
-      //   vat: "87956421",
-      //   created: "24 Aug 2018",
-      //   status: "Pending",
-      //   price: 10
-      // };
-    }
     return (
       <div>
         <input type="hidden" id="id" defaultValue={data.id} />
@@ -176,5 +164,19 @@ export default class InvoiceScene extends React.Component {
         </FormGroup>
       </div>
     );
+  }
+
+  getStatusColor(status) {
+    let statusColor;
+    if (status === "Paid" || status === "Paid Today") {
+      statusColor = "bg-success";
+    } else if (status === "Pending") {
+      statusColor = "bg-danger";
+    } else if (status === "Due in 2 Weeks") {
+      statusColor = "bg-warning";
+    } else {
+      statusColor = "bg-grey";
+    }
+    return statusColor;
   }
 }
