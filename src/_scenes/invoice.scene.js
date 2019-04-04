@@ -1,11 +1,11 @@
 import React from "react";
 import ActionTableContainer from "../_containers/actiontable.container";
 
-import FormGroup from "../_components/form/formgroup.component";
-import FormLabel from "../_components/form/formlabel.component";
-import FormText from "../_components/form/formtext.component";
+import Text from "../_components/form/text.component";
+
 import * as Urls from "../_constants/url.constant";
 import * as Events from "../_utils/event.util";
+import FormGroupContainer from "../_containers/formgroup.container";
 
 export default class InvoiceScene extends React.Component {
   constructor(props) {
@@ -114,54 +114,48 @@ export default class InvoiceScene extends React.Component {
     return (
       <div>
         <input type="hidden" id="id" defaultValue={data.id} />
-        <FormGroup>
-          <FormLabel>Subject</FormLabel>
-          <FormText
+        <FormGroupContainer label="Subject">
+          <Text
             id="subject"
             defaultValue={data.subject}
             onChange={e => Events.setDataById(e, data)}
           />
-        </FormGroup>
-        <FormGroup>
-          <FormLabel>Client</FormLabel>
-          <FormText
+        </FormGroupContainer>
+        <FormGroupContainer label="Client">
+          <Text
             id="client"
             defaultValue={data.client}
             onChange={e => Events.setDataById(e, data)}
           />
-        </FormGroup>
-        <FormGroup>
-          <FormLabel>VAT#</FormLabel>
-          <FormText
+        </FormGroupContainer>
+        <FormGroupContainer label="VAT#">
+          <Text
             id="vat"
             defaultValue={data.vat}
             onChange={e => Events.setDataById(e, data)}
           />
-        </FormGroup>
-        <FormGroup>
-          <FormLabel>Created</FormLabel>
-          <FormText
+        </FormGroupContainer>
+        <FormGroupContainer label="Created">
+          <Text
             id="created"
             defaultValue={data.created}
             onChange={e => Events.setDataById(e, data)}
           />
-        </FormGroup>
-        <FormGroup>
-          <FormLabel>Status</FormLabel>
-          <FormText
+        </FormGroupContainer>
+        <FormGroupContainer label="Status">
+          <Text
             id="status"
             defaultValue={data.status}
             onChange={e => Events.setDataById(e, data)}
           />
-        </FormGroup>
-        <FormGroup>
-          <FormLabel>Price</FormLabel>
-          <FormText
+        </FormGroupContainer>
+        <FormGroupContainer label="Price">
+          <Text
             id="price"
             defaultValue={data.price}
             onChange={e => Events.setDataById(e, data)}
           />
-        </FormGroup>
+        </FormGroupContainer>
       </div>
     );
   }

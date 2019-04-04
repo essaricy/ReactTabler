@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class FormPassword extends React.Component {
+export default class Password extends React.Component {
   render() {
     return <label className="form-label">{this.props.children}</label>;
   }

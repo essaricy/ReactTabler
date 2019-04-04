@@ -6,12 +6,14 @@ import Card from "../_components/card/card.component";
 import CardHeader from "../_components/card/cardheader.component";
 import CardBody from "../_components/card/cardbody.component";
 import CardAlert from "../_components/alert/cardalert.component";
+
 import FormGroup from "../_components/form/formgroup.component";
-import FormLabel from "../_components/form/formlabel.component";
-import FormText from "../_components/form/formtext.component";
+import Label from "../_components/form/label.component";
+import Text from "../_components/form/text.component";
 import LoginBox from "../_containers/login.container";
 import Logo from "../_components/app/logo.component";
 import CardDimmer from "../_components/card/carddimmer.component";
+import FormGroupContainer from "../_containers/formgroup.container";
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -38,24 +40,23 @@ export default class Login extends React.Component {
           <CardAlert type="error" message={this.state.error} />
           <CardBody>
             <CardDimmer active={this.state.loggingIn}>
-              <FormGroup>
-                <FormLabel>Login Id</FormLabel>
-                <FormText
+              <FormGroupContainer label="Login Id">
+                <Text
                   placeholder="Enter email/mobile number"
                   defaultValue={this.state.loginId}
                   required
                   autoFocus
                   onChange={this.handleChange}
                 />
-              </FormGroup>
+              </FormGroupContainer>
               <FormGroup>
-                <FormLabel>
+                <Label>
                   Password
                   <a href="/" className="float-right small">
                     I forgot password
                   </a>
-                </FormLabel>
-                <FormText
+                </Label>
+                <Text
                   type="password"
                   placeholder="Password"
                   defaultValue={this.state.password}
