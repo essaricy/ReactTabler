@@ -1,23 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 import {
   ActionConfigContainerProtoType,
   ColumnConfigProtoType
-} from '../_prototypes/actiontable.prototype';
-import ActionTable from '../_components/table/actiontable.component';
+} from "../_prototypes/actiontable.prototype";
+import ActionTable from "../_components/table/actiontable.component";
 
 export default class ActionTableContainer extends React.Component {
   constructor(props) {
     super(props);
 
     if (props.columns.length === 0) {
-      throw Error('At least one column must be configured');
+      throw Error("At least one column must be configured");
     }
     this.setActionDefault = this.setActionDefault.bind(this);
-
-    // Populate action defaults
-    this.setActionDefault('add', 'Add', 'ADD NEW RECORD', 'Submit');
-    this.setActionDefault('update', 'Update', 'UPDATE RECORD', 'Save');
   }
 
   setActionDefault(key, triggerName, modalTitle, actionName) {
@@ -40,6 +36,10 @@ export default class ActionTableContainer extends React.Component {
   }
 
   render() {
+    // Populate action defaults
+    this.setActionDefault("add", "Add", "ADD NEW RECORD", "Submit");
+    this.setActionDefault("update", "Update", "UPDATE RECORD", "Save");
+
     return (
       <div className="container">
         <div className="page-header">
@@ -72,5 +72,5 @@ ActionTableContainer.propTypes = {
 };
 
 ActionTableContainer.defaultProps = {
-  title: 'Action Table Title'
+  title: "Action Table Title"
 };
