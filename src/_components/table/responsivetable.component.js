@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class ResponsiveTableComponent extends React.Component {
+export default class ResponsiveTable extends React.Component {
   render() {
     return (
       <div className="table-responsive">

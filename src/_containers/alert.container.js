@@ -1,6 +1,6 @@
 import React from "react";
 
-import AlertComponent from "../_components/modal/alert.component";
+import Alert from "../_components/alert/alert.component";
 
 export default class AlertContainer extends React.Component {
   constructor(props) {
@@ -8,7 +8,6 @@ export default class AlertContainer extends React.Component {
     this.state = {
       type: "",
       message: "",
-      //confirmLabel: props.confirmLabel ? props.confirmLabel : "Yes",
       confirmLabel: "",
       onConfirm: null,
       isOpen: false
@@ -24,7 +23,7 @@ export default class AlertContainer extends React.Component {
 
   render() {
     return (
-      <AlertComponent
+      <Alert
         type={this.state.type}
         message={this.state.message}
         isOpen={this.state.isOpen}

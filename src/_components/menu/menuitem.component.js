@@ -1,13 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 import {
-  DropdownToggle,
-  DropdownMenu,
-  UncontrolledDropdown,
-  DropdownItem
-} from 'reactstrap';
+  DropdownToggle as RSDropdownToggle,
+  DropdownMenu as RSDropdownMenu,
+  UncontrolledDropdown as RSUncontrolledDropdown,
+  DropdownItem as RSDropdownItem
+} from "reactstrap";
 
-export default class MenuItemComponent extends React.Component {
+export default class MenuItem extends React.Component {
   render() {
     const menuName = this.props.name;
     const menuData = this.props.data;
@@ -21,27 +21,27 @@ export default class MenuItemComponent extends React.Component {
         const menuItemTitle = menuItem.title;
 
         dropdownItems.push(
-          <DropdownItem
+          <RSDropdownItem
             key={menuItem.id}
             data-id={menuItem.id}
             className="dropdown-item"
           >
-            <Link to={menuItem.url} style={{ color: '#6e7687' }}>
+            <Link to={menuItem.url} style={{ color: "#6e7687" }}>
               {menuItemTitle}
             </Link>
-          </DropdownItem>
+          </RSDropdownItem>
         );
       }
 
       dropdownMenu = (
-        <UncontrolledDropdown setActiveFromChild>
-          <DropdownToggle tag="a" className="nav-link">
+        <RSUncontrolledDropdown setActiveFromChild>
+          <RSDropdownToggle tag="a" className="nav-link">
             <i className={menuData.iconClass} /> {menuName}
-          </DropdownToggle>
-          <DropdownMenu className="dropdown-menu dropdown-menu-arrow">
+          </RSDropdownToggle>
+          <RSDropdownMenu className="dropdown-menu dropdown-menu-arrow">
             {dropdownItems}
-          </DropdownMenu>
-        </UncontrolledDropdown>
+          </RSDropdownMenu>
+        </RSUncontrolledDropdown>
       );
     } else {
       dropdownMenu = (

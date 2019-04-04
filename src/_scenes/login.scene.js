@@ -1,25 +1,25 @@
-import React from 'react';
+import React from "react";
 
-import * as ApiConstants from '../_constants/api.constant';
-import LoginService from '../_services/login.service';
-import Card from '../_components/card/card.component';
-import CardHeader from '../_components/card/cardheader.component';
-import CardBody from '../_components/card/cardbody.component';
-import InlineAlertComponent from '../_components/inlinealert.component';
-import FormGroup from '../_components/form/formgroup.component';
-import FormLabel from '../_components/form/formlabel.component';
-import FormText from '../_components/form/formtext.component';
-import LoginBoxComponent from '../_containers/login.container';
-import LogoComponent from '../_components/app/logo.component';
-import CardDimmer from '../_components/card/carddimmer.component';
+import * as ApiConstants from "../_constants/api.constant";
+import LoginService from "../_services/login.service";
+import Card from "../_components/card/card.component";
+import CardHeader from "../_components/card/cardheader.component";
+import CardBody from "../_components/card/cardbody.component";
+import CardAlert from "../_components/alert/cardalert.component";
+import FormGroup from "../_components/form/formgroup.component";
+import FormLabel from "../_components/form/formlabel.component";
+import FormText from "../_components/form/formtext.component";
+import LoginBox from "../_containers/login.container";
+import Logo from "../_components/app/logo.component";
+import CardDimmer from "../_components/card/carddimmer.component";
 
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
     // 200 for good, 401 for unauthorized and 500 for server error
     this.state = {
-      loginId: '200',
-      password: '#password',
+      loginId: "200",
+      password: "#password",
       loggingIn: false,
       error: null
     };
@@ -31,11 +31,11 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      <LoginBoxComponent>
-        <LogoComponent />
+      <LoginBox>
+        <Logo />
         <Card form="true" onSubmit={this.handleSubmit}>
           <CardHeader title="Login to your account" />
-          <InlineAlertComponent type="error" message={this.state.error} />
+          <CardAlert type="error" message={this.state.error} />
           <CardBody>
             <CardDimmer active={this.state.loggingIn}>
               <FormGroup>
@@ -79,7 +79,7 @@ export default class Login extends React.Component {
         <div className="text-center text-muted">
           Don't have account yet? <a href="/">Sign up</a>
         </div>
-      </LoginBoxComponent>
+      </LoginBox>
     );
   }
 

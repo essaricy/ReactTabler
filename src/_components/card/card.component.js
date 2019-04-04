@@ -2,10 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 
 export default class Card extends React.Component {
-  static propTypes = {
-    form: PropTypes.bool
-  };
-
   render() {
     let card;
     if (this.props.form) {
@@ -20,3 +16,7 @@ export default class Card extends React.Component {
     return card;
   }
 }
+
+Card.propTypes = {
+  form: PropTypes.bool
+};

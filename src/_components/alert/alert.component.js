@@ -1,11 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import Button from '../form/button.component';
-import FaIcon from '../icons/fa-icon.component';
-import * as AlertUtil from '../../_utils/alert.util';
+import React from "react";
+import PropTypes from "prop-types";
+import Modal from "../modal/modal.component";
+import Button from "../form/button.component";
+import FaIcon from "../icons/fa-icon.component";
+import * as AlertUtil from "../../_utils/alert.util";
 
-export default class AlertComponent extends React.Component {
+export default class Alert extends React.Component {
   constructor(props) {
     super(props);
     this.onConfirmation = this.onConfirmation.bind(this);
@@ -13,20 +13,17 @@ export default class AlertComponent extends React.Component {
 
   render() {
     if (!this.props.isOpen) {
-      return '';
+      return "";
     }
     const type = this.props.type;
     return (
       <Modal
+        title={this.getHeader(type)}
         isOpen={this.props.isOpen}
         toggle={this.props.toggle}
-        className={this.props.className}
+        buttons={this.getFooterButtons(type)}
       >
-        <ModalHeader toggle={this.props.toggle} charCode="X">
-          {this.getHeader(type)}
-        </ModalHeader>
-        <ModalBody>{this.props.message}</ModalBody>
-        <ModalFooter>{this.getFooterButtons(type)}</ModalFooter>
+        {this.props.message}
       </Modal>
     );
   }
@@ -36,14 +33,14 @@ export default class AlertComponent extends React.Component {
     return (
       <span>
         <FaIcon name={alertType.faIcon} style={{ color: alertType.color }} />
-        {' ' + alertType.title}
+        {" " + alertType.title}
       </span>
     );
   }
 
   getFooterButtons(type) {
     const buttons = [];
-    if (type === 'confirm') {
+    if (type === "confirm") {
       buttons.push(
         <Button
           key="confirm_yes"
@@ -73,7 +70,7 @@ export default class AlertComponent extends React.Component {
   }
 }
 
-AlertComponent.propTypes = {
+Alert.propTypes = {
   type: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired
 };

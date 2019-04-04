@@ -10,7 +10,7 @@ import NotificationService from "../_services/notification.service";
 import AlertService from "../_services/alert.service";
 import AlertContainer from "./alert.container";
 
-export default class Page extends React.Component {
+export default class PageContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};

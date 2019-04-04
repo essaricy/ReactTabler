@@ -2,7 +2,7 @@ import React from "react";
 
 import * as AppConstants from "../_constants/app.constant";
 
-import MenuComponent from "../_components/menu/menu.component";
+import Menu from "../_components/menu/menu.component";
 import MenuService from "../_services/menu.service";
 
 export default class MenuContainer extends React.Component {
@@ -40,7 +40,7 @@ export default class MenuContainer extends React.Component {
               </form>
             </div>
             <div className="col-lg order-lg-first">
-              <MenuComponent
+              <Menu
                 data={this.state.menus}
                 onMenuChange={this.props.onMenuChange}
               />
