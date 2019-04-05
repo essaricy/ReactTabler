@@ -9,22 +9,22 @@ export default class IconText extends React.Component {
     let content;
     if (this.props.align === "right") {
       content = (
-        <div class="input-icon mb-3">
+        <div className="input-icon mb-3">
           <Text
             id={this.props.id}
             defaultValue={this.props.defaultValue}
             placeholder={this.props.placeholder}
             onChange={this.props.onChange}
           />
-          <span class="input-icon-addon">
+          <span className="input-icon-addon">
             <FeIcon name={this.props.iconName} />
           </span>
         </div>
       );
     } else {
       content = (
-        <div class="input-icon">
-          <span class="input-icon-addon">
+        <div className="input-icon">
+          <span className="input-icon-addon">
             <FeIcon name={this.props.iconName} />
           </span>
           <Text

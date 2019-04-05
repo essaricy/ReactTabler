@@ -6,9 +6,17 @@ import Label from "../_components/form/label.component";
 
 export default class FormGroupContainer extends React.Component {
   render() {
+    let starMark;
+    if (this.props.required) {
+      starMark = <span className="form-required">*</span>;
+    }
+
     return (
       <FormGroup>
-        <Label>{this.props.label}</Label>
+        <Label>
+          {this.props.label}
+          {starMark}
+        </Label>
         {this.props.children}
       </FormGroup>
     );

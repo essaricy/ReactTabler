@@ -10,6 +10,9 @@ import TextArea from "../_components/form/textarea.component";
 import IconText from "../_components/form/icontext.component";
 import Select from "../_components/form/select.component";
 import FormGroupContainer from "../_containers/formgroup.container";
+import Switch from "../_components/form/switch.component";
+import Radio from "../_components/form/radio.component";
+import Checkbox from "../_components/form/checkbox.component";
 
 export default class FormScene extends SceneContainer {
   scene() {
@@ -21,8 +24,8 @@ export default class FormScene extends SceneContainer {
             <FormGroupContainer label="Static">
               <PlainText>Some Id</PlainText>
             </FormGroupContainer>
-            <FormGroupContainer label="Text">
-              <Text placeholder="Your place holder here" />
+            <FormGroupContainer label="Text" required>
+              <Text placeholder="Your place holder here" required />
             </FormGroupContainer>
             <FormGroupContainer label="Textarea">
               <TextArea
@@ -40,16 +43,32 @@ export default class FormScene extends SceneContainer {
               />
             </FormGroupContainer>
             <FormGroupContainer label="Select Country">
-              <Select
-                values={[
-                  { code: "G", text: "Germany" },
-                  { code: "I", text: "India" }
-                ]}
-              />
+              <Select values={this.getCountries()} />
+            </FormGroupContainer>
+            <FormGroupContainer label="Toggle with switch">
+              <Switch text="I agree with terms and conditions" />
+            </FormGroupContainer>
+            <FormGroupContainer label="Radio Buttons">
+              <Radio name="radio" choices={this.getChoices()} />
+            </FormGroupContainer>
+            <FormGroupContainer label="Radio Buttons">
+              <Checkbox name="checkbox" value="Checkbox 1" />
             </FormGroupContainer>
           </CardBody>
         </Card>
       </div>
     );
+  }
+
+  getCountries() {
+    return [{ code: "G", text: "Germany" }, { code: "I", text: "India" }];
+  }
+
+  getChoices() {
+    return [
+      { code: "1", text: "Choice 1" },
+      { code: "2", text: "Choice 2" },
+      { code: "3", text: "Choice 3" }
+    ];
   }
 }

@@ -6,6 +6,7 @@ export default class Text extends React.Component {
       <input
         className="form-control"
         id={this.props.id}
+        required={this.props.required}
         defaultValue={this.props.defaultValue}
         placeholder={this.props.placeholder}
         onChange={this.props.onChange}
