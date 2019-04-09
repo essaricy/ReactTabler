@@ -1,70 +1,34 @@
-{
-  "Home": {
-    "id": "Home",
-    "title": "Home",
-    "iconClass": "fe fe-home",
-    "url": "/"
+[
+  {
+    "value": "Home",
+    "to": "/",
+    "icon": "home",
+    "useExact": true
   },
-  "Interface": {
-    "iconClass": "fe fe-box",
-    "url": "/interface"
-  },
-  "Components": {
-    "iconClass": "fe fe-calendar",
-    "menuItems": [
+  {
+    "value": "Pages",
+    "icon": "file",
+    "subItems": [
       {
-        "id": "Component/Card",
-        "title": "Card",
-        "url": "/component/card"
+        "value": "Invoice",
+        "to": "/pages/invoice",
+        "LinkComponent": "withRouter(NavLink)"
       },
       {
-        "id": "Component/Alert",
-        "title": "Alerts",
-        "url": "/component/alert"
+        "value": "Empty Page",
+        "to": "/pages/blank",
+        "LinkComponent": "withRouter(NavLink)"
       },
       {
-        "id": "Component/Modal",
-        "title": "Modal",
-        "url": "/component/modal"
+        "value": "Forgot password",
+        "to": "/pages/forgot-password",
+        "LinkComponent": "withRouter(NavLink)"
       },
       {
-        "id": "Component/Carousal",
-        "title": "Carousal",
-        "url": "/component/carousal"
+        "value": "Profile",
+        "to": "/pages/profile",
+        "LinkComponent": "withRouter(NavLink)"
       }
     ]
-  },
-  "Pages": {
-    "iconClass": "fe fe-file",
-    "menuItems": [
-      {
-        "id": "Page/Crud",
-        "title": "Crud",
-        "url": "/page/crud"
-      },
-      {
-        "id": "Page/Profile",
-        "title": "Profile",
-        "url": "/page/profile"
-      },
-      {
-        "id": "Page/Invoices",
-        "title": "Invoice",
-        "url": "/page/invoice"
-      },
-      {
-        "id": "Page/Empty Page",
-        "title": "Empty Page",
-        "url": "/page/blank"
-      }
-    ]
-  },
-  "Forms": {
-    "iconClass": "fe fe-check-square",
-    "url": "/form"
-  },
-  "Gallery": {
-    "iconClass": "fe fe-image",
-    "url": "/gallery"
   }
-}
+]

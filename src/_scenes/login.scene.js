@@ -1,19 +1,19 @@
-import React from "react";
+import React from 'react';
+import { Button, Card, Dimmer, Form, Text } from 'tabler-react';
 
-import * as ApiConstants from "../_constants/api.constant";
-import LoginService from "../_services/login.service";
-import { Button, Card, Dimmer, Form, Text } from "tabler-react";
+import LoginBox from '../_containers/login.container';
+import Logo from '../_components/app/logo.component';
 
-import LoginBox from "../_containers/login.container";
-import Logo from "../_components/app/logo.component";
+import * as ApiConstants from '../_constants/api.constant';
+import LoginService from '../_services/login.service';
 
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
     // 200 for good, 401 for unauthorized and 500 for server error
     this.state = {
-      loginId: "",
-      password: "",
+      loginId: '',
+      password: '',
       loggingIn: false,
       error: null
     };
@@ -96,7 +96,7 @@ export default class Login extends React.Component {
       loginId: this.state.loginId,
       password: this.state.password
     };
-    console.log("payload==> " + JSON.stringify(payload));
+    console.log('payload==> ' + JSON.stringify(payload));
     this.loginService.login(payload).then(response => {
       if (response.code === ApiConstants.Result.SUCCESS) {
         this.props.onLoginSuccessful();

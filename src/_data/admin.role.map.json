@@ -1,0 +1,70 @@
+{
+  "Home": {
+    "id": "Home",
+    "title": "Home",
+    "iconClass": "fe fe-home",
+    "url": "/"
+  },
+  "Interface": {
+    "iconClass": "fe fe-box",
+    "url": "/interface"
+  },
+  "Components": {
+    "iconClass": "fe fe-calendar",
+    "menuItems": [
+      {
+        "id": "Component/Card",
+        "title": "Card",
+        "url": "/component/card"
+      },
+      {
+        "id": "Component/Alert",
+        "title": "Alerts",
+        "url": "/component/alert"
+      },
+      {
+        "id": "Component/Modal",
+        "title": "Modal",
+        "url": "/component/modal"
+      },
+      {
+        "id": "Component/Carousal",
+        "title": "Carousal",
+        "url": "/component/carousal"
+      }
+    ]
+  },
+  "Pages": {
+    "iconClass": "fe fe-file",
+    "menuItems": [
+      {
+        "id": "Page/Crud",
+        "title": "Crud",
+        "url": "/page/crud"
+      },
+      {
+        "id": "Page/Profile",
+        "title": "Profile",
+        "url": "/page/profile"
+      },
+      {
+        "id": "Page/Invoices",
+        "title": "Invoice",
+        "url": "/page/invoice"
+      },
+      {
+        "id": "Page/Empty Page",
+        "title": "Empty Page",
+        "url": "/page/blank"
+      }
+    ]
+  },
+  "Forms": {
+    "iconClass": "fe fe-check-square",
+    "url": "/form"
+  },
+  "Gallery": {
+    "iconClass": "fe fe-image",
+    "url": "/gallery"
+  }
+}
