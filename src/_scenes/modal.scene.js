@@ -1,7 +1,5 @@
 import React from "react";
 import SceneContainer from "../_containers/scene.container";
-import Modal from "../_components/modal/modal.component";
-import Button from "../_components/form/button.component";
 
 export default class ModalScene extends SceneContainer {
   constructor(props) {
@@ -27,7 +25,7 @@ export default class ModalScene extends SceneContainer {
   scene() {
     return (
       <div>
-        <Button kind="primary" value="Launch Modal" onClick={this.toggle} />
+        {/* <Button kind="primary" value="Launch Modal" onClick={this.toggle} />
         <Modal
           title="Sample Title"
           isOpen={this.state.isOpen}
@@ -35,7 +33,7 @@ export default class ModalScene extends SceneContainer {
           buttons={[<button onClick={this.save}>Save</button>]}
         >
           <label>Modal Body</label>
-        </Modal>
+        </Modal> */}
       </div>
     );
   }

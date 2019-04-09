@@ -2,26 +2,18 @@ import React from "react";
 
 import * as ApiConstants from "../_constants/api.constant";
 import LoginService from "../_services/login.service";
-import Card from "../_components/card/card.component";
-import CardHeader from "../_components/card/cardheader.component";
-import CardBody from "../_components/card/cardbody.component";
-import CardAlert from "../_components/alert/cardalert.component";
+import { Button, Card, Dimmer, Form, Text } from "tabler-react";
 
-import FormGroup from "../_components/form/formgroup.component";
-import Label from "../_components/form/label.component";
-import Text from "../_components/form/text.component";
 import LoginBox from "../_containers/login.container";
 import Logo from "../_components/app/logo.component";
-import CardDimmer from "../_components/card/carddimmer.component";
-import FormGroupContainer from "../_containers/formgroup.container";
 
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
     // 200 for good, 401 for unauthorized and 500 for server error
     this.state = {
-      loginId: "200",
-      password: "#password",
+      loginId: "",
+      password: "",
       loggingIn: false,
       error: null
     };
@@ -32,60 +24,69 @@ export default class Login extends React.Component {
   }
 
   render() {
+    let cardError;
+    if (this.state.error) {
+      cardError = <Card.Alert color="danger">{this.state.error}</Card.Alert>;
+    }
     return (
       <LoginBox>
         <Logo />
-        <Card form="true" onSubmit={this.handleSubmit}>
-          <CardHeader title="Login to your account" />
-          <CardAlert type="error" message={this.state.error} />
-          <CardBody>
-            <CardDimmer active={this.state.loggingIn}>
-              <FormGroupContainer label="Login Id">
-                <Text
-                  placeholder="Enter email/mobile number"
-                  defaultValue={this.state.loginId}
-                  required
-                  autoFocus
-                  onChange={this.handleChange}
-                />
-              </FormGroupContainer>
-              <FormGroup>
-                <Label>
-                  Password
-                  <a href="/" className="float-right small">
-                    I forgot password
-                  </a>
-                </Label>
-                <Text
-                  type="password"
-                  placeholder="Password"
-                  defaultValue={this.state.password}
-                  required
-                />
-              </FormGroup>
-              <div className="form-group">
-                <label className="custom-control custom-checkbox">
-                  <input type="checkbox" className="custom-control-input" />
-                  <span className="custom-control-label">Remember me</span>
-                </label>
-              </div>
-              <div className="form-footer">
-                <button type="submit" className="btn btn-primary btn-block">
-                  Sign in
-                </button>
-              </div>
-            </CardDimmer>
-          </CardBody>
-        </Card>
+        <Form onSubmit={this.handleSubmit}>
+          <Card>
+            <Card.Header>Login to your account</Card.Header>
+            {cardError}
+            <Card.Body>
+              <Dimmer active={this.state.loggingIn} loader={true}>
+                <Dimmer.Content>
+                  <Form.Group>
+                    <Form.Label>Login Id</Form.Label>
+                    <Form.Input
+                      name="loginId"
+                      placeholder="Enter email/mobile number"
+                      defaultValue={this.state.loginId}
+                      required
+                      autoFocus
+                      onChange={this.handleChange}
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>
+                      Password
+                      <Button link className="float-right small">
+                        <Text.Small>I forgot password</Text.Small>
+                      </Button>
+                    </Form.Label>
+                    <Form.Input
+                      name="password"
+                      type="password"
+                      placeholder="Password"
+                      required
+                      defaultValue={this.state.password}
+                      onChange={this.handleChange}
+                    />
+                  </Form.Group>
+                  <Form.Checkbox name="rememberMe" label="Remember me" />
+                  <div className="form-footer">
+                    <Button color="primary" block>
+                      Sign in
+                    </Button>
+                  </div>
+                </Dimmer.Content>
+              </Dimmer>
+            </Card.Body>
+          </Card>
+        </Form>
         <div className="text-center text-muted">
-          Don't have account yet? <a href="/">Sign up</a>
+          <Text.Small>
+            Don't have account yet? <a href="/">Sign up</a>
+          </Text.Small>
         </div>
       </LoginBox>
     );
   }
 
   handleChange(event) {
-    this.setState({ [event.target.id]: event.target.value });
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   handleSubmit(event) {
@@ -95,6 +96,7 @@ export default class Login extends React.Component {
       loginId: this.state.loginId,
       password: this.state.password
     };
+    console.log("payload==> " + JSON.stringify(payload));
     this.loginService.login(payload).then(response => {
       if (response.code === ApiConstants.Result.SUCCESS) {
         this.props.onLoginSuccessful();

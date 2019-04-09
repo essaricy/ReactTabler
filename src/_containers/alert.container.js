@@ -1,7 +1,5 @@
 import React from "react";
 
-import Alert from "../_components/alert/alert.component";
-
 export default class AlertContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -22,15 +20,14 @@ export default class AlertContainer extends React.Component {
   }
 
   render() {
-    return (
-      <Alert
-        type={this.state.type}
-        message={this.state.message}
-        isOpen={this.state.isOpen}
-        toggle={this.toggle}
-        confirmLabel={this.state.confirmLabel}
-        onConfirm={this.state.onConfirm}
-      />
-    );
+    return "";
+    // <Alert
+    //   type={this.state.type}
+    //   message={this.state.message}
+    //   isOpen={this.state.isOpen}
+    //   toggle={this.toggle}
+    //   confirmLabel={this.state.confirmLabel}
+    //   onConfirm={this.state.onConfirm}
+    // />
   }
 }

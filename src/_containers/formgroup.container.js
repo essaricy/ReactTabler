@@ -1,9 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import FormGroup from "../_components/form/formgroup.component";
-import Label from "../_components/form/label.component";
-
 export default class FormGroupContainer extends React.Component {
   render() {
     let starMark;
@@ -11,15 +8,14 @@ export default class FormGroupContainer extends React.Component {
       starMark = <span className="form-required">*</span>;
     }
 
-    return (
-      <FormGroup>
-        <Label>
-          {this.props.label}
-          {starMark}
-        </Label>
-        {this.props.children}
-      </FormGroup>
-    );
+    return "";
+    // <FormGroup>
+    //   <Label>
+    //     {this.props.label}
+    //     {starMark}
+    //   </Label>
+    //   {this.props.children}
+    // </FormGroup>
   }
 }
 

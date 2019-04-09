@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import "./App.css";
 
 import LoginScene from "./_scenes/login.scene";
-import PageContainer from "./_containers/page.container";
+import SiteContainer from "./_containers/site.container";
 import LoginService from "./_services/login.service";
 
 class App extends React.Component {
@@ -31,7 +31,7 @@ class App extends React.Component {
   render() {
     let landingPage;
     if (this.state.isAutenticated) {
-      landingPage = <PageContainer onLogout={this.onLogout} />;
+      landingPage = <SiteContainer />;
     } else {
       landingPage = <LoginScene onLoginSuccessful={this.onLoginSuccessful} />;
     }

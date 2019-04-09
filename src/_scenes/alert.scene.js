@@ -3,7 +3,6 @@ import "./alert.scene.css";
 
 import SceneContainer from "../_containers/scene.container";
 import AlertService from "../_services/alert.service";
-import Button from "../_components/form/button.component";
 
 export default class AlertScene extends SceneContainer {
   constructor(props) {
@@ -14,7 +13,7 @@ export default class AlertScene extends SceneContainer {
   scene() {
     return (
       <div className="row">
-        <Button
+        {/* <Button
           kind="success"
           value="Success Alert"
           onClick={() =>
@@ -58,7 +57,7 @@ export default class AlertScene extends SceneContainer {
               this.onConfirmation
             )
           }
-        />
+        /> */}
       </div>
     );
   }

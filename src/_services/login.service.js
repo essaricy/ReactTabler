@@ -1,6 +1,6 @@
-import * as FetchApi from '../_utils/fetchapi.util';
-import * as Urls from '../_constants/url.constant';
-import * as ApiConstants from '../_constants/api.constant';
+import * as FetchApi from "../_utils/fetchapi.util";
+import * as Urls from "../_constants/url.constant";
+import * as ApiConstants from "../_constants/api.constant";
 
 export default class LoginService {
   constructor() {
@@ -26,8 +26,11 @@ export default class LoginService {
   isUserAuthenticated() {
     // TODO: Send the session id to API to check if the session is still valid or not.
     // and update prop accordingly
-    console.log('Is User Authenticated? ' + this.authenticated);
-    //return this.authenticated;
+    // console.log("Is User Authenticated? " + this.authenticated);
+    // const loginUrl = Urls.API_URL.BASE + Urls.API_URL.LOGIN;
+    // const response = FetchApi.patch(loginUrl, "Some Token");
+    // this.authenticated = response.code === ApiConstants.Result.SUCCESS;
+    // return this.authenticated;
     return true;
   }
 }

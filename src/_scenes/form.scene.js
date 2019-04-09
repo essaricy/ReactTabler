@@ -1,24 +1,11 @@
 import React from "react";
 import SceneContainer from "../_containers/scene.container";
-import Card from "../_components/card/card.component";
-import CardHeader from "../_components/card/cardheader.component";
-import CardBody from "../_components/card/cardbody.component";
-
-import Text from "../_components/form/text.component";
-import PlainText from "../_components/form/plaintext.component";
-import TextArea from "../_components/form/textarea.component";
-import IconText from "../_components/form/icontext.component";
-import Select from "../_components/form/select.component";
-import FormGroupContainer from "../_containers/formgroup.container";
-import Switch from "../_components/form/switch.component";
-import Radio from "../_components/form/radio.component";
-import Checkbox from "../_components/form/checkbox.component";
 
 export default class FormScene extends SceneContainer {
   scene() {
     return (
       <div className="col-md-6 col-xl-4">
-        <Card>
+        {/* <Card>
           <CardHeader title="Form" />
           <CardBody>
             <FormGroupContainer label="Static">
@@ -55,7 +42,7 @@ export default class FormScene extends SceneContainer {
               <Checkbox name="checkbox" value="Checkbox 1" />
             </FormGroupContainer>
           </CardBody>
-        </Card>
+        </Card> */}
       </div>
     );
   }
