@@ -1,21 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Button,
-  Card,
-  Dimmer,
-  Form,
-  Grid,
-  Header,
-  Icon,
-  List,
-  RouterContextProvider,
-  Site,
-  Table,
-  Text
-} from 'tabler-react';
+import { Button, Card, Dimmer, Icon, Table } from 'tabler-react';
 import Modal from '../../_components/modal/modal.component';
-import ResponsiveTable from './responsivetable.component';
 
 import {
   ActionConfigComponentProtoType,
@@ -135,14 +121,14 @@ export default class ActionTable extends React.Component {
         hideClassName = 'actiontable-col-hidden';
       }
       tableHeaders.push(
-        <Table.ColHeader
+        <th
           key={column.name}
           className={hideClassName + sortClassName}
           onClick={() => this.sort(column)}
         >
           {column.name}
           {sortIcon}
-        </Table.ColHeader>
+        </th>
       );
     });
     if (this.hasActions()) {
@@ -172,23 +158,25 @@ export default class ActionTable extends React.Component {
     return (
       <div key="Add">
         <Button
-          icon="plus"
-          color="success"
+          //icon="plus"
+          color="primary"
           disabled={this.state.isDataLoading}
           onClick={this.toggleAdd}
-        />
+        >
+          {triggerName}
+        </Button>
         <Modal
           title={modalTitle}
           isOpen={this.state.isAddOpen}
           toggle={this.toggleAdd}
           buttons={[
             <Button
-              kind="primary"
-              value={actionName}
-              //type="submit"
+              color="primary"
               disabled={this.state.isDataLoading}
               onClick={() => this.onAddAction(modalData)}
-            />
+            >
+              {actionName}
+            </Button>
           ]}
         >
           <Dimmer active={this.state.isDataLoading} loader={true}>
@@ -320,10 +308,11 @@ export default class ActionTable extends React.Component {
         buttons={[
           <Button
             color="primary"
-            value={actionName}
             disabled={this.state.isDataLoading}
             onClick={() => this.onUpdateAction(modalData)}
-          />
+          >
+            {actionName}
+          </Button>
         ]}
       >
         <Dimmer active={this.state.isDataLoading} loader={true}>

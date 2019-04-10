@@ -6,18 +6,7 @@ import {
   ModalBody as RSModalBody,
   ModalFooter as RSModalFooter
 } from 'reactstrap';
-import {
-  Button,
-  Card,
-  Dimmer,
-  Form,
-  Grid,
-  Icon,
-  List,
-  RouterContextProvider,
-  Site,
-  Text
-} from 'tabler-react';
+import { Button } from 'tabler-react';
 
 export default class Modal extends React.Component {
   render() {
@@ -28,13 +17,12 @@ export default class Modal extends React.Component {
           {this.props.buttons.map((button, index) => (
             <Button
               key={index}
-              kind={button.props.kind}
+              color={button.props.color}
               disabled={button.props.disabled}
-              size={button.props.size}
-              //type="submit"
-              value={button.props.value}
               onClick={button.props.onClick}
-            />
+            >
+              {button.props.children}
+            </Button>
           ))}
         </RSModalFooter>
       );
