@@ -5,24 +5,27 @@
   color: #ff0000;
 }
 
-.icon {
-  color: #9aa0ac !important;
+.actiontable-update {
+  color: #5eba00 !important;
 }
 
-.icon i {
-  vertical-align: -1px;
+.actiontable-delete {
+  color: #cd201f !important;
+}
+
+a i {
+  text-decoration: none;
   margin-left: 5px;
 }
 
-a.icon {
-  text-decoration: none;
+a i:hover {
   cursor: pointer;
 }
 
-a.icon:hover {
-  color: #495057 !important;
+.actiontable-col {
+  padding-left: 0.75rem;
+  padding-bottom: 0rem;
 }
-
 .actiontable-col-hidden {
   display: none;
 }

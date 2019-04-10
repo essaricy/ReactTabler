@@ -37,41 +37,39 @@ export default class Login extends React.Component {
             {cardError}
             <Card.Body>
               <Dimmer active={this.state.loggingIn} loader={true}>
-                <Dimmer.Content>
-                  <Form.Group>
-                    <Form.Label>Login Id</Form.Label>
-                    <Form.Input
-                      name="loginId"
-                      placeholder="Enter email/mobile number"
-                      defaultValue={this.state.loginId}
-                      required
-                      autoFocus
-                      onChange={this.handleChange}
-                    />
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label>
-                      Password
-                      <Button link className="float-right small">
-                        <Text.Small>I forgot password</Text.Small>
-                      </Button>
-                    </Form.Label>
-                    <Form.Input
-                      name="password"
-                      type="password"
-                      placeholder="Password"
-                      required
-                      defaultValue={this.state.password}
-                      onChange={this.handleChange}
-                    />
-                  </Form.Group>
-                  <Form.Checkbox name="rememberMe" label="Remember me" />
-                  <div className="form-footer">
-                    <Button color="primary" block>
-                      Sign in
+                <Form.Group>
+                  <Form.Label>Login Id</Form.Label>
+                  <Form.Input
+                    name="loginId"
+                    placeholder="Enter email/mobile number"
+                    defaultValue={this.state.loginId}
+                    required
+                    autoFocus
+                    onChange={this.handleChange}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>
+                    Password
+                    <Button link className="float-right small">
+                      <Text.Small>I forgot password</Text.Small>
                     </Button>
-                  </div>
-                </Dimmer.Content>
+                  </Form.Label>
+                  <Form.Input
+                    name="password"
+                    type="password"
+                    placeholder="Password"
+                    required
+                    defaultValue={this.state.password}
+                    onChange={this.handleChange}
+                  />
+                </Form.Group>
+                <Form.Checkbox name="rememberMe" label="Remember me" />
+                <div className="form-footer">
+                  <Button color="primary" block>
+                    Sign in
+                  </Button>
+                </div>
               </Dimmer>
             </Card.Body>
           </Card>
