@@ -1,20 +1,23 @@
 [
   {
     "unread": true,
+    "userName": "Nathan",
     "avatarURL": "demo/faces/male/41.jpg",
-    "message": "<strong>Nathan</strong> pushed new commit: Fix page load performance issue.",
+    "message": "{userName} pushed new commit: Fix page load performance issue.",
     "time": "10 minutes ago"
   },
   {
     "unread": true,
+    "userName": "Alice",
     "avatarURL": "demo/faces/female/1.jpg",
-    "message": "<strong>Alice</strong> started new task: Tabler UI design.",
+    "message": "{userName} started new task: Tabler UI design.",
     "time": "1 hour ago"
   },
   {
     "unread": false,
+    "userName": "Rose",
     "avatarURL": "demo/faces/female/18.jpg",
-    "message": "<strong>Rose</strong> deployed new version of NodeJS REST Api // V3",
+    "message": "{userName} deployed new version of NodeJS REST Api // V3",
     "time": "2 hours ago"
   }
 ]

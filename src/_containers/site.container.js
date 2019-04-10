@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Button,
   Card,
@@ -9,13 +9,13 @@ import {
   RouterContextProvider,
   Site,
   Text
-} from 'tabler-react';
-import { NavLink, withRouter } from 'react-router-dom';
+} from "tabler-react";
+import { NavLink, withRouter } from "react-router-dom";
 
-import MenuRoutes from '../_routes/menu.routes';
-import * as AppConstants from '../_constants/app.constant';
-import MenuService from '../_services/menu.service';
-import NotificationService from '../_services/notification.service';
+import MenuRoutes from "../_routes/menu.routes";
+import * as AppConstants from "../_constants/app.constant";
+import MenuService from "../_services/menu.service";
+import NotificationService from "../_services/notification.service";
 
 export default class SiteContainer extends React.Component {
   constructor(props) {
@@ -37,7 +37,6 @@ export default class SiteContainer extends React.Component {
       menuItems: this.getMenuItems(),
       notifications: this.getNotification()
     });
-    console.log('notifications ===> ' + this.state.notifications);
   }
 
   getMenuItems() {
@@ -57,29 +56,35 @@ export default class SiteContainer extends React.Component {
   getNotification() {
     const notifications = this.notificationService.getAll();
     notifications.forEach(notification => {
+      const userName = notification.userName;
+      const message = notification.message.replace("{userName}", userName);
       notification.message = (
-        <React.Fragment>{notification.message}</React.Fragment>
+        <React.Fragment>
+          <strong>{userName}</strong> {message}
+        </React.Fragment>
       );
     });
+    console.log("notifications==> " + JSON.stringify(notifications));
+    return notifications;
   }
 
   markAllAsRead() {
-    console.log('mark all as read');
+    console.log("mark all as read");
   }
 
   getAccountDropdonProps() {
     const accountDropdownProps = {
-      avatarURL: './demo/faces/female/25.jpg',
-      name: 'Jane Pearson',
-      description: 'Administrator',
+      avatarURL: "./demo/faces/female/25.jpg",
+      name: "Jane Pearson",
+      description: "Administrator",
       options: [
-        { icon: 'user', value: 'Profile' },
-        { icon: 'settings', value: 'Settings' },
-        { icon: 'mail', value: 'Inbox', badge: '6' },
-        { icon: 'send', value: 'Message' },
+        { icon: "user", value: "Profile" },
+        { icon: "settings", value: "Settings" },
+        { icon: "mail", value: "Inbox", badge: "6" },
+        { icon: "send", value: "Message" },
         { isDivider: true },
-        { icon: 'help-circle', value: 'Need help?' },
-        { icon: 'log-out', value: 'Sign out' }
+        { icon: "help-circle", value: "Need help?" },
+        { icon: "log-out", value: "Sign out" }
       ]
     };
     return accountDropdownProps;
@@ -87,15 +92,16 @@ export default class SiteContainer extends React.Component {
 
   render() {
     const notifications = this.state.notifications;
+    console.log("notifications 2 ===> " + this.state.notifications);
 
     return (
       <Site.Wrapper
         headerProps={{
-          href: '/',
-          alt: 'Tabler React',
-          imageURL: './images/brand/tabler.svg',
+          href: "/",
+          alt: "Tabler React",
+          imageURL: "./images/brand/tabler.svg",
           notificationsTray: {
-            notifications,
+            notificationsObjects: this.state.notifications,
             markAllAsRead: this.markAllAsRead,
             unread: 10
           },
@@ -113,9 +119,9 @@ export default class SiteContainer extends React.Component {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {' '}
+                {" "}
                 codecalm.net
-              </a>{' '}
+              </a>{" "}
               All rights reserved.
             </React.Fragment>
           )
