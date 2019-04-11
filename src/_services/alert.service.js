@@ -3,14 +3,14 @@
 export default class AlertService {
   static instance;
 
-  constructor(domRef) {
+  constructor(alertDOMRef) {
     if (AlertService.instance) {
       return AlertService.instance;
     }
-    if (!domRef) {
+    if (!alertDOMRef) {
       throw Error("DOM REF is required to create alert service");
     }
-    this.alertDOMRef = domRef;
+    this.alertDOMRef = alertDOMRef;
     AlertService.instance = this;
   }
   static getInstance() {

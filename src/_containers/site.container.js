@@ -2,9 +2,12 @@ import React from "react";
 import { RouterContextProvider, Site } from "tabler-react";
 import { NavLink, withRouter } from "react-router-dom";
 
+import Alert from "../_components/modal/alert.component";
+
 import MenuRoutes from "../_routes/menu.routes";
 import * as AppConstants from "../_constants/app.constant";
 import MenuService from "../_services/menu.service";
+import AlertService from "../_services/alert.service";
 import NotificationService from "../_services/notification.service";
 
 export default class SiteContainer extends React.Component {
@@ -13,8 +16,10 @@ export default class SiteContainer extends React.Component {
     this.state = {
       navBarItems: []
     };
+    this.alertDOMRef = React.createRef();
     this.menuService = new MenuService();
     this.notificationService = new NotificationService();
+    this.alertService = new AlertService(this.alertDOMRef);
 
     this.state = {
       menuItems: [],
@@ -116,6 +121,7 @@ export default class SiteContainer extends React.Component {
         }}
       >
         <MenuRoutes />
+        <Alert ref={this.alertDOMRef} />
       </Site.Wrapper>
     );
   }

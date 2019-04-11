@@ -13,7 +13,6 @@ import * as ApiConstants from "../../_constants/api.constant";
 import * as ActionTableConstants from "../../_constants/actiontable.constant";
 
 import ActionTableService from "../../_services/actiontable.service";
-import NotificationService from "../../_services/notification.service";
 import AlertService from "../../_services/alert.service";
 
 export default class ActionTable extends React.Component {
@@ -365,9 +364,9 @@ export default class ActionTable extends React.Component {
         // Add Record to the table.
         this.addToDataset(modalData, response);
         this.toggleAdd();
-        //this.notificationService.success(response.message);
+        this.alertService.success(response.message);
       } else {
-        //this.notificationService.error(response.message);
+        this.alertService.error(response.message);
       }
       this.setState({ isDataLoading: false });
     });
@@ -384,9 +383,9 @@ export default class ActionTable extends React.Component {
         // Update Record to the table.
         this.updateDataset(modalData, response);
         this.toggleUpdate();
-        // this.notificationService.success(response.message);
+        this.alertService.success(response.message);
       } else {
-        // this.notificationService.error(response.message);
+        this.alertService.error(response.message);
       }
       this.setState({ isDataLoading: false });
     });
@@ -414,9 +413,9 @@ export default class ActionTable extends React.Component {
       if (response.code === ApiConstants.Result.SUCCESS) {
         // Add Record to the table.
         this.deleteFromDataset(index);
-        // this.notificationService.success(response.message);
+        this.alertService.success(response.message);
       } else {
-        // this.notificationService.error(response.message);
+        this.alertService.error(response.message);
       }
       this.setState({ isDataLoading: false });
     });
