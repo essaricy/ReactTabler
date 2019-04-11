@@ -1,12 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
+import "./modal.component.css";
+
 import {
   Modal as RSModal,
   ModalHeader as RSModalHeader,
   ModalBody as RSModalBody,
   ModalFooter as RSModalFooter
-} from 'reactstrap';
-import { Button } from 'tabler-react';
+} from "reactstrap";
+import { Button } from "tabler-react";
 
 export default class Modal extends React.Component {
   render() {

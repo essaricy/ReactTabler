@@ -1,0 +1,4 @@
+.modal-header .close:before {
+  content: "";
+  display: none;
+}

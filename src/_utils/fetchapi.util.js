@@ -10,6 +10,20 @@ export function get(url) {
   });
 }
 
+export function getGeneric(url) {
+  console.log("Sending request (GET) to " + url);
+  return fetch(url, {
+    method: "get",
+    headers: ApiConstants.JsonHeaders
+  })
+    .then(function(apiResponse) {
+      return sendGenericResponse(apiResponse);
+    })
+    .catch(error => {
+      return sendFailureResponse(error);
+    });
+}
+
 export function post(url, payload) {
   const payloadAsText = JSON.stringify(payload);
   console.log(
