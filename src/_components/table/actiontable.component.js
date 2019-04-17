@@ -1,19 +1,19 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Button, Card, Dimmer, Icon, Table } from "tabler-react";
-import Modal from "../../_components/modal/modal.component";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Button, Card, Dimmer, Icon, Table } from 'tabler-react';
+import Modal from '../../_components/modal/modal.component';
 
 import {
   ActionConfigComponentProtoType,
   ColumnConfigProtoType
-} from "../../_prototypes/actiontable.prototype";
-import "./actiontable.component.css";
+} from '../../_prototypes/actiontable.prototype';
+import './actiontable.component.css';
 
-import * as ApiConstants from "../../_constants/api.constant";
-import * as ActionTableConstants from "../../_constants/actiontable.constant";
+import * as ApiConstants from '../../_constants/api.constant';
+import * as ActionTableConstants from '../../_constants/actiontable.constant';
 
-import ActionTableService from "../../_services/actiontable.service";
-import AlertService from "../../_services/alert.service";
+import ActionTableService from '../../_services/actiontable.service';
+import AlertService from '../../_services/alert.service';
 
 export default class ActionTable extends React.Component {
   constructor(props) {
@@ -99,10 +99,10 @@ export default class ActionTable extends React.Component {
     const tableHeaders = [];
     this.props.columns.forEach((column, index) => {
       let sortIcon;
-      let sortClassName = "";
-      let hideClassName = "";
+      let sortClassName = '';
+      let hideClassName = '';
       if (column.sort) {
-        sortClassName = "actiontable-col-sortable";
+        sortClassName = 'actiontable-col-sortable';
         sortIcon =
           this.sortBy.column === column.name ? (
             this.sortBy.order === ActionTableConstants.SortOrder.ASC ? (
@@ -115,7 +115,7 @@ export default class ActionTable extends React.Component {
           );
       }
       if (column.hide) {
-        hideClassName = "actiontable-col-hidden";
+        hideClassName = 'actiontable-col-hidden';
       }
       tableHeaders.push(
         <th
@@ -146,7 +146,7 @@ export default class ActionTable extends React.Component {
 
     let content;
     if (!config.getEmpty) {
-      throw Error("Missing declaration of getEmpty for add configuration");
+      throw Error('Missing declaration of getEmpty for add configuration');
     }
     const modalData = config.getEmpty();
     if (this.state.isAddOpen) {
@@ -155,7 +155,6 @@ export default class ActionTable extends React.Component {
     return (
       <div key="Add">
         <Button
-          //icon="plus"
           color="primary"
           disabled={this.state.isDataLoading}
           onClick={this.toggleAdd}
@@ -197,13 +196,13 @@ export default class ActionTable extends React.Component {
   }
 
   getNoDataContent() {
-    return this.getSpannedContent("EMPTYROW", "No data available...");
+    return this.getSpannedContent('EMPTYROW', 'No data available...');
   }
 
   getErrorContent() {
     return this.getSpannedContent(
-      "ERRORROW",
-      "An Error has occurred while loading data"
+      'ERRORROW',
+      'An Error has occurred while loading data'
     );
   }
 
@@ -233,7 +232,7 @@ export default class ActionTable extends React.Component {
         <Table.Col key="action-cell">
           {index === 0 && actions.update
             ? this.getUpdateModal(actions.update)
-            : ""}
+            : ''}
           {rowActions}
         </Table.Col>
       );
@@ -262,7 +261,7 @@ export default class ActionTable extends React.Component {
       renderedElement = data[columnConfig.field];
     }
     const style = {
-      display: columnConfig.hide ? "none" : ""
+      display: columnConfig.hide ? 'none' : ''
     };
     return (
       <td key={index} style={style}>
@@ -340,7 +339,7 @@ export default class ActionTable extends React.Component {
         sortBy.column = column.name;
         sortBy.order = ActionTableConstants.SortOrder.ASC;
       }
-      console.log("sortBy: " + JSON.stringify(sortBy));
+      console.log('sortBy: ' + JSON.stringify(sortBy));
       this.dataset.sort(function(a, b) {
         if (sortBy.order === ActionTableConstants.SortOrder.ASC) {
           return a[column.field] > b[column.field] ? 1 : -1;
@@ -354,7 +353,7 @@ export default class ActionTable extends React.Component {
 
   onAddAction(modalData) {
     this.setState({ isDataLoading: true });
-    console.log("ActionTable: onAddAction called");
+    console.log('ActionTable: onAddAction called');
     // Call API and get the response
     this.actionTableService.add(modalData).then(response => {
       // Check the response and close add popup
@@ -371,7 +370,7 @@ export default class ActionTable extends React.Component {
   }
 
   onUpdateAction(modalData) {
-    console.log("ActionTable: onUpdateAction called");
+    console.log('ActionTable: onUpdateAction called');
     this.setState({ isDataLoading: true });
     const modelId = modalData.id;
     // Call API and get the response
@@ -390,11 +389,11 @@ export default class ActionTable extends React.Component {
   }
 
   onDeleteAction(index) {
-    console.log("ActionTable: onDeleteAction called at: " + index);
+    console.log('ActionTable: onDeleteAction called at: ' + index);
     if (this.hasActions()) {
       AlertService.confirm(
         this.props.actions.delete.message,
-        "Yes, Delete!",
+        'Yes, Delete!',
         () => {
           this.onDeleteConfirmation(index);
         }
@@ -430,7 +429,7 @@ export default class ActionTable extends React.Component {
   updateDataset(modalData, response) {
     const index = this.dataset.findIndex(item => item.id === modalData.id);
     console.log(
-      "will update dataset for the id: " + modalData.id + " at index: " + index
+      'will update dataset for the id: ' + modalData.id + ' at index: ' + index
     );
     if (response.content) {
       this.dataset[index] = response.content;
@@ -440,7 +439,7 @@ export default class ActionTable extends React.Component {
   }
 
   deleteFromDataset(index) {
-    console.log("will delete from dataset where index: " + index);
+    console.log('will delete from dataset where index: ' + index);
     this.dataset.splice(index, 1);
     this.setState({ dataset: this.dataset });
   }

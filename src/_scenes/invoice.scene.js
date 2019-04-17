@@ -1,9 +1,10 @@
-import React from "react";
-import ActionTableContainer from "../_containers/actiontable.container";
+import React from 'react';
+import ActionTableContainer from '../_containers/actiontable.container';
 
-import { Button, Card, Dimmer, Form, Text } from "tabler-react";
-import * as Urls from "../_constants/url.constant";
-import * as Events from "../_utils/event.util";
+import { Form } from 'tabler-react';
+import FormInput from '../_components/form/input.component';
+import * as Urls from '../_constants/url.constant';
+import * as Events from '../_utils/event.util';
 
 export default class InvoiceScene extends React.Component {
   constructor(props) {
@@ -26,13 +27,13 @@ export default class InvoiceScene extends React.Component {
   getColumns() {
     return [
       {
-        name: "Id",
-        field: "id",
+        name: 'Id',
+        field: 'id',
         hide: true
       },
       {
-        name: "Subject",
-        field: "subject",
+        name: 'Subject',
+        field: 'subject',
         sort: true,
         render: data => (
           <a href="/page/invoice" className="text-inherit">
@@ -41,39 +42,39 @@ export default class InvoiceScene extends React.Component {
         )
       },
       {
-        name: "Client",
-        field: "client",
+        name: 'Client',
+        field: 'client',
         sort: true
       },
       {
-        name: "Vat #",
-        field: "vat",
+        name: 'Vat #',
+        field: 'vat',
         render: data => <span className="text-muted">{data.vat}</span>
       },
       {
-        name: "Created",
-        field: "created",
+        name: 'Created',
+        field: 'created',
         sort: true
       },
       {
-        name: "Status",
-        field: "status",
+        name: 'Status',
+        field: 'status',
         sort: true,
         render: data => (
           <span>
             <span
-              className={"status-icon " + this.getStatusColor(data.status)}
+              className={'status-icon ' + this.getStatusColor(data.status)}
             />
             {data.status}
           </span>
         )
       },
       {
-        name: "Price",
-        field: "price",
+        name: 'Price',
+        field: 'price',
         sort: true,
         render: data => {
-          return "$" + data.price;
+          return '$' + data.price;
         }
       }
     ];
@@ -82,16 +83,16 @@ export default class InvoiceScene extends React.Component {
   getActions() {
     return {
       add: {
-        modalTitle: "Add New Invoice",
+        modalTitle: 'Add New Invoice',
         getEmpty: this.getEmpty,
         content: this.getModalScene
       },
       update: {
-        modalTitle: "Update Invoice",
+        modalTitle: 'Update Invoice',
         content: this.getModalScene
       },
       delete: {
-        message: "Do you really want to delete this invoice?"
+        message: 'Do you really want to delete this invoice?'
       }
     };
   }
@@ -99,11 +100,11 @@ export default class InvoiceScene extends React.Component {
   getEmpty() {
     return {
       id: 0,
-      subject: "Test subject",
-      client: "Test client",
-      vat: "87956421",
-      created: "24 Aug 2018",
-      status: "Pending",
+      subject: 'Test subject',
+      client: 'Test client',
+      vat: '87956421',
+      created: '24 Aug 2018',
+      status: 'Pending',
       price: 10
     };
   }
@@ -112,68 +113,58 @@ export default class InvoiceScene extends React.Component {
     return (
       <div>
         <input type="hidden" id="id" defaultValue={data.id} />
-        <Form.Group>
-          <Form.Label>Subject</Form.Label>
-          <Form.Input
-            id="subject"
-            defaultValue={data.subject}
-            onChange={e => Events.setDataById(e, data)}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Client</Form.Label>
-          <Form.Input
-            id="client"
-            defaultValue={data.client}
-            onChange={e => Events.setDataById(e, data)}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>VAT#</Form.Label>
-          <Form.Input
-            id="vat"
-            defaultValue={data.vat}
-            onChange={e => Events.setDataById(e, data)}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Created</Form.Label>
-          <Form.Input
-            id="created"
-            defaultValue={data.created}
-            onChange={e => Events.setDataById(e, data)}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Status</Form.Label>
-          <Form.Input
-            id="status"
-            defaultValue={data.status}
-            onChange={e => Events.setDataById(e, data)}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Price</Form.Label>
-          <Form.Input
-            id="price"
-            defaultValue={data.price}
-            onChange={e => Events.setDataById(e, data)}
-          />
-        </Form.Group>
+        <FormInput
+          id="subject"
+          label="Subject"
+          defaultValue={data.subject}
+          onChange={e => Events.setDataById(e, data)}
+          autoFocus
+          required
+        />
+        <FormInput
+          id="client"
+          label="Client"
+          defaultValue={data.client}
+          onChange={e => Events.setDataById(e, data)}
+        />
+        <FormInput
+          id="vat"
+          label="VAT#"
+          defaultValue={data.vat}
+          onChange={e => Events.setDataById(e, data)}
+        />
+        <FormInput
+          id="created"
+          label="Created"
+          defaultValue={data.created}
+          onChange={e => Events.setDataById(e, data)}
+        />
+        <FormInput
+          id="status"
+          label="Status"
+          defaultValue={data.status}
+          onChange={e => Events.setDataById(e, data)}
+        />
+        <FormInput
+          id="price"
+          label="Price"
+          defaultValue={data.price}
+          onChange={e => Events.setDataById(e, data)}
+        />
       </div>
     );
   }
 
   getStatusColor(status) {
     let statusColor;
-    if (status === "Paid" || status === "Paid Today") {
-      statusColor = "bg-success";
-    } else if (status === "Pending") {
-      statusColor = "bg-danger";
-    } else if (status === "Due in 2 Weeks") {
-      statusColor = "bg-warning";
+    if (status === 'Paid' || status === 'Paid Today') {
+      statusColor = 'bg-success';
+    } else if (status === 'Pending') {
+      statusColor = 'bg-danger';
+    } else if (status === 'Due in 2 Weeks') {
+      statusColor = 'bg-warning';
     } else {
-      statusColor = "bg-grey";
+      statusColor = 'bg-grey';
     }
     return statusColor;
   }

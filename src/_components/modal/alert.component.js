@@ -1,17 +1,17 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import { Button, Icon } from "tabler-react";
-import Modal from "./modal.component";
-import * as AlertUtil from "../../_utils/alert.util";
+import { Button, Icon } from 'tabler-react';
+import Modal from './modal.component';
+import * as AlertUtil from '../../_utils/alert.util';
 
 export default class Alert extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      type: "",
-      message: "",
-      confirmLabel: "",
+      type: '',
+      message: '',
+      confirmLabel: '',
       onConfirm: null,
       isOpen: false
     };
@@ -20,7 +20,7 @@ export default class Alert extends React.Component {
   }
 
   toggle() {
-    console.log("toggle() called.");
+    console.log('toggle() called.');
     this.setState(prevState => ({
       isOpen: !prevState.isOpen
     }));
@@ -28,10 +28,10 @@ export default class Alert extends React.Component {
 
   render() {
     if (!this.state.isOpen) {
-      return "";
+      return '';
     }
     const type = this.state.type;
-    console.log("type => " + type);
+    console.log('type => ' + type);
     return (
       <Modal
         title={this.getHeader(type)}
@@ -53,18 +53,18 @@ export default class Alert extends React.Component {
           name={alertType.faIcon}
           style={{ color: alertType.color }}
         />
-        {" " + alertType.title}
+        {' ' + alertType.title}
       </span>
     );
   }
 
   getFooterButtons(type) {
     const buttons = [];
-    if (type === "confirm") {
+    if (type === 'confirm') {
       buttons.push(
         <Button
           key="confirm_yes"
-          color="primary"
+          color="danger"
           //size="sm"
           onClick={this.onConfirmation}
         >
