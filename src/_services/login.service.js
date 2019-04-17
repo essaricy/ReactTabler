@@ -32,5 +32,6 @@ export default class LoginService {
     // this.authenticated = response.code === ApiConstants.Result.SUCCESS;
     // return this.authenticated;
     return true;
+    //return false;
   }
 }

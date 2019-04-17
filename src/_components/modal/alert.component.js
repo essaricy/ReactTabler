@@ -36,7 +36,7 @@ export default class Alert extends React.Component {
       <Modal
         title={this.getHeader(type)}
         isOpen={this.state.isOpen}
-        toggle={this.state.toggle}
+        toggle={this.toggle}
         buttons={this.getFooterButtons(type)}
       >
         {this.state.message}
@@ -77,7 +77,7 @@ export default class Alert extends React.Component {
         key="close"
         color="default"
         //size="sm"
-        onClick={this.state.toggle}
+        onClick={this.toggle}
       >
         Close
       </Button>

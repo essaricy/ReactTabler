@@ -8,16 +8,14 @@ import BodyContainer from "./body.container";
 import FooterContainer from "./footer.container";
 import NotificationService from "../_services/notification.service";
 import AlertService from "../_services/alert.service";
-import AlertContainer from "./alert.container";
 
 export default class PageContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
     this.notificationDOMRef = React.createRef();
-    this.alertDOMRef = React.createRef();
     this.notificationService = new NotificationService(this.notificationDOMRef);
-    this.alertService = new AlertService(this.alertDOMRef);
+    AlertService.setInstance(React.createRef());
   }
 
   render() {
@@ -25,7 +23,7 @@ export default class PageContainer extends React.Component {
       <div>
         <div className="page-main">
           <ReactNotification ref={this.notificationDOMRef} />
-          <AlertContainer ref={this.alertDOMRef} />
+          <div ref={AlertService.getInstance()} />
           <HeaderContainer {...this.props} />
           <BodyContainer {...this.props} />
           <FooterContainer {...this.props} />

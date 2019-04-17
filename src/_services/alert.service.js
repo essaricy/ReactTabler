@@ -3,49 +3,45 @@
 export default class AlertService {
   static instance;
 
-  constructor(alertDOMRef) {
-    if (AlertService.instance) {
-      return AlertService.instance;
-    }
-    if (!alertDOMRef) {
-      throw Error("DOM REF is required to create alert service");
-    }
-    this.alertDOMRef = alertDOMRef;
-    AlertService.instance = this;
-  }
+  constructor() {}
+
   static getInstance() {
-    if (AlertService.instance) {
-      return AlertService.instance;
-    }
+    return AlertService.instance;
   }
 
-  success(message) {
-    this.showAlert("success", message);
+  static setInstance(alertDOMRef) {
+    AlertService.instance = alertDOMRef;
   }
 
-  warning(message) {
-    this.showAlert("warning", message);
+  static success(message) {
+    AlertService.getInstance().showAlert("success", message);
   }
 
-  info(message) {
-    this.showAlert("info", message);
+  static warning(message) {
+    AlertService.getInstance().showAlert("warning", message);
   }
 
-  error(message) {
-    this.showAlert("error", message);
+  static info(message) {
+    AlertService.getInstance().showAlert("info", message);
+  }
+
+  static error(message) {
+    AlertService.getInstance().showAlert("error", message);
   }
 
   showAlert(type, message) {
-    this.alertDOMRef.current.state.type = type;
-    this.alertDOMRef.current.state.message = message;
-    this.alertDOMRef.current.toggle();
+    const alert = AlertService.getInstance();
+    alert.current.state.type = type;
+    alert.current.state.message = message;
+    alert.current.toggle();
   }
 
-  confirm(message, confirmLabel = "Yes", onConfirm = function() {}) {
-    this.alertDOMRef.current.state.type = "confirm";
-    this.alertDOMRef.current.state.message = message;
-    this.alertDOMRef.current.state.confirmLabel = confirmLabel;
-    this.alertDOMRef.current.state.onConfirm = onConfirm;
-    this.alertDOMRef.current.toggle();
+  static confirm(message, confirmLabel = "Yes", onConfirm = function() {}) {
+    const alert = AlertService.getInstance();
+    alert.current.state.type = "confirm";
+    alert.current.state.message = message;
+    alert.current.state.confirmLabel = confirmLabel;
+    alert.current.state.onConfirm = onConfirm;
+    alert.current.toggle();
   }
 }

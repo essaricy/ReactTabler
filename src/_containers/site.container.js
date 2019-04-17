@@ -19,7 +19,7 @@ export default class SiteContainer extends React.Component {
     this.alertDOMRef = React.createRef();
     this.menuService = new MenuService();
     this.notificationService = new NotificationService();
-    this.alertService = new AlertService(this.alertDOMRef);
+    AlertService.setInstance(React.createRef());
 
     this.state = {
       menuItems: [],
@@ -121,7 +121,7 @@ export default class SiteContainer extends React.Component {
         }}
       >
         <MenuRoutes />
-        <Alert ref={this.alertDOMRef} />
+        <Alert ref={AlertService.getInstance()} />
       </Site.Wrapper>
     );
   }

@@ -48,8 +48,6 @@ export default class ActionTable extends React.Component {
     this.onDeleteConfirmation = this.onDeleteConfirmation.bind(this);
 
     this.actionTableService = new ActionTableService(this.props.url);
-    //this.notificationService = NotificationService.getInstance();
-    this.alertService = AlertService.getInstance();
   }
 
   componentWillMount() {
@@ -364,9 +362,9 @@ export default class ActionTable extends React.Component {
         // Add Record to the table.
         this.addToDataset(modalData, response);
         this.toggleAdd();
-        this.alertService.success(response.message);
+        AlertService.success(response.message);
       } else {
-        this.alertService.error(response.message);
+        AlertService.error(response.message);
       }
       this.setState({ isDataLoading: false });
     });
@@ -383,9 +381,9 @@ export default class ActionTable extends React.Component {
         // Update Record to the table.
         this.updateDataset(modalData, response);
         this.toggleUpdate();
-        this.alertService.success(response.message);
+        AlertService.success(response.message);
       } else {
-        this.alertService.error(response.message);
+        AlertService.error(response.message);
       }
       this.setState({ isDataLoading: false });
     });
@@ -394,7 +392,7 @@ export default class ActionTable extends React.Component {
   onDeleteAction(index) {
     console.log("ActionTable: onDeleteAction called at: " + index);
     if (this.hasActions()) {
-      this.alertService.confirm(
+      AlertService.confirm(
         this.props.actions.delete.message,
         "Yes, Delete!",
         () => {
@@ -413,9 +411,9 @@ export default class ActionTable extends React.Component {
       if (response.code === ApiConstants.Result.SUCCESS) {
         // Add Record to the table.
         this.deleteFromDataset(index);
-        this.alertService.success(response.message);
+        AlertService.success(response.message);
       } else {
-        this.alertService.error(response.message);
+        AlertService.error(response.message);
       }
       this.setState({ isDataLoading: false });
     });
