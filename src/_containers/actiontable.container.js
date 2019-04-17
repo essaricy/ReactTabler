@@ -41,19 +41,14 @@ export default class ActionTableContainer extends React.Component {
     this.setActionDefault('update', 'Update', 'UPDATE RECORD', 'Update');
 
     return (
-      <div className="container">
-        <div className="page-header">
-          <h1 className="page-title">{this.props.title}</h1>
-        </div>
-        <div className="row">
-          <div className="col-12">
-            <ActionTable
-              title={this.props.title}
-              url={this.props.url}
-              columns={this.props.columns}
-              actions={this.props.actions}
-            />
-          </div>
+      <div className="row">
+        <div className="col-12">
+          <ActionTable
+            title={this.props.title}
+            url={this.props.url}
+            columns={this.props.columns}
+            actions={this.props.actions}
+          />
         </div>
       </div>
     );

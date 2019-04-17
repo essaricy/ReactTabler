@@ -1,5 +1,6 @@
 import React from 'react';
 
+import PageContainer from '../_containers/page.container';
 import ActionTableContainer from '../_containers/actiontable.container';
 import FormInput from '../_components/form/input.component';
 
@@ -16,12 +17,14 @@ export default class InvoiceScene extends React.Component {
 
   render() {
     return (
-      <ActionTableContainer
-        title="Invoices"
-        url={Urls.API_URL.BASE + Urls.API_URL.INVOICE}
-        columns={this.getColumns()}
-        actions={this.getActions()}
-      />
+      <PageContainer title="Invoices">
+        <ActionTableContainer
+          title="Invoices"
+          url={Urls.API_URL.BASE + Urls.API_URL.INVOICE}
+          columns={this.getColumns()}
+          actions={this.getActions()}
+        />
+      </PageContainer>
     );
   }
 
@@ -104,7 +107,7 @@ export default class InvoiceScene extends React.Component {
 
   getModalScene(data) {
     return (
-      <div>
+      <React.Fragment>
         <input type="hidden" id="id" defaultValue={data.id} />
         <FormInput
           id="subject"
@@ -144,7 +147,7 @@ export default class InvoiceScene extends React.Component {
           defaultValue={data.price}
           onChange={e => Events.setDataById(e, data)}
         />
-      </div>
+      </React.Fragment>
     );
   }
 

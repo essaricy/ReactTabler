@@ -53,7 +53,8 @@ export default class SiteContainer extends React.Component {
       const message = notification.message.replace('{userName}', userName);
       notification.message = (
         <React.Fragment>
-          <strong>{userName}</strong> {message}
+          {/* <strong>{userName}</strong> */}
+          {message}
         </React.Fragment>
       );
     });
@@ -90,11 +91,11 @@ export default class SiteContainer extends React.Component {
         headerProps={{
           href: '/',
           alt: 'Tabler React',
-          imageURL: './images/brand/tabler.svg',
+          imageURL: '/images/brand/tabler.svg',
           notificationsTray: {
             notificationsObjects: this.state.notifications,
             markAllAsRead: this.markAllAsRead,
-            unread: 10
+            unread: 0
           },
           accountDropdown: this.getAccountDropdonProps()
         }}

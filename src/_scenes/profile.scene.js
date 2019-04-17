@@ -1,8 +1,14 @@
-import React from "react";
-import SceneContainer from "../_containers/scene.container";
+import React from 'react';
+import PageContainer from '../_containers/page.container';
 
-export default class ProfileScene extends SceneContainer {
-  scene() {
-    return <div>This is Profile page</div>;
+export default class ProfileScene extends React.Component {
+  render() {
+    return (
+      <PageContainer title="Home">
+        <div className="row">
+          <div className="col-12">This is profile page</div>
+        </div>
+      </PageContainer>
+    );
   }
 }
