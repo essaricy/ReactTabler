@@ -1,10 +1,11 @@
 import React from 'react';
-import ActionTableContainer from '../_containers/actiontable.container';
 
-import { Form } from 'tabler-react';
+import ActionTableContainer from '../_containers/actiontable.container';
 import FormInput from '../_components/form/input.component';
+
 import * as Urls from '../_constants/url.constant';
 import * as Events from '../_utils/event.util';
+import * as Models from '../_utils/models';
 
 export default class InvoiceScene extends React.Component {
   constructor(props) {
@@ -98,15 +99,7 @@ export default class InvoiceScene extends React.Component {
   }
 
   getEmpty() {
-    return {
-      id: 0,
-      subject: 'Test subject',
-      client: 'Test client',
-      vat: '87956421',
-      created: '24 Aug 2018',
-      status: 'Pending',
-      price: 10
-    };
+    return Models.getInvoice();
   }
 
   getModalScene(data) {
