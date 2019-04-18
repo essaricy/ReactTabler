@@ -2,7 +2,7 @@ import * as FetchApi from '../_utils/fetchapi.util';
 import * as Urls from '../_constants/url.constant';
 import * as ApiConstants from '../_constants/api.constant';
 
-import LocalStorageService from './localstorage.service';
+import StorageService from './storage.service';
 
 export default class LoginService {
   constructor() {
@@ -11,7 +11,7 @@ export default class LoginService {
     this.logout = this.logout.bind(this);
     this.validate = this.validate.bind(this);
 
-    this.localStorageService = new LocalStorageService();
+    this.storageService = new StorageService();
   }
 
   login(payload) {
@@ -19,7 +19,7 @@ export default class LoginService {
     return FetchApi.post(loginUrl, payload).then(response => {
       this.authenticated = response.code === ApiConstants.Result.SUCCESS;
       if (this.authenticated) {
-        this.localStorageService.setUserInfo(response.content);
+        this.storageService.setUserInfo(response.content);
       }
       return new Promise(function(resolve, reject) {
         resolve(response);
@@ -29,7 +29,7 @@ export default class LoginService {
 
   logout() {
     // TODO: Call API to invalidate session
-    this.localStorageService.removeUserInfo();
+    this.storageService.removeUserInfo();
     this.authenticated = false;
   }
 
@@ -41,7 +41,7 @@ export default class LoginService {
       });
     }
     // Check if local storage has user info
-    const userToken = this.localStorageService.getUserToken();
+    const userToken = this.storageService.getUserToken();
     if (userToken == null) {
       console.log(
         'isUserAuthenticated: user info does not exist in local storage'

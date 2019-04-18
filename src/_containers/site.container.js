@@ -9,7 +9,7 @@ import * as AppConstants from '../_constants/app.constant';
 import MenuService from '../_services/menu.service';
 import AlertService from '../_services/alert.service';
 import NotificationService from '../_services/notification.service';
-import LocalStorageService from '../_services/localstorage.service';
+import StorageService from '../_services/storage.service';
 import LoginService from '../_services/login.service';
 
 export default class SiteContainer extends React.Component {
@@ -20,7 +20,7 @@ export default class SiteContainer extends React.Component {
     };
     this.menuService = new MenuService();
     this.notificationService = new NotificationService();
-    this.localStorageService = new LocalStorageService();
+    this.storageService = new StorageService();
     this.loginService = new LoginService();
 
     this.state = {
@@ -40,9 +40,9 @@ export default class SiteContainer extends React.Component {
 
   getAccountDropdownProps() {
     return {
-      avatarURL: './demo/faces/female/25.jpg',
-      name: this.localStorageService.getUserName(),
-      description: this.localStorageService.getDesignation(),
+      avatarURL: this.storageService.getImageUrl(),
+      name: this.storageService.getUserName(),
+      description: this.storageService.getDesignation(),
       options: [
         { icon: 'user', value: 'Profile' },
         { icon: 'settings', value: 'Settings' },
