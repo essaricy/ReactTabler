@@ -1,9 +1,9 @@
-import * as ApiConstants from "../_constants/api.constant";
+import * as ApiConstants from '../_constants/api.constant';
 
 export function get(url) {
-  console.log("Sending request (GET) to " + url);
+  console.log('Sending request (GET) to ' + url);
   return fetch(url, {
-    method: "get",
+    method: 'get',
     headers: ApiConstants.JsonHeaders
   }).then(function(apiResponse) {
     return apiResponse.json();
@@ -11,13 +11,13 @@ export function get(url) {
 }
 
 export function getGeneric(url) {
-  console.log("Sending request (GET) to " + url);
+  console.log('Sending request (GET) to ' + url);
   return fetch(url, {
-    method: "get",
+    method: 'get',
     headers: ApiConstants.JsonHeaders
   })
     .then(function(apiResponse) {
-      return sendGenericResponse(apiResponse);
+      return apiResponse.json();
     })
     .catch(error => {
       return sendFailureResponse(error);
@@ -27,15 +27,15 @@ export function getGeneric(url) {
 export function post(url, payload) {
   const payloadAsText = JSON.stringify(payload);
   console.log(
-    "Sending request (POST) to " + url + " with payload=" + payloadAsText
+    'Sending request (POST) to ' + url + ' with payload=' + payloadAsText
   );
   return fetch(url, {
-    method: "post",
+    method: 'post',
     headers: ApiConstants.JsonHeaders,
     body: payloadAsText
   })
     .then(function(apiResponse) {
-      return sendGenericResponse(apiResponse);
+      return apiResponse.json();
     })
     .catch(error => {
       console.error(error);
@@ -46,15 +46,15 @@ export function post(url, payload) {
 export function patch(url, payload) {
   const payloadAsText = JSON.stringify(payload);
   console.log(
-    "Sending request (POST) to " + url + " with payload=" + payloadAsText
+    'Sending request (POST) to ' + url + ' with payload=' + payloadAsText
   );
   return fetch(url, {
-    method: "post",
+    method: 'post',
     headers: ApiConstants.JsonHeaders,
     body: payloadAsText
   })
     .then(function(apiResponse) {
-      return sendGenericResponse(apiResponse);
+      return apiResponse.json();
     })
     .catch(error => {
       console.error(error);
@@ -63,13 +63,13 @@ export function patch(url, payload) {
 }
 
 export function del(url) {
-  console.log("Sending request (DELETE) to " + url);
+  console.log('Sending request (DELETE) to ' + url);
   return fetch(url, {
-    method: "delete",
+    method: 'delete',
     headers: ApiConstants.JsonHeaders
   })
     .then(function(apiResponse) {
-      return sendGenericResponse(apiResponse);
+      return apiResponse.json();
     })
     .catch(error => {
       console.error(error);
@@ -77,22 +77,18 @@ export function del(url) {
     });
 }
 
-function sendGenericResponse(apiResponse) {
-  return apiResponse.json();
-}
-
 function sendFailureResponse(error) {
   const errorMessage = error.message;
   let message;
   if (
-    errorMessage === "Failed to fetch" ||
-    errorMessage === "NetworkError when attempting to fetch resource." ||
-    errorMessage === "Network request failed"
+    errorMessage === 'Failed to fetch' ||
+    errorMessage === 'NetworkError when attempting to fetch resource.' ||
+    errorMessage === 'Network request failed'
   ) {
     message =
-      "Unable to contact the server now. Please try again after sometime";
+      'Unable to contact the server now. Please try again after sometime.';
   } else {
-    message = "Technical Error: " + errorMessage;
+    message = 'Technical Error: ' + errorMessage;
   }
   return { code: ApiConstants.Result.FAILURE, message: message };
 }

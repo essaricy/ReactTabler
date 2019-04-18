@@ -20,6 +20,7 @@ export default class ActionTable extends React.Component {
     super(props);
     this.state = {
       isDataLoading: true,
+      loadingError: null,
       isAddOpen: false,
       isUpdateOpen: false,
       actionRowIndex: null
@@ -52,10 +53,14 @@ export default class ActionTable extends React.Component {
 
   componentWillMount() {
     this.actionTableService.getAll().then(response => {
-      this.dataset = response;
+      this.dataset = Array.isArray(response) ? response : null;
       this.setState({
         isDataLoading: false,
-        dataset: this.response
+        loadingError:
+          response.code === ApiConstants.Result.SUCCESS
+            ? null
+            : response.message,
+        dataset: this.dataset
       });
     });
   }
@@ -68,14 +73,17 @@ export default class ActionTable extends React.Component {
     if (actions != null && actions.add) {
       headerTools.push(this.getAddContent(actions.add));
     }
-    if (this.dataset == null || this.dataset.length === 0) {
-      // No records found
-      tableDataRows.push(this.getNoDataContent());
-    } else {
+    if (this.state.loadingError != null) {
+      // Unable to connect to the server
+      tableDataRows.push(this.getErrorContent(this.state.loadingError));
+    } else if (this.dataset.length) {
       const columnsConfig = this.props.columns;
       this.dataset.forEach((row, index) => {
         tableDataRows.push(this.getRenderedRow(index, row, columnsConfig));
       });
+    } else {
+      // No records found
+      tableDataRows.push(this.getNoDataContent());
     }
     return (
       <Card>
@@ -196,20 +204,25 @@ export default class ActionTable extends React.Component {
   }
 
   getNoDataContent() {
-    return this.getSpannedContent('EMPTYROW', 'No data available...');
-  }
-
-  getErrorContent() {
     return this.getSpannedContent(
-      'ERRORROW',
-      'An Error has occurred while loading data'
+      'NODATA',
+      'No data available...',
+      'actiontable-no-data'
     );
   }
 
-  getSpannedContent(key, message) {
+  getErrorContent(message) {
+    return this.getSpannedContent(
+      'ERROR',
+      message,
+      'actiontable-loading-error'
+    );
+  }
+
+  getSpannedContent(key, message, className) {
     return (
       <Table.Row key={key}>
-        <Table.Col id={key} colSpan="100%">
+        <Table.Col colSpan="100%" className={className}>
           {message}
         </Table.Col>
       </Table.Row>
