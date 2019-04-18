@@ -1,41 +1,62 @@
-import React from "react";
-import { withRouter } from "react-router-dom";
-import "./App.css";
+import React from 'react';
+import { withRouter } from 'react-router-dom';
+import './App.css';
 
-import LoginScene from "./_scenes/login.scene";
-import SiteContainer from "./_containers/site.container";
-import LoginService from "./_services/login.service";
+import LoginScene from './_scenes/login.scene';
+import SiteContainer from './_containers/site.container';
+import LoginService from './_services/login.service';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.loginService = new LoginService();
-    this.state = { isAutenticated: this.loginService.isUserAuthenticated() };
+    this.state = { isAuthenticated: false, loginError: null };
     this.onLoginSuccessful = this.onLoginSuccessful.bind(this);
     this.onLoginFailure = this.onLoginFailure.bind(this);
     this.onLogout = this.onLogout.bind(this);
+
+    this.loginService = new LoginService();
+  }
+
+  componentWillMount() {
+    this.loginService
+      .validate()
+      .then(isAuthenticated =>
+        this.setState({ isAuthenticated: isAuthenticated })
+      );
   }
 
   onLoginSuccessful() {
-    this.setState({ isAutenticated: true });
+    this.setState({ isAuthenticated: true, loginError: null });
   }
 
   onLoginFailure() {
-    this.setState({ isAutenticated: false });
+    this.setState({
+      isAuthenticated: false,
+      loginError: 'Unable to login now'
+    });
   }
 
   onLogout() {
-    this.setState({ isAutenticated: false });
+    this.loginService.logout();
+    this.setState({
+      isAuthenticated: false,
+      loginError: 'You have been logged out successfully'
+    });
   }
 
   render() {
     let landingPage;
-    if (this.state.isAutenticated) {
-      landingPage = <SiteContainer />;
+    if (this.state.isAuthenticated) {
+      landingPage = <SiteContainer onLogout={this.onLogout} />;
     } else {
-      landingPage = <LoginScene onLoginSuccessful={this.onLoginSuccessful} />;
+      landingPage = (
+        <LoginScene
+          error={this.state.loginError}
+          onLoginSuccessful={this.onLoginSuccessful}
+        />
+      );
     }
-    return <div>{landingPage}</div>;
+    return <React.Fragment>{landingPage}</React.Fragment>;
   }
 }
 

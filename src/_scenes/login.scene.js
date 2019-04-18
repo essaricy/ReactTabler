@@ -15,7 +15,7 @@ export default class Login extends React.Component {
       loginId: '',
       password: '',
       loggingIn: false,
-      error: null
+      error: this.props.error
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -94,7 +94,6 @@ export default class Login extends React.Component {
       loginId: this.state.loginId,
       password: this.state.password
     };
-    console.log('payload==> ' + JSON.stringify(payload));
     this.loginService.login(payload).then(response => {
       if (response.code === ApiConstants.Result.SUCCESS) {
         this.props.onLoginSuccessful();

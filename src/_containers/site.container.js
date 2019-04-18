@@ -9,6 +9,8 @@ import * as AppConstants from '../_constants/app.constant';
 import MenuService from '../_services/menu.service';
 import AlertService from '../_services/alert.service';
 import NotificationService from '../_services/notification.service';
+import LocalStorageService from '../_services/localstorage.service';
+import LoginService from '../_services/login.service';
 
 export default class SiteContainer extends React.Component {
   constructor(props) {
@@ -18,18 +20,46 @@ export default class SiteContainer extends React.Component {
     };
     this.menuService = new MenuService();
     this.notificationService = new NotificationService();
+    this.localStorageService = new LocalStorageService();
+    this.loginService = new LoginService();
 
     this.state = {
       menuItems: [],
-      notifications: []
+      notifications: [],
+      accountDropdownProps: {}
     };
   }
 
   componentDidMount() {
     this.setState({
       menuItems: this.getMenuItems(),
-      notifications: this.getNotification()
+      notifications: this.getNotification(),
+      accountDropdownProps: this.getAccountDropdownProps()
     });
+  }
+
+  getAccountDropdownProps() {
+    return {
+      avatarURL: './demo/faces/female/25.jpg',
+      name: this.localStorageService.getUserName(),
+      description: this.localStorageService.getDesignation(),
+      options: [
+        { icon: 'user', value: 'Profile' },
+        { icon: 'settings', value: 'Settings' },
+        //{ icon: 'mail', value: 'Inbox', badge: '6' },
+        //{ icon: 'send', value: 'Message' },
+        { isDivider: true },
+        { icon: 'help-circle', value: 'Need help?' },
+        {
+          icon: 'log-out',
+          value: 'Sign out',
+          // to: "./home",
+          onClick: () => {
+            this.props.onLogout();
+          }
+        }
+      ]
+    };
   }
 
   getMenuItems() {
@@ -65,24 +95,6 @@ export default class SiteContainer extends React.Component {
     console.log('mark all as read');
   }
 
-  getAccountDropdonProps() {
-    const accountDropdownProps = {
-      avatarURL: './demo/faces/female/25.jpg',
-      name: 'Jane Pearson',
-      description: 'Administrator',
-      options: [
-        { icon: 'user', value: 'Profile' },
-        { icon: 'settings', value: 'Settings' },
-        { icon: 'mail', value: 'Inbox', badge: '6' },
-        { icon: 'send', value: 'Message' },
-        { isDivider: true },
-        { icon: 'help-circle', value: 'Need help?' },
-        { icon: 'log-out', value: 'Sign out' }
-      ]
-    };
-    return accountDropdownProps;
-  }
-
   render() {
     const notifications = this.state.notifications;
 
@@ -97,7 +109,7 @@ export default class SiteContainer extends React.Component {
             markAllAsRead: this.markAllAsRead,
             unread: 0
           },
-          accountDropdown: this.getAccountDropdonProps()
+          accountDropdown: this.state.accountDropdownProps
         }}
         navProps={{ itemsObjects: this.state.menuItems }}
         routerContextComponentType={withRouter(RouterContextProvider)}
