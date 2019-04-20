@@ -7,7 +7,7 @@ import Logo from '../_components/app/logo.component';
 import * as ApiConstants from '../_constants/api.constant';
 import LoginService from '../_services/login.service';
 
-export default class Login extends React.Component {
+export default class Registration extends React.Component {
   constructor(props) {
     super(props);
     // 200 for good, 401 for unauthorized and 500 for server error
@@ -33,7 +33,7 @@ export default class Login extends React.Component {
         <Logo />
         <Form onSubmit={this.handleSubmit}>
           <Card>
-            <Card.Header>Login to your account</Card.Header>
+            <Card.Header>Registration</Card.Header>
             {cardError}
             <Card.Body>
               <Dimmer active={this.state.loggingIn} loader={true}>
@@ -76,7 +76,7 @@ export default class Login extends React.Component {
         </Form>
         <div className="text-center text-muted">
           <Text.Small>
-            Don't have account yet? <a href="/account/register">Register</a>
+            Already have an account? <a href="/">Login</a>
           </Text.Small>
         </div>
       </LoginBox>

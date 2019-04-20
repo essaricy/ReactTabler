@@ -106,8 +106,8 @@ export default class SiteContainer extends React.Component {
           imageURL: '/images/brand/tabler.svg',
           notificationsTray: {
             notificationsObjects: this.state.notifications,
-            markAllAsRead: this.markAllAsRead,
-            unread: 0
+            markAllAsRead: this.markAllAsRead
+            //unread: 0
           },
           accountDropdown: this.state.accountDropdownProps
         }}
