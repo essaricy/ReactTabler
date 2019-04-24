@@ -1,16 +1,18 @@
-import React from 'react';
-import { RouterContextProvider, Site } from 'tabler-react';
-import { NavLink, withRouter } from 'react-router-dom';
+import React from "react";
+import { RouterContextProvider, Site } from "tabler-react";
+import { NavLink, withRouter } from "react-router-dom";
 
-import Alert from '../_components/modal/alert.component';
+import "./site.container.css";
 
-import MenuRoutes from '../_routes/menu.routes';
-import * as AppConstants from '../_constants/app.constant';
-import MenuService from '../_services/menu.service';
-import AlertService from '../_services/alert.service';
-import NotificationService from '../_services/notification.service';
-import StorageService from '../_services/storage.service';
-import LoginService from '../_services/login.service';
+import Alert from "../_components/modal/alert.component";
+
+import MenuRoutes from "../_routes/menu.routes";
+import * as AppConstants from "../_constants/app.constant";
+import MenuService from "../_services/menu.service";
+import AlertService from "../_services/alert.service";
+import NotificationService from "../_services/notification.service";
+import StorageService from "../_services/storage.service";
+import LoginService from "../_services/login.service";
 
 export default class SiteContainer extends React.Component {
   constructor(props) {
@@ -44,16 +46,23 @@ export default class SiteContainer extends React.Component {
       name: this.storageService.getUserName(),
       description: this.storageService.getDesignation(),
       options: [
-        { icon: 'user', value: 'Profile' },
-        { icon: 'settings', value: 'Settings' },
+        { icon: "user", value: "Profile", to: "/" },
+        { icon: "settings", value: "Settings", to: "/" },
         //{ icon: 'mail', value: 'Inbox', badge: '6' },
         //{ icon: 'send', value: 'Message' },
         { isDivider: true },
-        { icon: 'help-circle', value: 'Need help?' },
         {
-          icon: 'log-out',
-          value: 'Sign out',
-          // to: "./home",
+          icon: "help-circle",
+          value: "Need help?",
+          to: "#",
+          onClick: () => {
+            this.props.history.push("/account/help");
+          }
+        },
+        {
+          icon: "log-out",
+          value: "Sign out",
+          to: "#",
           onClick: () => {
             this.props.onLogout();
           }
@@ -80,7 +89,7 @@ export default class SiteContainer extends React.Component {
     const notifications = this.notificationService.getAll();
     notifications.forEach(notification => {
       const userName = notification.userName;
-      const message = notification.message.replace('{userName}', userName);
+      const message = notification.message.replace("{userName}", userName);
       notification.message = (
         <React.Fragment>
           {/* <strong>{userName}</strong> */}
@@ -92,7 +101,7 @@ export default class SiteContainer extends React.Component {
   }
 
   markAllAsRead() {
-    console.log('mark all as read');
+    console.log("mark all as read");
   }
 
   render() {
@@ -101,9 +110,9 @@ export default class SiteContainer extends React.Component {
     return (
       <Site.Wrapper
         headerProps={{
-          href: '/',
-          alt: 'Tabler React',
-          imageURL: '/images/brand/tabler.svg',
+          href: "/",
+          alt: "Tabler React",
+          imageURL: "/images/brand/tabler.svg",
           notificationsTray: {
             notificationsObjects: this.state.notifications,
             markAllAsRead: this.markAllAsRead
@@ -123,9 +132,9 @@ export default class SiteContainer extends React.Component {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {' '}
+                {" "}
                 codecalm.net
-              </a>{' '}
+              </a>{" "}
               All rights reserved.
             </React.Fragment>
           )

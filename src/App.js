@@ -1,10 +1,10 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
-import './App.css';
+import React from "react";
+import { withRouter } from "react-router-dom";
+import "./App.css";
 
-import LoginScene from './_scenes/login.scene';
-import SiteContainer from './_containers/site.container';
-import LoginService from './_services/login.service';
+import LoginScene from "./_scenes/login.scene";
+import SiteContainer from "./_containers/site.container";
+import LoginService from "./_services/login.service";
 
 class App extends React.Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class App extends React.Component {
   onLoginFailure() {
     this.setState({
       isAuthenticated: false,
-      loginError: 'Unable to login now'
+      loginError: "Unable to login now"
     });
   }
 
@@ -40,17 +40,18 @@ class App extends React.Component {
     this.loginService.logout();
     this.setState({
       isAuthenticated: false,
-      loginError: 'You have been logged out successfully'
+      loginError: "You have been logged out successfully"
     });
   }
 
   render() {
     let landingPage;
     if (this.state.isAuthenticated) {
-      landingPage = <SiteContainer onLogout={this.onLogout} />;
+      landingPage = <SiteContainer {...this.props} onLogout={this.onLogout} />;
     } else {
       landingPage = (
         <LoginScene
+          {...this.props}
           error={this.state.loginError}
           onLoginSuccessful={this.onLoginSuccessful}
         />

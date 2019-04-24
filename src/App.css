@@ -1,8 +1,12 @@
-.App {
-  border: 2px solid black;
-  text-align: center;
-  background: #f5f5f5;
-  color: #333;
-  margin: 20px;
-  padding: 20px;
+.dropdown-item.active,
+.dropdown-item:active {
+  color: #6e7687;
+  text-decoration: none;
+  background-color: #fff;
+}
+.dropdown-item:hover {
+  color: #fff;
+  text-decoration: none;
+  background-color: #467fcf;
+  cursor: pointer;
 }
