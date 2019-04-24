@@ -37,6 +37,13 @@ export default class MenuRoutes extends React.Component {
             return <div>This is help page</div>;
           }}
         />
+        <Route
+          exact
+          path="/account/profile"
+          render={props => {
+            return <div>This is profile page</div>;
+          }}
+        />
       </Switch>
     );
   }

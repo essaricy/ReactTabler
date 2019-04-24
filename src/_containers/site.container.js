@@ -46,7 +46,14 @@ export default class SiteContainer extends React.Component {
       name: this.storageService.getUserName(),
       description: this.storageService.getDesignation(),
       options: [
-        { icon: "user", value: "Profile", to: "/" },
+        {
+          icon: "user",
+          value: "Profile",
+          to: "#",
+          onClick: () => {
+            this.props.history.push("/account/profile");
+          }
+        },
         { icon: "settings", value: "Settings", to: "/" },
         //{ icon: 'mail', value: 'Inbox', badge: '6' },
         //{ icon: 'send', value: 'Message' },
