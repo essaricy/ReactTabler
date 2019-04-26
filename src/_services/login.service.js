@@ -1,8 +1,9 @@
-import * as FetchApi from '../_utils/fetchapi.util';
-import * as Urls from '../_constants/url.constant';
-import * as ApiConstants from '../_constants/api.constant';
+import * as FetchApi from "../_utils/fetchapi.util";
+import * as AxiosApi from "../_utils/axios.util";
+import * as Urls from "../_constants/url.constant";
+import * as ApiConstants from "../_constants/api.constant";
 
-import StorageService from './storage.service';
+import StorageService from "./storage.service";
 
 export default class LoginService {
   constructor() {
@@ -15,16 +16,23 @@ export default class LoginService {
   }
 
   login(payload) {
-    const loginUrl = Urls.API_URL.BASE + Urls.API_URL.LOGIN;
-    return FetchApi.post(loginUrl, payload).then(response => {
+    return AxiosApi.post(Urls.API_URL.LOGIN, payload).then(response => {
+      // TODO check for the status code, then response
       this.authenticated = response.code === ApiConstants.Result.SUCCESS;
       if (this.authenticated) {
         this.storageService.setUserInfo(response.content);
       }
-      return new Promise(function(resolve, reject) {
-        resolve(response);
-      });
+      return response;
     });
+    //console.log("response====> " + JSON.stringify(response));
+    // const loginUrl = Urls.API_URL.BASE + Urls.API_URL.LOGIN;
+    // return FetchApi.post(loginUrl, payload).then(response => {
+    //   this.authenticated = response.code === ApiConstants.Result.SUCCESS;
+    //   if (this.authenticated) {
+    //     this.storageService.setUserInfo(response.content);
+    //   }
+    //   return Promise.resolve(response);
+    // });
   }
 
   logout() {
@@ -35,30 +43,26 @@ export default class LoginService {
 
   validate() {
     if (this.authenticated) {
-      console.log('isUserAuthenticated: user has already been authenticated');
-      return new Promise(function(resolve, reject) {
-        resolve(true);
-      });
+      console.log("isUserAuthenticated: user has already been authenticated");
+      return Promise.resolve(true);
     }
     // Check if local storage has user info
     const userToken = this.storageService.getUserToken();
     if (userToken == null) {
       console.log(
-        'isUserAuthenticated: user info does not exist in local storage'
+        "isUserAuthenticated: user info does not exist in local storage"
       );
-      return new Promise(function(resolve, reject) {
-        resolve(false);
-      });
+      return Promise.resolve(false);
     }
-    console.log('isUserAuthenticated: Validating user token');
+    console.log("isUserAuthenticated: Validating user token");
     // Send the JWT Token to API to check if the session is still valid or not.
     const loginUrl = Urls.API_URL.BASE + Urls.API_URL.LOGIN + userToken;
     return FetchApi.get(loginUrl)
       .then(response => {
         this.authenticated = response.code === ApiConstants.Result.SUCCESS;
-        console.log('isUserAuthenticated: valid? ' + this.authenticated);
+        console.log("isUserAuthenticated: valid? " + this.authenticated);
         return this.authenticated;
       })
-      .catch(error => console.log('error=> ' + error));
+      .catch(error => console.log("error=> " + error));
   }
 }

@@ -1,5 +1,35 @@
+import axios from "axios";
+import * as AxiosBase from "./axios.base";
+import * as Urls from "../_constants/url.constant";
 import * as ApiConstants from "../_constants/api.constant";
 
+export function post(url, payload) {
+  const payloadAsText = JSON.stringify(payload);
+  console.log(
+    "Sending request (POST) to " + url + " with payload=" + payloadAsText
+  );
+  return axios
+    .post(Urls.API_URL.BASE + url, payload)
+    .then(response => response.data)
+    .catch(error => {
+      const errorResponse = {
+        code: ApiConstants.Result.FAILURE,
+        message: null
+      };
+      if (!errorResponse.response) {
+        this.errorStatus =
+          "Unable to contact the server now. Please try again after some time";
+      } else {
+        this.errorStatus = error.response.data.message;
+      }
+    });
+  // .catch(error => {
+  //   console.error(error);
+  //   return sendFailureResponse(error);
+  // });
+}
+
+///////////////////////////////////////////////////////////////////////////
 export function get(url) {
   console.log("Sending request (GET) to " + url);
   return fetch(url, {
@@ -20,25 +50,6 @@ export function getGeneric(url) {
       return apiResponse.json();
     })
     .catch(error => {
-      return sendFailureResponse(error);
-    });
-}
-
-export function post(url, payload) {
-  const payloadAsText = JSON.stringify(payload);
-  console.log(
-    "Sending request (POST) to " + url + " with payload=" + payloadAsText
-  );
-  return fetch(url, {
-    method: "post",
-    headers: ApiConstants.JsonHeaders,
-    body: payloadAsText
-  })
-    .then(function(apiResponse) {
-      return apiResponse.json();
-    })
-    .catch(error => {
-      console.error(error);
       return sendFailureResponse(error);
     });
 }
