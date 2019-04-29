@@ -1,5 +1,5 @@
 import axios from "axios";
-import * as AxiosBase from "./axios.base";
+//import * as AxiosBase from "./axios.base";
 import * as Urls from "../_constants/url.constant";
 import * as ApiConstants from "../_constants/api.constant";
 
@@ -10,35 +10,41 @@ export function post(url, payload) {
   );
   return axios
     .post(Urls.API_URL.BASE + url, payload)
-    .then(response => response.data)
-    .catch(error => {
-      const errorResponse = {
-        code: ApiConstants.Result.FAILURE,
-        message: null
-      };
-      if (!errorResponse.response) {
-        this.errorStatus =
-          "Unable to contact the server now. Please try again after some time";
-      } else {
-        this.errorStatus = error.response.data.message;
-      }
-    });
-  // .catch(error => {
-  //   console.error(error);
-  //   return sendFailureResponse(error);
-  // });
+    .then(response => handleSuccess(response))
+    .catch(error => handleError(error));
+}
+
+export function get(url) {
+  console.log("Sending request (GET) to " + url);
+  return axios
+    .get(Urls.API_URL.BASE + url)
+    .then(response => handleSuccess(response))
+    .catch(error => handleError(error));
+}
+
+export function handleSuccess(response) {
+  return response.data;
+}
+
+export function handleError(error) {
+  const errorResponse = {
+    code: ApiConstants.Result.FAILURE,
+    message: null
+  };
+  if (!error.response) {
+    errorResponse.message =
+      "Unable to contact the server now. Please try again after some time";
+  } else if (error.response.status === 403) {
+    errorResponse.message = "You are not authorized to view this data";
+  } else if (error.response.status === 500) {
+    errorResponse.message =
+      "Something went wrong. Please try again after sometime.";
+    console.error(error.response.data.message);
+  }
+  return errorResponse;
 }
 
 ///////////////////////////////////////////////////////////////////////////
-export function get(url) {
-  console.log("Sending request (GET) to " + url);
-  return fetch(url, {
-    method: "get",
-    headers: ApiConstants.JsonHeaders
-  }).then(function(apiResponse) {
-    return apiResponse.json();
-  });
-}
 
 export function getGeneric(url) {
   console.log("Sending request (GET) to " + url);

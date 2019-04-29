@@ -1,4 +1,3 @@
-import * as FetchApi from "../_utils/fetchapi.util";
 import * as AxiosApi from "../_utils/axios.util";
 import * as Urls from "../_constants/url.constant";
 import * as ApiConstants from "../_constants/api.constant";
@@ -24,15 +23,6 @@ export default class LoginService {
       }
       return response;
     });
-    //console.log("response====> " + JSON.stringify(response));
-    // const loginUrl = Urls.API_URL.BASE + Urls.API_URL.LOGIN;
-    // return FetchApi.post(loginUrl, payload).then(response => {
-    //   this.authenticated = response.code === ApiConstants.Result.SUCCESS;
-    //   if (this.authenticated) {
-    //     this.storageService.setUserInfo(response.content);
-    //   }
-    //   return Promise.resolve(response);
-    // });
   }
 
   logout() {
@@ -56,8 +46,7 @@ export default class LoginService {
     }
     console.log("isUserAuthenticated: Validating user token");
     // Send the JWT Token to API to check if the session is still valid or not.
-    const loginUrl = Urls.API_URL.BASE + Urls.API_URL.LOGIN + userToken;
-    return FetchApi.get(loginUrl)
+    return AxiosApi.get(Urls.API_URL.LOGIN + userToken)
       .then(response => {
         this.authenticated = response.code === ApiConstants.Result.SUCCESS;
         console.log("isUserAuthenticated: valid? " + this.authenticated);

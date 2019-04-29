@@ -79,7 +79,7 @@ export default class SiteContainer extends React.Component {
   }
 
   getMenuItems() {
-    const menuItems = this.menuService.accessList(AppConstants.Role.ADMIN);
+    const menuItems = this.menuService.getMenuItems();
     menuItems.forEach(menuItem => {
       if (menuItem.subItems) {
         menuItem.subItems.forEach(submenuItem => {
